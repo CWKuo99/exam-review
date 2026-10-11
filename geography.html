@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>中國自然與人口複習</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* Layout: two hubs (space = map, time = linked timeline), then practice. Map + info panel sit side by side on wide screens, stacked on phones. */
+:root{
+  --paper:#F1F4F2; --card:#FFFFFF; --ink:#1C2A28; --muted:#5A6A66; --line:#D3DCD8;
+  --sea:#DCE7EC; --land:#E6E9E4; --cn:#F7F3EA;
+  --east:#1F7A72; --east-soft:#DCEFEC; --west:#A8701C; --west-soft:#F5E9D3;
+  --accent:#2D5BA3; --accent-soft:#E2EAF7;
+  --good:#1F7A4D; --good-soft:#DDF1E6; --bad:#B0362D; --bad-soft:#F8E1DE;
+  --s1:#8A4B9C; --s2:#C27C1E; --s3:#2E8B57;
+  --f-display:"LXGW WenKai TC","Kaiti TC","STKaiti","KaiTi",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#111816; --card:#19221F; --ink:#E3EBE7; --muted:#9BAAA5; --line:#2C3935;
+  --sea:#14202A; --land:#222B28; --cn:#2B302A;
+  --east:#4FB8AC; --east-soft:#163330; --west:#DDA64A; --west-soft:#3A2D16;
+  --accent:#86ABEF; --accent-soft:#1E2C45;
+  --good:#5BC28E; --good-soft:#163526; --bad:#F07D72; --bad-soft:#3E1D1A;
+  --s1:#C58AD6; --s2:#E3A54E; --s3:#5DC08A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#111816; --card:#19221F; --ink:#E3EBE7; --muted:#9BAAA5; --line:#2C3935;
+  --sea:#14202A; --land:#222B28; --cn:#2B302A;
+  --east:#4FB8AC; --east-soft:#163330; --west:#DDA64A; --west-soft:#3A2D16;
+  --accent:#86ABEF; --accent-soft:#1E2C45;
+  --good:#5BC28E; --good-soft:#163526; --bad:#F07D72; --bad-soft:#3E1D1A;
+  --s1:#C58AD6; --s2:#E3A54E; --s3:#5DC08A; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;padding:0 16px}
+.wrap{max-width:1040px;margin:0 auto;padding-block:20px 80px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.3;margin:0}
+h1{font-size:clamp(28px,6vw,40px)}
+h2{font-size:26px;margin-bottom:6px}
+h3{font-size:19px;margin:18px 0 8px}
+p{margin:0 0 10px}
+.eyebrow{font-size:13px;letter-spacing:.08em;color:var(--muted)}
+.lead{color:var(--muted);max-width:66ch}
+header.top{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between;padding-block:8px 14px}
+.scorebox{font-size:14px;color:var(--muted);text-align:right}
+.scorebox b{font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums}
+nav.chips{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);display:flex;gap:6px;overflow-x:auto;padding-block:8px;border-bottom:1px solid var(--line);scrollbar-width:none}
+nav.chips a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;padding:5px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card)}
+nav.chips a:hover,nav.chips a:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
+section{padding-top:34px;scroll-margin-top:56px}
+.tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);vertical-align:middle;margin-left:4px;font-family:var(--f-body)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:12px 0}
+.note{font-size:14px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.grid2>*{min-width:0}
+.k{font-weight:700}
+.east{color:var(--east)} .west{color:var(--west)}
+button{font:inherit;cursor:pointer}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 12px;font-size:15px}
+.btn:hover{border-color:var(--accent)}
+.btn:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.primary{background:var(--accent);color:var(--card);border-color:var(--accent)}
+.btn.sel{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.btn.ok{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.btn.no{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.fb{font-size:14px;margin-top:6px;padding:8px 10px;border-radius:8px}
+.fb.ok{background:var(--good-soft);color:var(--ink);border-left:3px solid var(--good)}
+.fb.no{background:var(--bad-soft);color:var(--ink);border-left:3px solid var(--bad)}
+.grp{display:flex;gap:6px;flex-wrap:wrap}
+.mainline{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:22px 12px;margin:10px 0}
+.mainline>div{min-width:0;position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px;font-size:14px}
+.mainline>div b{display:block;font-family:var(--f-display);font-size:18px;font-weight:700;margin:2px 0 4px}
+.mainline .lno{font-size:12px;color:var(--accent);letter-spacing:.06em}
+.core-q{font-family:var(--f-display);font-size:20px;border-left:4px solid var(--accent);padding:6px 12px;margin:14px 0;background:var(--accent-soft);border-radius:0 8px 8px 0}
+
+/* ---- map hub ---- */
+.layers{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.layers .btn{font-size:14px;padding:5px 12px;border-radius:999px}
+.hub{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:760px){.hub{grid-template-columns:1fr}}
+.mapbox{background:var(--sea);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;max-width:100%}
+.mapbox svg{display:block;width:100%;height:100%}
+#map text{font-family:var(--f-body);paint-order:stroke;stroke:var(--cn);stroke-width:4px;stroke-linejoin:round;fill:var(--ink);pointer-events:none}
+#map .pin{cursor:pointer}
+#map .pin text{pointer-events:auto}
+@media (max-width:560px){#map .pin text{font-size:19px}#map #huStats text{font-size:18px}}
+#huHalves,#huStats,#huLine,#migArrows{pointer-events:none}
+#map .pin:focus{outline:none}
+#map .pin:focus-visible circle.dot,#map .pin.on circle.dot{stroke:var(--accent);stroke-width:4}
+#map .ghost{opacity:.18;pointer-events:none}
+.info{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;min-height:200px}
+.info h3{margin-top:0}
+.stepchip{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;color:var(--card);margin-right:4px;vertical-align:middle}
+.flow{display:grid;gap:14px;margin-top:10px}
+.flow>div{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px;position:relative}
+.flow>div b{display:block;font-size:12px;letter-spacing:.06em;color:var(--muted);font-weight:500}
+.flow>div+div::before{content:"↓";position:absolute;top:-17px;left:14px;line-height:1;color:var(--muted);font-size:13px}
+.mlegend{display:flex;flex-wrap:wrap;gap:10px;font-size:13px;color:var(--muted);margin-top:8px}
+.mlegend i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.mlegend i.sq{border-radius:3px}
+
+/* ---- time hub ---- */
+.chart{width:100%;overflow-x:auto}
+.chart svg{display:block;width:100%;height:auto;min-width:320px}
+#tchart text{fill:var(--muted);font-family:var(--f-body);font-size:12px}
+#tchart .axis{stroke:var(--line);stroke-width:1}
+#tchart .grid{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
+.slider{display:flex;align-items:center;gap:10px;margin:10px 0 4px}
+.slider input{flex:1;min-width:0;accent-color:var(--accent)}
+.slider output{font-family:var(--f-display);font-size:24px;font-variant-numeric:tabular-nums;min-width:4.2em;text-align:right}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:8px}
+.readout>div{min-width:0;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--card)}
+.readout .lab{font-size:12px;color:var(--muted)}
+.readout .val{font-size:18px;font-variant-numeric:tabular-nums;font-weight:500}
+.readout .src{font-size:12px;color:var(--muted)}
+.tlegend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted)}
+.tlegend i{display:inline-block;width:14px;height:3px;margin-right:4px;vertical-align:4px}
+.tlegend i.box{height:12px;width:12px;vertical-align:-1px;border-radius:2px}
+.event{margin-top:10px}
+
+/* ---- practice ---- */
+.sortlist{display:grid;gap:8px}
+.sortitem{display:flex;flex-wrap:wrap;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--card)}
+.sortitem .name{flex:1 1 180px;font-weight:500}
+.sortitem .fb{flex-basis:100%;margin-top:2px}
+.chain{display:grid;gap:10px}
+.chainrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;align-items:start}
+.chainrow>*{min-width:0}
+.chainrow .cell{border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--card);font-size:14px;border-left:3px solid var(--bad)}
+.chainrow select{width:100%;font:inherit;font-size:14px;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.chainhead{font-size:13px;color:var(--muted)}
+@media (max-width:560px){.chainrow{grid-template-columns:1fr}.chainhead{display:none}}
+.pool,.seq{display:flex;flex-wrap:wrap;gap:8px;min-height:44px}
+.seq{border:1px dashed var(--line);border-radius:8px;padding:8px;margin:8px 0}
+.seq .btn{background:var(--accent-soft);border-color:var(--accent)}
+.seq .btn::before{content:attr(data-n) ". ";color:var(--accent);font-weight:700}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.cards>button{min-width:0;text-align:left;border:1px solid var(--line);border-radius:var(--r);background:var(--card);color:var(--ink);padding:12px;min-height:110px}
+.cards>button .t{font-family:var(--f-display);font-size:19px;display:block}
+.cards>button .h{font-size:13px;color:var(--muted)}
+.cards>button.open{background:var(--accent-soft);border-color:var(--accent)}
+.cards>button .d{font-size:14px;display:none;margin-top:6px}
+.cards>button.open .d{display:block}
+.cards>button.open .h{display:none}
+.agerow{display:grid;grid-template-columns:70px 1fr 44px;gap:8px;align-items:center;margin:3px 0;font-size:14px;font-variant-numeric:tabular-nums}
+.agerow>*{min-width:0}
+.stack{display:flex;height:30px;border-radius:6px;overflow:hidden;font-size:13px;line-height:30px;color:#fff}
+.stack span{display:block;text-align:center;white-space:nowrap;overflow:hidden}
+.q{border-top:1px solid var(--line);padding:14px 0}
+.q:first-of-type{border-top:0}
+.q .stem{font-weight:500;margin-bottom:8px}
+.q .src{font-size:12px;color:var(--muted);margin-left:6px}
+.opts{display:grid;gap:6px}
+.opts .btn{text-align:left}
+table.data{border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;margin:6px 0 10px;min-width:420px}
+table.data th,table.data td{border:1px solid var(--line);padding:4px 8px;text-align:center}
+table.data th{background:var(--paper);font-weight:500}
+.tblwrap{overflow-x:auto}
+details.open-q{border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:12px 14px;margin:10px 0}
+details.open-q summary{cursor:pointer;font-weight:500}
+details.open-q .ans{margin-top:8px;font-size:15px;border-left:3px solid var(--east);padding-left:10px}
+.tf{display:grid;gap:8px}
+.tfrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--card)}
+.tfrow .s{flex:1 1 220px}
+.tfrow .fb{flex-basis:100%}
+footer{margin-top:40px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head><body>
+
+<div class="wrap">
+<header class="top">
+  <div>
+    <div class="eyebrow">國中地理 2 上・第 1–2 課・段考複習</div>
+    <h1>中國的自然環境與人口</h1>
+  </div>
+  <div class="scorebox">互動題答對<br><b id="score">0</b> / <span id="total">0</span><br><button class="btn" id="resetAll" style="font-size:13px;padding:2px 10px;margin-top:4px">全部重來</button></div>
+</header>
+
+<nav class="chips" aria-label="章節">
+  <a href="#line">主線</a><a href="#space">空間軸・地圖</a><a href="#time">時間軸・人口變化</a><a href="#more">重點補充</a><a href="#think">整合思考</a><a href="#tf">易錯辨析</a><a href="#quiz-s">段考練習</a>
+</nav>
+
+<div class="core-q">核心問題：中國如何面對快速增長且數量龐大的人口？</div>
+<section id="line" style="padding-top:8px">
+  <p class="lead">課本用四個問題回答核心問題。第 1 課的自然環境是第 2 課人口現象的「原因」，複習時順著箭頭讀。</p>
+  <div class="mainline">
+    <div><span class="lno">1-1・1-2</span><b>自然環境有何特徵？</b>地勢西高東低、三級階梯；夏雨冬乾、東溼西乾；季風、乾燥、高地三大氣候</div>
+    <div><span class="lno">環境負載力</span><b>各地能養活多少人？</b>平坦＋溼潤 → 農業、交通、產業發達 → 負載力高</div>
+    <div><span class="lno">2-1</span><b>人口有哪些特徵？</b>族系眾多、快速增加、黑河—騰衝線東密西疏</div>
+    <div><span class="lno">2-2・2-3</span><b>怎麼面對人口壓力？</b>計畫生育與衍生問題；東南丘陵山多田少 → 向外遷移、文化擴散</div>
+  </div>
+  <p class="note">用法：<b>空間軸</b>（地圖）回答「為什麼人住在這裡、往哪裡移動」，<b>時間軸</b>回答「人口怎麼變多、政策怎麼改」。兩條軸在「政策的地區差異」交會。</p>
+</section>
+
+<!-- ============ SPACE ============ -->
+<section id="space">
+  <div class="eyebrow">空間軸・第 1 課地形氣候 → 第 2 課人口分布與遷移</div>
+  <h2>依序切換圖層，同一個地點看三次</h2>
+  <p class="lead">建議順序：先在「三級階梯」判斷階梯，再到「氣候分區」判讀氣候站，最後到「人口」預測疏密，看自然條件怎麼決定人口。</p>
+  <div class="layers" role="tablist" aria-label="地圖圖層">
+    <button class="btn" data-layer="terrain" role="tab">1-1 三級階梯</button>
+    <button class="btn" data-layer="climate" role="tab">1-2 氣候分區</button>
+    <button class="btn" data-layer="pop" role="tab">2-1 人口：東密西疏</button>
+    <button class="btn" data-layer="mig" role="tab">2-3 向外遷移</button>
+    <button class="btn" data-layer="pol" role="tab">交會：政策的地區差異</button>
+  </div>
+  <div class="hub">
+    <div>
+      <div class="mapbox"><svg id="map" viewBox="40 0 560 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="中國與東南亞示意地圖"></svg></div>
+      <div class="mlegend" id="mlegend"></div>
+    </div>
+    <div class="info" id="info" aria-live="polite"></div>
+  </div>
+  <p class="note" style="margin-top:8px">底圖為 Natural Earth 簡化國界，僅供教學示意。階梯界線、氣候界線依課本圖 1-1-4、1-1-15 的山脈與界線位置描繪，為示意而非精確邊界；黑河—騰衝線以兩城位置直線連接。</p>
+</section>
+
+<!-- ============ TIME ============ -->
+<section id="time">
+  <div class="eyebrow">時間軸・2-1 人口成長 ＋ 2-2 計畫生育政策</div>
+  <h2>拖動年份，看四張圖一起變</h2>
+  <div class="panel">
+    <div class="slider"><input type="range" id="yr" min="0" max="13" step="1" value="5" aria-label="選擇年份"><output id="yrOut" for="yr">1979</output></div>
+    <div class="tlegend"><span><i class="box" style="background:var(--s1);opacity:.25"></i>鼓勵生育</span><span><i class="box" style="background:var(--s2);opacity:.25"></i>計畫生育／一胎化</span><span><i class="box" style="background:var(--s3);opacity:.25"></i>開放二胎、三胎</span></div>
+    <div class="chart"><svg id="tchart" viewBox="0 0 640 440" role="img" aria-label="1950到2023年中國人口總數、出生率死亡率、年齡組成與新生兒性別比"></svg></div>
+    <div class="readout" id="readout"></div>
+    <div class="event" id="eventBox" aria-live="polite"></div>
+  </div>
+  <p class="note">資料來源：人口總數、出生率、死亡率取自備課用書「學習會考」題 2 統計表（1950 年取自課本圖 1-2-2）；年齡組成 1953–2020 取自 112 會考 4 題表，1970、2023 取自課本人口金字塔圖；性別比取自課本第 27 頁長條圖。沒有資料的年份會顯示最近一筆資料的年份。</p>
+  <details class="open-q">
+    <summary>更早以前：1600～1950 年為什麼長得慢？</summary>
+    <div class="ans">1600→1700：明末清初<b>政權轉替</b>、戰爭動盪，人口由 1.9 億降到約 1.5 億（負成長）。1700→1850：政治相對安定、民生經濟發展，加上中南美洲的<b>番薯、馬鈴薯、玉米</b>傳入，可種在貧瘠荒地，人口增至 4.3 億；1700～1794 年約 90 餘年翻倍。1850→1950：清末內亂外患、民初內亂、二次大戰、國共內戰，成長減緩，只到 5.5 億。1950→1990 年約 40 年就接近翻倍，倍時縮短代表成長愈來愈快。<br>三大因素：<b>政治局勢、糧食供應、醫療衛生</b>。</div>
+  </details>
+</section>
+
+<!-- ============ MORE ============ -->
+<section id="more">
+  <h2>重點補充</h2>
+  <h3>第 1 課：地形與人地關係</h3>
+  <div class="grid2">
+    <div class="panel">
+      <div class="note" style="margin-bottom:6px">中國五大地形面積比例（圖 1-1-2）</div>
+      <div class="stack" style="height:34px;line-height:34px"><span style="width:33%;background:var(--s1)">山地 33%</span><span style="width:26%;background:var(--accent)">高原 26%</span><span style="width:19%;background:var(--s2)">盆地 19%</span><span style="width:12%;background:var(--s3)">平原 12%</span><span style="width:10%;background:var(--east)">丘陵</span></div>
+      <p class="note" style="margin-top:8px">山地＋高原約 59%，山多平原少；丘陵 10%。人口眾多的平原和盆地只占約 31%，這是「人多地少」壓力的源頭。</p>
+      <p class="note">行政區：省 22、自治區 5、直轄市 4、特別行政區 2。東半部地形平坦、氣候溫和溼潤、人口多，行政區劃分較細；西半部人口稀疏，行政區面積較大。自治區多分布在少數民族比例較高的西北、西南。</p>
+    </div>
+    <div class="panel">
+      <div class="note" style="margin-bottom:6px">人地關係：自然環境塑造生活方式（課本扉頁）</div>
+      <div class="cards" id="landCards" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr))"></div>
+    </div>
+  </div>
+  <h3>第 2 課：人口組成與環境負載力</h3>
+  <div class="grid2">
+    <div class="panel">
+      <h3 style="margin-top:0">族系眾多的人口組成</h3>
+      <div class="stack" style="margin-bottom:8px"><span style="width:91.1%;background:var(--east)">漢族 91.1%</span><span style="width:8.9%;background:var(--west)" title="少數民族 8.9%"></span></div>
+      <p class="note">課本：官方承認共 55 族，漢族超過 12 億人；其餘 54 族為少數民族，約 1 億餘人（8.9%）。不同民族因集居環境差異，發展出各具特色的生活方式與文化。</p>
+      <div class="note" style="margin-bottom:4px">少數民族內部比例（圖 1-2-1）</div>
+      <div id="minority"></div>
+    </div>
+    <div class="panel">
+      <h3 style="margin-top:0">環境負載力</h3>
+      <p>某一地區能提供生物所需的資源及承受其廢棄物的能力。高低與<b>自然環境</b>和<b>生產技術</b>有關；負載力較高的地方，人口較密集。</p>
+      <p class="note">例：剛果與新加坡自然環境相似，但新加坡高度工業化、生產技術較高，大幅提升了環境負載力。</p>
+      <h3>配對：問題 → 對策 → 目前結果</h3>
+      <div class="chain" id="chainGame"></div>
+      <div style="margin-top:10px"><button class="btn primary" id="chainCheck">檢查答案</button></div>
+      <div id="chainFb"></div>
+    </div>
+  </div>
+  <h3>推力、拉力還是中間障礙？</h3>
+  <div class="panel"><p class="note">早期東南沿海居民為何「下南洋」？</p><div class="sortlist" id="pushGame"></div></div>
+  <h3>文化擴散卡片 <span class="tag">點卡片翻面</span></h3>
+  <div class="cards" id="cultureCards"></div>
+</section>
+
+<!-- ============ THINK ============ -->
+<section id="think">
+  <h2>整合思考</h2>
+  <p class="lead">先排因果鏈，再試著自己回答申論題，最後才打開參考答案。</p>
+  <h3>因果鏈排序 <span class="tag">依序點選</span></h3>
+  <div id="orderGames"></div>
+  <h3>想一想，再打開</h3>
+  <div id="openQs"></div>
+</section>
+
+<section id="tf">
+  <h2>易錯辨析</h2>
+  <div class="tf" id="tfGame"></div>
+</section>
+
+<section id="quiz-s">
+  <h2>段考練習</h2>
+  <p class="lead">標「會考改寫」的題目依備課用書收錄的歷屆試題與解析改寫，非原題。</p>
+  <div class="panel" id="quiz"></div>
+</section>
+
+<footer>內容依據：康軒 115 學年度國中地理 2 上備課用書第 1 課（課本第 12–23 頁、學習會考、歷屆試題觀摩）與第 2 課（課本第 24–29 頁、教材 Q&amp;A、學習圖解、素養試題、歷屆試題觀摩）。作答紀錄只存在這台裝置的瀏覽器中。</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var el=function(tag,attrs,html){var e=document.createElement(tag);if(attrs)for(var k in attrs){if(k==="class")e.className=attrs[k];else e.setAttribute(k,attrs[k]);}if(html!=null)e.innerHTML=html;return e};
+var NS="http://www.w3.org/2000/svg";
+function S(tag,attrs,text){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;return e}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+
+/* ---------- scoring ---------- */
+var KEY="geo3-l2-review-v2",state={},items={};
+try{state=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){state={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+function reg(id){items[id]=1}
+function mark(id,ok){state[id]=ok?1:0;save();updScore()}
+function updScore(){var n=0,t=0;for(var id in items){t++;if(state[id]===1)n++}$("#score").textContent=n;$("#total").textContent=t}
+$("#resetAll").addEventListener("click",function(){state={};save();location.reload()});
+
+/* =========================================================
+   SPACE HUB
+   ========================================================= */
+var MAP={"china":"M466.5 245.1L463.5 244.5L461.9 243.6L460.9 242.4L461.9 242.0L463.0 242.4L463.7 243.3L466.0 244.5ZM470.2 260.4L469.0 260.0L467.9 259.9L467.4 258.6L468.6 258.6L470.1 259.3L470.2 260.4ZM469.1 263.2L468.0 262.6L469.1 263.0ZM448.8 305.4L447.7 305.7L447.9 304.5L448.4 303.5L448.9 304.4L448.8 305.4ZM367.1 349.1L368.3 349.2L368.1 350.3L366.7 350.0L367.1 349.1ZM461.2 279.1L460.1 279.4L460.8 278.0L461.2 279.1ZM394.5 332.0L393.4 331.4L394.5 332.0ZM387.9 344.0L387.2 343.0L388.3 342.4L387.9 344.0ZM386.6 343.6L385.6 343.8L386.7 342.9ZM346.2 344.9L344.7 343.5L343.3 343.9L341.8 344.0L340.8 343.9L340.1 342.9L338.3 342.1L337.8 341.1L336.7 340.5L335.4 340.0L334.8 338.6L334.7 337.6L333.9 336.6L333.9 335.0L334.6 334.1L335.5 332.9L334.5 331.3L333.0 331.1L332.0 331.4L330.7 330.4L329.7 330.3L328.8 330.6L327.7 330.8L326.4 329.7L325.2 329.3L324.7 328.2L323.5 326.9L322.1 327.2L320.4 328.1L319.2 328.6L318.8 329.9L318.7 330.9L317.7 331.8L316.3 332.0L315.0 333.0L313.8 332.3L312.2 332.5L311.7 334.1L308.6 332.3L307.7 333.9L306.2 332.5L304.8 333.6L304.3 334.6L303.2 335.5L302.0 334.7L300.7 333.5L299.6 333.0L298.5 332.5L297.7 333.5L297.1 334.5L296.0 335.9L294.6 335.6L293.1 336.1L292.4 335.1L291.4 335.9L290.7 337.2L290.7 338.4L290.8 339.5L291.8 341.2L292.2 342.2L292.2 343.9L292.1 346.0L292.4 347.2L292.1 348.4L290.8 348.0L289.6 347.7L288.2 348.2L287.6 347.2L287.6 346.2L287.5 344.8L286.9 342.9L284.4 343.4L283.0 345.0L281.7 345.4L280.2 345.0L279.0 345.4L277.9 344.4L278.0 343.4L276.9 343.0L276.5 341.8L276.7 340.1L275.6 339.5L273.6 339.1L271.8 338.9L270.5 338.9L270.2 337.2L271.4 335.0L271.4 333.1L271.8 331.7L272.5 330.7L272.5 329.5L271.4 329.0L270.4 329.0L269.0 328.7L267.3 328.1L267.5 326.9L267.2 325.6L267.0 323.8L266.6 322.6L265.7 321.6L265.9 320.4L267.0 319.1L264.9 319.3L263.0 318.8L261.6 318.9L259.9 319.3L258.4 320.1L257.1 321.0L256.0 320.9L257.1 318.7L257.0 316.9L256.6 315.8L255.7 315.1L255.7 313.7L256.2 312.2L257.4 311.6L257.3 310.3L257.8 308.4L258.2 307.5L259.5 307.4L260.4 306.5L261.0 304.3L262.4 304.3L263.3 303.2L263.8 302.1L265.2 301.7L264.9 300.0L264.8 298.9L265.7 298.1L265.6 297.0L266.0 295.7L266.2 294.2L266.2 293.0L266.1 291.2L266.0 289.6L265.7 288.1L265.7 285.8L265.4 284.3L264.2 283.5L263.2 284.1L262.2 284.0L260.9 280.3L260.7 278.6L259.2 276.9L258.2 276.4L257.2 275.3L255.8 274.9L255.3 275.7L254.2 277.5L252.4 276.6L251.0 276.6L249.7 276.4L248.1 275.5L246.2 275.9L244.9 275.9L245.3 274.8L245.9 273.9L247.5 272.4L246.6 270.4L245.5 269.7L243.9 270.9L243.6 269.2L244.8 268.4L245.6 267.5L244.5 267.5L243.6 266.2L242.8 265.5L241.5 266.1L240.0 266.9L238.3 267.9L237.8 269.0L236.9 269.6L235.1 269.0L233.8 268.5L231.8 268.2L231.0 267.0L229.2 267.8L227.7 268.6L226.8 269.4L226.1 270.2L225.3 270.9L224.3 272.0L223.1 272.7L219.6 273.5L218.3 274.1L217.9 275.1L216.8 276.7L215.5 277.7L213.9 278.5L213.6 279.5L213.6 280.5L212.6 281.2L211.4 281.7L210.2 281.7L208.7 281.9L207.7 282.7L206.3 282.5L204.7 282.4L204.7 280.8L203.5 280.2L202.4 279.8L201.1 279.3L199.9 280.3L198.9 280.0L196.7 279.3L194.7 279.3L193.6 279.2L193.7 277.8L192.5 277.2L191.4 277.0L190.4 276.9L188.9 277.4L187.5 278.4L186.5 278.9L185.3 280.4L184.2 281.7L183.3 282.9L182.8 284.1L181.4 285.4L180.9 286.8L179.8 285.7L180.4 282.3L180.5 281.3L180.2 279.9L178.6 279.1L177.4 279.7L175.6 280.3L174.4 280.5L173.4 281.2L172.0 281.1L170.5 281.8L169.3 281.8L167.1 281.8L165.8 281.6L164.7 280.7L163.2 280.0L162.1 279.3L160.7 279.1L160.4 280.4L158.7 280.4L157.8 279.8L157.1 278.8L156.5 280.0L155.8 280.9L155.2 280.1L154.5 278.6L153.8 277.8L150.8 277.2L149.1 277.1L148.0 276.3L148.3 275.2L148.6 274.1L146.0 274.5L144.7 274.0L142.6 272.5L141.3 271.3L140.1 269.6L139.7 268.4L138.8 267.5L136.7 267.7L135.7 268.1L133.9 266.9L133.0 265.6L131.9 264.5L130.0 263.8L128.6 263.2L126.8 261.7L125.5 260.6L123.1 259.4L122.4 258.4L121.6 256.7L120.0 256.4L118.2 256.1L116.2 256.6L114.8 259.1L113.5 259.6L112.7 258.4L111.5 257.1L110.4 256.4L109.2 255.5L107.5 254.9L106.2 254.4L105.7 253.2L105.2 252.1L103.3 251.1L102.1 250.3L101.0 250.3L99.5 250.1L98.6 249.4L97.3 247.6L96.2 246.0L95.0 246.7L93.9 247.0L93.2 245.6L93.2 244.5L93.1 243.3L92.6 241.9L93.0 240.4L90.9 237.8L90.4 236.0L90.0 234.8L91.2 234.3L92.7 234.0L93.1 235.0L93.9 235.9L95.2 236.4L96.4 235.2L97.1 234.4L97.3 233.0L97.0 231.9L97.0 230.5L96.2 229.8L96.4 228.3L95.4 227.1L94.6 226.1L93.6 225.0L93.4 223.5L93.4 221.9L92.9 219.9L94.7 218.1L95.0 217.0L94.1 216.1L93.2 215.5L92.4 214.8L91.1 214.4L89.4 213.9L88.7 212.3L88.0 210.5L87.3 208.6L86.7 207.5L87.0 205.5L85.7 205.5L84.2 205.2L82.9 205.3L81.8 205.2L80.5 204.9L78.7 204.5L76.9 203.9L75.9 203.4L74.8 202.7L74.1 201.1L72.6 201.6L71.5 201.9L70.2 200.5L68.8 199.8L68.7 198.7L69.1 196.2L68.7 194.8L67.9 193.5L66.4 192.6L64.6 192.7L63.9 191.2L61.9 190.3L60.2 190.3L58.6 189.9L57.2 189.6L55.2 188.6L56.8 187.6L57.8 187.3L59.2 187.7L60.7 187.1L61.7 186.1L60.5 184.7L59.7 184.0L60.1 182.3L59.7 180.7L59.3 179.6L58.7 178.1L59.2 176.0L58.4 174.9L56.4 174.0L54.4 173.4L53.1 173.4L52.2 174.6L50.8 174.4L49.8 173.0L49.5 171.8L50.2 170.6L49.8 169.5L48.6 167.7L48.8 166.0L50.4 165.1L51.2 164.2L50.9 162.8L50.7 161.7L51.4 160.2L52.2 159.4L54.1 159.1L55.5 158.6L57.3 157.3L58.6 156.7L58.9 155.7L60.7 155.5L62.7 155.2L65.1 153.7L66.0 154.8L66.3 156.7L68.2 157.0L69.3 156.3L70.6 156.2L71.5 155.7L72.7 156.1L73.8 154.9L74.7 153.4L75.0 152.2L76.4 150.2L77.8 149.6L79.5 149.9L83.0 150.1L84.2 149.8L86.2 149.5L87.7 149.2L89.6 147.2L90.4 145.8L93.0 144.4L96.5 142.8L97.8 142.2L99.6 141.8L101.9 141.0L102.5 140.0L105.8 139.7L105.7 138.1L105.7 136.0L105.5 134.8L105.3 133.8L105.7 132.7L107.6 131.4L108.6 131.3L107.2 130.3L108.3 129.1L109.3 128.7L110.4 129.0L110.5 128.0L109.7 126.9L110.0 125.7L109.6 124.4L109.1 123.1L108.2 121.1L107.3 119.5L107.0 118.3L107.0 116.7L106.8 115.6L107.0 114.5L107.2 113.4L108.1 112.9L107.1 112.3L106.1 111.9L105.0 112.0L103.9 112.0L102.8 111.4L103.5 110.6L104.4 109.9L105.9 109.7L107.5 109.2L109.4 108.7L110.7 108.7L112.9 108.3L115.5 107.5L117.8 106.9L119.2 106.9L120.1 108.2L121.1 108.4L122.3 108.0L123.5 107.8L124.7 108.4L125.8 108.7L126.4 107.8L126.7 106.3L125.2 105.3L124.1 104.8L124.3 103.3L125.0 101.9L125.7 99.9L126.0 98.4L127.2 96.1L128.2 93.8L129.7 90.3L130.1 88.6L131.6 88.1L133.7 88.9L135.4 89.6L137.1 90.0L138.7 90.3L140.4 90.1L141.5 90.0L143.2 90.2L144.3 90.3L145.0 91.4L147.3 90.9L149.2 89.6L150.3 89.5L151.4 89.4L152.2 88.1L153.0 86.6L152.3 85.1L152.1 82.5L151.8 80.8L152.1 79.5L152.6 78.0L153.2 76.9L154.4 75.9L156.4 75.8L158.2 75.5L160.1 75.0L161.6 73.7L162.5 71.4L162.4 69.9L163.5 69.1L165.0 68.9L166.5 68.9L168.2 69.2L169.5 68.7L171.2 68.3L171.8 69.7L171.1 70.8L171.7 72.1L172.7 72.4L173.7 72.9L173.0 74.0L173.7 74.6L175.9 75.3L176.8 76.0L178.1 76.8L179.1 78.3L180.5 79.0L181.6 79.5L182.9 80.1L184.7 79.7L186.0 79.7L187.4 80.9L188.6 81.7L189.7 81.6L190.8 81.2L191.4 82.5L193.2 83.2L193.8 84.4L194.6 85.9L194.8 87.1L196.1 89.0L196.7 90.0L198.1 90.5L199.1 92.5L199.2 94.1L198.9 96.1L198.4 97.3L199.2 98.9L198.8 100.1L197.9 101.2L196.7 102.7L196.3 104.0L196.5 105.2L197.1 106.3L197.9 107.4L199.6 107.8L201.1 108.5L203.0 108.8L204.2 109.2L205.6 109.3L208.1 109.3L209.3 109.6L211.5 109.9L212.9 109.9L214.7 109.6L215.8 109.8L219.0 110.2L221.0 110.6L222.2 111.0L223.0 111.7L224.0 112.8L226.9 113.5L228.3 114.8L229.5 115.3L231.3 116.5L232.7 117.0L234.3 117.4L236.8 117.2L236.7 118.9L236.9 119.9L237.9 120.1L238.7 121.1L239.8 123.4L241.1 126.2L241.3 127.2L243.2 129.0L244.0 129.8L245.1 130.7L245.5 132.5L247.9 132.6L249.7 132.4L252.9 132.1L257.4 132.6L261.9 133.2L266.0 133.6L268.0 133.8L272.5 134.3L275.0 133.7L277.0 133.2L281.6 133.8L283.8 134.1L286.6 134.5L288.5 134.6L290.1 134.6L291.5 135.0L293.4 137.1L294.2 137.8L295.8 138.4L299.4 139.1L301.4 139.5L303.8 139.9L305.2 140.6L307.0 141.4L309.3 142.5L311.7 142.0L314.4 141.5L316.1 141.2L316.1 143.4L318.5 143.6L320.3 144.0L321.4 143.4L322.1 142.6L323.1 142.3L324.9 141.5L327.9 140.1L331.8 138.6L333.6 137.9L335.1 137.4L336.9 136.9L338.5 136.8L340.3 136.5L344.2 136.0L347.0 135.7L349.3 135.6L351.1 135.7L352.4 135.8L354.0 135.7L356.2 135.6L358.0 135.6L360.2 134.9L361.1 134.5L362.5 133.9L364.2 133.4L365.4 132.9L367.2 132.3L368.2 131.0L369.2 130.1L369.9 129.3L371.0 128.1L372.5 126.6L374.0 126.1L376.3 125.2L378.0 124.4L379.1 123.4L380.5 122.9L380.4 121.8L379.6 120.6L378.3 119.6L376.9 118.1L376.1 116.8L376.6 114.9L377.1 113.3L377.8 111.7L378.9 110.3L380.2 109.4L381.3 109.2L383.6 109.4L384.6 109.4L386.2 110.8L387.2 111.2L390.1 111.9L391.4 112.1L393.7 112.3L394.8 112.5L396.2 111.7L397.3 111.0L398.6 110.6L399.8 109.5L400.8 108.9L402.0 108.0L402.7 106.8L404.0 105.9L406.3 106.2L408.4 106.1L410.8 105.8L412.9 105.4L413.9 104.7L415.1 103.7L416.0 103.2L417.4 102.6L417.7 101.5L418.0 100.4L418.8 99.0L420.2 97.9L421.0 96.9L422.5 96.2L424.2 96.4L425.7 96.4L427.2 96.4L427.7 94.6L429.1 94.1L430.2 94.8L431.4 94.6L432.2 93.8L433.6 93.3L435.7 92.8L438.0 93.1L439.3 93.1L440.3 92.4L441.3 92.6L443.1 93.6L444.5 93.9L445.8 93.7L447.0 94.0L448.1 93.7L449.2 93.3L449.3 92.1L449.1 90.9L448.3 89.7L447.8 88.5L446.9 87.8L444.9 86.2L444.2 85.3L443.1 84.7L442.5 83.8L441.3 83.0L439.6 82.4L437.9 80.6L435.1 80.0L433.4 79.8L431.6 80.0L430.2 80.9L429.1 82.0L428.3 82.6L427.4 83.5L426.1 82.6L425.0 81.9L423.9 81.6L422.3 81.3L420.1 81.6L419.0 81.6L417.7 81.4L416.3 82.1L415.6 82.9L414.1 82.6L413.2 82.0L412.4 81.3L411.6 78.7L412.6 78.1L413.8 77.5L413.9 75.4L414.2 74.2L415.3 73.1L415.9 72.2L416.6 70.6L417.1 69.6L417.8 68.3L419.2 65.9L420.8 63.1L421.6 61.8L423.4 62.6L424.5 63.1L426.5 63.8L428.5 63.9L430.4 64.6L431.4 64.9L434.6 63.1L436.9 61.6L439.6 60.4L441.5 60.2L443.0 59.9L443.9 59.3L444.5 58.4L444.7 57.2L443.3 56.2L443.9 55.2L444.6 53.7L445.5 53.0L446.1 51.4L447.6 49.7L448.2 48.2L448.7 47.3L450.0 45.8L450.9 44.0L452.4 42.8L454.7 41.5L456.2 40.3L456.8 39.0L456.8 37.9L456.1 37.0L456.4 35.1L454.8 33.8L453.5 33.7L451.8 34.0L450.7 32.8L452.2 31.6L454.0 30.3L456.4 28.3L458.9 27.2L462.5 26.8L465.4 26.2L468.4 25.5L470.6 25.1L472.1 25.4L474.1 25.3L475.9 25.0L477.7 24.6L479.0 24.4L480.0 24.7L481.2 24.7L482.7 24.9L484.9 25.9L486.3 26.4L487.5 26.6L489.0 27.7L490.5 27.9L492.0 28.7L493.4 28.0L495.6 28.3L497.3 29.2L498.4 29.5L499.6 30.0L500.0 31.1L501.2 31.3L502.3 32.3L502.7 33.3L503.7 34.5L504.3 35.5L505.3 36.4L505.7 37.9L506.2 38.7L506.7 40.7L508.0 42.2L508.2 43.9L509.3 44.9L509.6 46.3L509.7 47.4L510.2 48.3L511.1 50.1L512.7 51.7L513.6 52.9L514.0 54.5L513.6 55.5L513.9 56.5L516.1 57.9L515.4 59.3L515.3 61.3L516.5 62.4L517.1 63.3L518.0 63.8L519.6 64.3L521.7 64.4L524.2 64.1L525.7 64.0L526.3 65.1L527.7 65.5L528.9 66.3L529.9 66.2L531.0 66.5L532.1 66.1L532.9 66.8L534.1 67.2L535.2 68.0L537.3 70.3L538.6 71.1L540.0 71.3L541.7 71.4L542.3 72.3L541.8 73.2L542.1 74.3L542.6 75.2L543.5 76.1L543.8 77.5L543.1 78.7L543.3 79.8L544.3 80.7L544.9 81.6L545.3 82.9L546.7 83.0L548.4 82.7L549.6 82.8L552.4 83.2L555.5 82.8L557.5 82.7L559.1 82.3L559.8 81.1L560.9 80.6L563.1 79.4L564.2 78.9L565.5 79.0L567.0 79.0L568.7 77.9L570.2 77.3L573.4 76.4L574.5 76.3L575.5 76.4L577.3 77.5L577.4 78.5L576.5 79.8L577.2 81.3L578.1 82.9L577.6 83.8L576.7 84.8L575.8 85.5L574.5 85.7L573.5 86.5L573.0 87.4L573.3 88.7L572.3 90.2L572.0 91.2L571.8 92.9L571.2 93.9L570.4 95.0L570.7 96.3L570.4 97.5L569.4 98.1L569.1 99.3L568.5 100.5L567.7 101.0L567.1 101.9L566.8 103.0L566.0 104.3L564.5 105.1L563.9 106.8L563.7 107.8L563.0 109.3L562.0 109.5L560.5 109.2L559.0 108.8L557.4 108.4L555.8 108.0L554.1 107.6L553.0 106.7L552.0 107.6L550.9 108.6L549.8 109.9L547.9 110.6L546.3 110.9L545.4 111.5L546.1 113.4L546.7 115.3L547.8 119.3L547.1 123.0L547.2 124.3L547.7 125.3L547.7 126.6L547.1 128.6L546.3 129.6L546.2 131.0L545.1 131.5L543.9 131.4L541.9 131.9L540.9 132.5L541.9 133.8L540.8 134.2L539.5 133.1L539.1 131.3L538.0 130.4L536.7 130.2L535.7 130.4L535.0 132.2L534.7 134.0L534.5 135.2L533.5 135.6L532.5 135.9L531.4 135.6L530.5 136.4L530.0 137.8L528.9 138.6L527.9 139.3L526.9 139.6L525.0 139.8L523.3 139.9L522.3 139.7L521.0 139.9L520.0 140.1L520.1 141.4L520.7 142.3L521.8 143.4L521.8 144.9L520.9 146.1L519.7 145.5L516.9 145.6L515.9 145.5L514.6 145.2L513.3 144.8L512.1 144.4L511.5 143.1L510.6 142.3L509.1 142.8L507.5 143.6L507.0 145.0L506.7 146.1L505.9 146.8L505.1 147.7L504.5 148.6L503.5 149.2L502.9 150.3L501.2 151.1L500.0 151.3L499.2 152.2L497.2 153.4L495.2 154.1L494.3 154.5L493.6 155.3L491.7 156.2L489.1 158.2L488.3 159.0L488.1 160.0L487.3 160.8L485.9 161.6L482.9 161.8L482.0 161.2L481.3 162.1L479.3 162.4L478.3 163.1L476.6 163.3L474.9 164.0L470.6 166.3L469.6 167.3L468.7 168.5L467.5 169.5L466.5 170.0L465.4 169.9L464.5 170.5L463.5 171.7L461.8 171.9L460.8 172.6L460.0 171.9L459.9 170.8L461.3 170.4L464.9 168.9L464.4 167.8L465.6 166.5L463.4 166.3L462.1 166.2L461.5 164.8L462.5 163.8L463.4 163.1L463.5 161.5L465.9 160.5L466.5 159.5L467.5 158.6L469.3 156.4L469.9 155.0L469.2 154.0L466.4 151.6L466.2 150.3L465.6 151.2L464.2 151.6L460.5 151.0L459.0 152.5L457.6 153.5L454.5 157.7L453.5 158.0L449.0 160.1L446.8 161.0L445.0 162.5L444.5 163.4L443.9 164.4L443.6 165.9L442.0 167.8L440.9 168.3L439.5 168.4L438.4 168.2L437.1 168.8L435.6 169.3L434.3 168.1L431.9 168.1L429.7 171.5L429.1 173.1L430.0 175.8L431.0 176.9L433.1 178.2L437.7 179.0L438.8 178.7L439.9 178.7L441.2 179.6L441.9 181.0L442.0 182.2L442.0 183.4L441.3 185.1L441.3 186.7L442.6 188.0L444.2 188.6L445.6 188.7L448.3 188.5L449.4 187.5L451.7 185.1L453.0 183.8L456.8 181.7L459.4 182.7L460.9 184.0L462.4 184.2L463.4 184.8L464.5 185.4L466.1 185.4L467.3 185.6L468.2 184.7L469.1 185.4L470.6 186.0L471.9 185.9L473.4 186.0L472.6 186.8L472.7 188.2L471.5 189.3L472.1 190.5L470.6 191.7L469.6 191.2L468.1 190.3L467.1 190.4L464.8 191.6L462.6 192.6L460.2 193.4L458.9 194.0L458.0 193.6L458.2 195.2L457.1 195.4L456.2 196.6L456.2 198.3L454.8 198.9L453.7 199.5L453.3 198.1L451.9 198.0L451.2 198.8L451.9 199.8L450.8 201.4L450.2 202.6L449.2 203.6L447.9 204.1L447.0 205.3L446.2 206.4L445.4 207.0L444.7 208.9L443.6 209.9L443.1 211.5L443.4 212.5L444.7 212.5L446.7 214.2L448.4 215.0L450.0 215.5L452.1 216.8L453.1 218.3L454.0 221.3L454.7 222.8L455.7 225.1L456.7 227.6L457.9 229.8L458.1 231.6L457.7 233.4L458.9 234.3L461.5 235.4L462.5 236.3L462.5 237.9L463.3 238.8L464.8 239.5L466.2 241.0L466.5 243.0L464.9 242.9L462.0 241.4L460.3 241.6L458.8 241.3L457.2 239.7L456.1 239.2L454.8 238.9L451.9 240.3L450.6 240.6L452.0 240.9L453.3 240.5L454.7 239.8L456.5 240.2L457.1 241.8L458.5 242.5L459.5 242.8L460.8 243.7L462.0 245.2L464.7 246.8L465.8 248.4L466.2 249.4L466.6 250.8L465.7 251.3L463.6 251.6L462.6 252.1L461.7 253.0L459.0 254.4L458.5 255.3L457.5 256.5L455.8 256.1L454.2 256.1L452.5 257.2L454.6 257.0L455.8 258.7L458.2 258.4L460.4 257.0L461.9 257.2L464.9 260.2L466.0 260.5L467.2 261.1L468.4 261.3L466.8 262.2L464.8 264.2L463.4 265.2L465.0 264.9L466.1 264.0L467.2 263.9L467.4 265.1L466.9 268.7L465.8 267.7L464.7 267.6L463.6 267.6L462.9 268.7L464.8 269.9L463.7 270.7L464.7 271.5L464.1 272.7L463.1 273.6L463.7 274.8L464.2 276.3L462.1 277.7L460.9 276.5L459.9 277.1L459.3 278.4L458.6 279.6L457.4 279.9L457.6 281.1L456.3 282.5L456.1 283.6L455.8 285.2L455.0 286.8L453.7 288.4L452.7 289.0L451.5 291.1L451.2 292.2L451.1 293.3L450.1 294.1L449.3 293.2L448.7 292.0L447.8 292.7L446.8 292.1L447.1 293.2L447.9 293.9L448.9 295.5L449.3 296.7L447.7 297.6L446.6 298.7L445.7 299.5L444.4 299.4L442.9 298.8L444.0 300.3L445.3 300.5L447.0 300.0L447.0 301.8L446.5 303.0L446.4 304.1L447.0 305.6L446.0 305.9L444.6 305.5L443.2 305.5L443.8 306.9L443.7 307.9L441.9 307.8L440.9 308.7L441.3 310.0L440.1 310.9L439.1 311.5L439.2 312.5L438.7 313.8L436.6 314.0L435.6 314.3L434.7 313.7L433.1 314.4L432.5 315.3L433.2 316.2L433.5 317.5L432.2 318.9L431.6 319.9L430.1 320.6L429.8 321.6L428.4 321.6L428.4 322.6L428.0 323.8L427.2 322.9L426.3 323.5L425.1 324.2L423.6 323.5L423.2 325.5L422.3 326.2L421.1 326.5L421.5 327.7L420.4 328.2L420.2 329.9L418.7 330.6L417.6 330.5L416.2 331.2L414.4 332.0L412.6 331.5L411.7 332.4L410.3 332.8L408.7 331.8L407.1 332.9L406.1 333.6L404.9 333.7L404.5 332.6L403.5 333.0L403.2 334.7L402.0 334.2L400.7 334.6L399.4 334.3L398.5 334.9L396.9 333.9L396.3 332.7L395.4 332.0L394.9 330.3L394.9 329.2L393.6 329.5L393.5 330.6L392.6 330.9L393.5 332.1L393.9 333.1L394.5 334.1L394.5 336.0L394.7 337.0L393.9 337.8L392.9 338.4L392.0 339.1L391.0 339.2L390.5 337.9L389.8 338.8L389.6 340.6L388.1 340.5L386.8 341.4L386.1 342.2L384.7 341.2L384.5 340.2L384.4 342.0L382.7 342.4L381.3 341.6L380.4 342.2L379.5 342.9L378.5 343.4L377.6 344.4L375.8 344.6L374.3 345.1L373.2 345.1L372.4 345.7L371.3 346.0L369.4 347.2L368.1 347.9L367.5 346.7L367.0 348.3L365.4 349.6L365.3 351.4L366.9 351.6L366.5 352.8L368.2 354.8L367.6 356.4L366.7 357.1L364.8 357.4L363.2 357.1L362.7 355.9L362.5 354.9L361.9 353.8L361.7 352.2L361.0 351.3L361.2 349.5L361.6 347.7L361.8 346.6L363.1 346.2L363.1 345.2L361.6 344.4L360.2 343.3L359.8 344.6L358.8 345.2L357.0 345.6L355.8 345.6L356.2 344.6L355.3 343.7L353.7 343.7L352.3 342.8L351.5 341.8L350.6 341.0L350.7 342.6L350.8 343.7L349.7 343.2L348.6 344.4L347.0 344.7ZM371.4 360.1L372.1 361.2L372.4 362.3L372.5 363.4L371.6 364.1L369.3 367.1L368.7 368.3L368.2 370.3L367.9 371.9L367.2 373.0L365.9 373.4L365.1 374.3L364.1 375.0L363.5 375.8L362.1 376.0L361.2 377.4L360.2 377.7L358.5 377.2L356.7 376.7L355.3 376.3L354.4 375.8L352.5 374.6L352.3 372.5L351.9 371.3L352.0 367.3L353.3 365.8L354.2 365.2L355.6 363.9L356.6 363.3L357.5 362.4L357.3 361.2L358.7 361.1L360.1 360.3L362.9 360.4L364.5 360.1L365.6 359.4L366.7 359.6L368.8 360.2L368.9 359.0L370.2 359.4L371.4 360.1ZM398.5 334.9L399.4 334.3L400.7 334.6L401.2 335.6L400.9 336.7L399.6 336.5L397.8 336.3L398.4 335.2Z","taiwan":"M459.1 333.8L458.5 335.0L458.1 336.2L457.9 337.4L458.0 338.6L457.8 339.7L457.6 340.8L456.3 339.7L456.2 338.4L455.6 336.9L454.5 335.6L453.1 334.5L452.3 332.8L451.6 330.3L451.1 329.1L451.1 327.9L451.6 326.0L451.4 324.7L451.5 323.5L455.8 315.2L456.9 313.6L457.6 312.8L458.1 311.9L458.7 310.7L459.4 309.7L462.2 308.4L462.9 307.5L464.1 307.2L464.9 308.2L466.4 309.0L467.0 310.3L466.1 311.8L466.2 313.6L466.2 314.7L465.4 317.1L464.5 318.7L464.0 321.4L463.5 323.3L463.1 325.8L462.4 328.3L462.0 329.3L461.5 330.3L460.4 332.2L459.1 333.8ZM436.5 314.8L436.8 315.9L435.6 315.6L436.5 314.8Z","others":"M278.2 356.8L276.2 355.8L274.0 356.8L272.4 358.8L270.2 358.8L268.4 361.4L264.1 363.0L261.9 363.1L259.1 364.1L258.0 367.3L257.3 370.0L257.7 373.8L255.6 375.0L256.6 377.1L257.4 379.6L257.3 382.0L259.2 384.7L261.3 387.6L263.6 390.2L263.9 392.7L264.9 394.8L265.8 396.9L264.9 399.5L264.7 402.3L264.7 406.0L262.7 407.2L261.6 410.2L262.7 413.0L264.1 415.3L266.1 417.6L267.9 419.5L269.2 421.8L269.8 424.2L270.0 427.7L270.0 430.4L270.4 432.6L272.0 434.5L272.2 436.9L273.0 439.1L273.8 442.2L272.3 444.5L270.1 448.9L268.7 450.8L266.6 452.9L266.5 455.7L265.9 458.1L264.3 456.5L263.8 453.2L265.0 451.4L265.7 448.7L266.2 445.6L266.7 443.4L265.3 441.3L265.6 438.7L265.7 436.5L265.6 433.4L265.0 430.1L264.0 427.1L261.9 422.7L261.5 420.2L261.1 423.5L260.7 421.0L260.7 418.4L259.6 415.4L259.2 413.0L258.1 408.1L257.9 405.7L257.3 401.2L256.4 398.6L256.6 395.4L254.4 394.8L253.5 392.6L252.7 389.4L250.9 386.8L250.3 389.7L249.5 392.2L247.9 394.4L245.6 394.8L244.6 392.3L245.3 395.6L243.2 396.5L240.4 398.3L238.6 401.6L236.4 402.4L237.0 400.1L235.4 401.7L232.9 400.2L230.8 399.3L231.4 396.0L229.5 398.1L227.7 399.9L227.5 394.8L228.6 391.3L229.3 388.7L230.3 384.3L229.5 381.8L228.9 378.0L227.5 374.9L226.7 372.7L225.5 368.5L224.6 371.0L222.6 369.7L220.8 366.3L222.8 367.3L225.2 365.6L223.2 363.9L222.2 361.5L220.3 359.9L217.9 359.6L217.1 356.2L215.5 358.5L215.2 355.9L211.1 352.8L210.3 350.7L209.5 348.0L210.3 345.7L212.5 346.8L212.9 343.9L212.9 340.6L214.1 338.7L216.2 340.0L217.1 337.9L217.4 334.5L217.5 331.9L217.9 329.7L219.9 326.6L220.1 323.2L219.2 319.8L221.4 320.1L223.9 320.6L226.3 321.2L227.1 318.9L228.4 315.3L230.2 312.3L231.3 309.5L230.0 307.6L231.0 305.4L233.4 303.0L234.2 300.6L234.4 298.1L234.4 295.3L236.5 293.3L240.2 290.5L242.2 288.7L244.1 287.4L248.3 286.6L250.1 288.2L250.3 285.6L250.8 283.0L252.5 281.6L254.1 279.7L254.2 277.5L255.5 275.4L257.8 276.4L260.0 277.9L260.9 280.3L261.9 283.4L264.2 283.5L265.7 285.8L265.7 288.1L266.1 291.2L266.2 294.2L265.6 297.0L264.7 299.3L265.5 301.4L263.3 303.2L261.0 304.3L260.4 306.5L258.2 307.5L257.3 309.7L256.2 312.2L255.7 315.1L257.3 317.7L256.1 320.1L258.4 320.1L261.6 318.9L264.1 318.8L266.4 318.8L265.7 320.9L267.0 323.8L267.5 326.2L269.0 328.7L271.4 329.0L271.8 331.7L271.5 334.1L270.6 336.3L270.0 338.5L273.6 339.1L276.4 339.7L276.6 342.4L277.9 344.4L280.2 345.0L282.4 345.3L284.4 343.4L286.5 342.4L286.5 345.3L284.2 346.9L282.8 348.7L281.6 350.8L279.3 352.7L278.3 356.3ZM342.3 413.0L341.6 415.5L340.6 418.7L341.8 421.8L342.9 424.8L342.5 427.7L341.9 430.7L342.4 432.9L342.4 435.7L340.2 436.8L338.2 438.2L335.7 439.5L333.4 440.3L332.7 442.6L330.0 442.5L327.8 443.6L327.9 446.3L329.9 449.2L330.5 452.0L328.0 451.4L325.4 450.3L323.1 451.5L320.8 450.9L320.3 453.4L317.8 454.8L315.5 455.9L311.2 454.1L308.8 454.9L309.0 452.4L308.8 449.4L306.7 450.2L304.4 450.9L303.9 447.9L304.2 445.4L303.1 442.9L300.8 439.1L300.8 436.2L298.8 433.3L298.5 429.8L297.3 427.1L297.2 424.6L299.4 423.7L300.8 421.6L302.0 419.4L303.4 417.5L305.8 416.5L308.3 415.8L310.9 416.4L313.7 416.0L316.8 416.1L319.4 416.0L320.7 417.7L322.9 418.4L326.8 419.2L329.7 420.8L329.1 417.4L331.0 415.2L333.4 414.2L335.5 416.1L338.0 415.7L340.0 414.3L342.3 413.0ZM103.8 461.9L106.1 462.0L110.1 466.3L111.7 469.1L114.3 473.4L115.5 475.3L116.3 477.8L118.3 482.2L119.5 485.3L120.2 489.8L119.7 492.4L118.7 494.9L115.9 497.6L112.3 499.1L110.2 500.2L106.2 499.9L104.0 496.4L103.5 494.1L102.7 491.7L102.1 484.1L101.4 479.3L101.8 477.1L101.8 479.5L102.5 477.0L103.4 473.1L104.5 469.0L104.9 466.7L104.7 464.2L106.7 465.3L104.3 463.5ZM1.4 321.4L4.2 320.3L6.3 317.3L8.5 317.3L12.5 317.2L14.9 318.3L17.5 318.1L19.8 316.4L22.1 315.8L23.5 317.6L25.4 316.4L25.8 313.8L25.6 311.1L24.2 307.9L23.0 305.8L22.9 303.3L20.1 303.1L18.2 300.9L18.5 297.9L18.7 295.3L16.5 294.1L13.9 293.0L12.9 290.5L13.6 288.3L16.4 285.3L17.8 283.0L19.0 281.1L20.8 279.8L22.9 281.6L24.9 282.9L27.6 281.7L30.7 281.3L33.5 280.4L34.2 278.2L35.8 276.5L36.7 274.3L40.1 271.0L42.5 269.7L44.4 266.4L45.5 263.9L46.6 260.7L49.0 259.7L51.0 258.4L51.0 256.1L53.8 252.3L56.4 250.4L56.5 248.1L57.1 245.3L56.4 242.9L58.4 240.5L61.2 239.1L63.4 237.8L61.5 235.8L58.8 235.4L57.7 232.4L55.0 232.3L54.6 230.1L52.4 228.6L53.0 226.2L52.0 223.7L53.8 221.1L51.5 219.8L51.3 217.1L50.9 214.7L53.5 212.8L56.3 212.7L58.8 213.2L61.7 213.6L64.5 214.6L66.8 215.0L68.7 213.9L73.2 212.4L75.8 211.5L77.9 210.1L79.4 208.3L81.6 207.0L84.0 205.6L86.7 205.1L86.7 207.5L88.0 210.5L89.0 213.5L91.1 214.4L93.2 215.5L95.0 217.0L93.1 219.1L93.4 221.9L93.6 225.0L95.4 227.1L96.1 229.5L97.0 231.9L97.1 234.4L95.8 236.1L93.3 235.3L91.2 234.3L90.5 237.0L92.5 239.8L92.6 242.6L92.9 245.3L94.8 246.6L97.3 247.6L98.6 249.4L101.0 250.3L103.2 251.1L105.2 252.1L105.6 254.3L108.6 255.4L111.5 257.1L109.9 260.1L107.4 262.7L106.1 265.8L105.9 268.1L104.7 270.1L105.2 272.2L107.6 273.9L110.2 274.5L112.7 275.9L114.7 277.6L116.8 279.4L119.2 280.9L121.6 281.0L123.7 282.4L126.7 283.1L129.3 285.3L131.7 286.0L134.7 285.4L137.1 286.2L139.4 285.1L142.7 286.5L144.2 289.1L146.7 290.7L148.7 292.2L151.2 292.0L153.4 292.9L155.9 293.5L159.1 294.3L162.0 295.7L164.7 294.4L167.0 296.4L170.0 296.0L173.2 296.2L174.2 294.1L174.6 291.9L173.2 289.1L173.4 285.9L174.1 283.6L174.1 281.3L176.9 279.9L179.8 279.6L180.4 282.3L179.7 284.8L180.9 286.8L180.3 289.0L182.2 291.3L184.8 291.5L186.9 292.2L190.0 292.8L192.3 291.5L195.4 292.0L197.9 292.2L200.3 292.0L202.9 291.3L205.0 292.0L207.4 291.4L207.8 289.2L208.6 287.1L206.5 285.6L204.3 284.4L205.4 282.4L207.7 282.7L209.8 281.7L212.0 281.5L213.8 280.1L215.5 277.7L217.5 276.0L218.7 273.7L222.3 273.1L224.3 272.0L226.1 270.2L227.7 268.6L230.5 266.9L233.5 268.6L236.3 269.5L238.3 268.5L240.0 266.9L242.8 265.5L244.2 267.3L243.7 270.4L246.3 269.5L247.3 271.7L245.9 273.9L245.3 276.1L247.7 275.4L249.7 276.4L252.4 276.6L253.8 278.4L253.8 280.9L251.6 282.4L250.1 284.1L252.0 288.4L249.4 287.0L244.9 287.2L242.2 288.7L240.2 290.5L237.8 292.4L235.6 293.6L234.3 296.5L234.8 299.1L233.8 302.3L232.0 304.8L230.2 306.8L231.3 309.0L230.2 312.3L228.6 314.9L227.1 318.9L226.3 321.2L223.9 320.6L221.4 320.1L219.3 319.4L219.7 322.3L220.0 324.7L219.7 328.7L217.8 330.0L217.2 332.8L217.9 336.4L216.7 338.5L214.5 338.9L212.5 335.9L212.1 333.2L211.3 331.0L210.8 327.6L210.3 325.1L209.2 322.8L207.2 324.0L206.0 326.4L205.9 328.9L204.0 330.1L203.0 328.0L201.4 326.3L200.6 324.2L201.2 320.8L202.6 319.0L205.0 318.1L207.3 316.7L208.9 315.1L209.8 312.3L212.0 311.3L209.6 308.9L205.8 308.4L203.3 308.6L199.5 308.3L196.8 308.4L194.3 308.4L191.5 307.8L189.4 307.1L189.0 304.4L188.8 301.6L188.0 298.3L185.9 300.2L183.5 298.9L182.4 296.2L180.4 297.5L178.6 295.7L176.8 294.3L176.5 296.9L174.5 299.1L174.1 301.6L176.4 303.0L178.4 305.0L180.3 306.3L179.1 308.2L176.4 310.4L173.6 312.9L174.5 315.1L176.6 316.1L178.8 316.7L179.4 319.3L178.6 321.7L178.4 324.0L179.3 327.1L181.3 328.1L180.7 330.6L181.2 333.1L182.3 337.2L182.1 340.6L182.3 343.5L179.7 344.2L179.6 339.9L178.1 341.7L177.1 343.9L174.3 343.6L174.8 339.7L173.2 337.4L174.1 339.5L172.7 341.7L170.4 343.5L166.3 344.6L164.1 346.3L163.2 348.9L164.0 352.5L163.1 354.7L162.4 356.9L160.2 358.3L158.0 359.5L154.6 362.1L152.2 363.1L151.2 361.0L149.4 362.4L149.2 364.9L145.2 368.7L143.8 371.2L142.6 373.1L140.1 376.0L135.6 379.3L133.3 382.1L131.6 383.9L129.7 385.4L126.4 387.3L124.4 389.0L123.9 391.2L123.5 394.4L119.2 396.7L116.1 396.3L113.7 400.4L112.4 402.4L110.0 401.1L107.2 402.1L104.8 406.8L104.4 409.3L104.8 412.0L105.3 414.2L105.4 416.5L105.2 419.4L106.0 422.3L106.6 425.1L105.3 422.9L106.4 425.6L105.9 433.1L105.2 435.5L103.8 437.6L102.7 440.1L101.9 443.1L102.1 445.5L102.6 448.0L102.6 452.3L102.5 456.8L99.9 456.7L97.5 458.2L95.2 463.2L94.6 465.5L97.6 467.2L95.1 467.3L90.3 469.0L88.3 471.1L87.8 473.4L87.1 476.2L84.6 478.1L82.4 479.2L78.5 476.8L74.6 471.5L73.5 469.1L72.1 465.5L71.8 463.2L71.4 460.7L72.5 462.9L71.4 459.8L70.4 456.7L68.6 452.2L67.9 449.4L66.9 446.4L65.2 443.0L63.3 440.4L60.1 434.4L59.5 431.5L58.6 429.2L57.9 424.9L57.2 421.5L56.0 418.3L55.4 415.9L54.4 413.5L52.7 411.0L51.0 406.9L50.3 404.6L48.6 401.3L47.2 398.5L46.2 395.4L45.4 388.0L44.6 384.7L43.7 380.9L43.0 377.4L42.6 374.2L43.1 370.7L43.0 368.5L41.5 366.4L40.9 364.2L40.5 362.0L40.8 359.2L42.3 354.4L42.2 351.7L41.8 349.2L40.1 346.3L41.6 343.8L44.3 342.5L41.9 343.1L39.3 343.0L40.2 340.6L39.4 338.4L41.6 337.7L38.6 337.5L36.2 337.3L36.8 339.7L35.0 341.8L36.9 343.4L35.3 347.8L30.9 350.3L26.2 352.6L23.6 352.6L21.5 351.6L18.4 349.1L15.1 344.9L13.4 343.2L10.3 340.1L8.7 338.0L9.1 335.6L11.1 337.1L13.4 335.9L15.7 335.5L18.0 334.5L20.2 331.8L21.8 330.0L19.5 330.3L16.0 331.4L10.7 331.5L7.1 329.5L4.6 326.4L3.6 324.3L5.4 322.5L3.0 323.8L1.4 321.4ZM224.2 491.7L222.7 490.0L223.6 487.6L224.6 490.3ZM212.2 454.4L210.9 452.5L212.2 454.4ZM214.1 444.6L212.8 442.8L213.1 440.5L213.7 438.1L214.1 434.6L214.2 432.2L215.1 430.0L215.3 427.7L215.9 425.1L217.1 427.5L215.7 430.2L216.4 434.6L215.5 437.7L214.3 440.1L214.5 442.4L214.1 444.6ZM255.3 545.3L257.2 548.2L259.0 549.8L258.7 553.7L256.4 551.7L254.3 549.4L251.8 545.7L254.1 544.7ZM269.9 577.8L267.4 576.6L265.2 572.6L265.7 569.7L267.9 569.5L269.0 572.4L270.3 575.6L269.9 577.8ZM421.2 646.1L420.1 648.2L417.8 649.1L414.6 648.3L416.4 646.1L417.6 643.0L421.3 642.8L421.2 646.1ZM410.9 641.6L413.0 643.6L409.9 646.2L408.9 648.2L407.5 645.7L405.7 644.3L403.3 643.5L402.5 641.2L405.6 641.8L408.4 640.7L410.9 641.6ZM329.5 576.7L330.5 578.7L330.9 581.9L332.2 584.6L336.2 585.7L334.4 589.0L332.1 589.5L329.1 588.3L328.6 584.9L327.2 581.8L325.2 580.8L323.0 581.1L323.2 578.6L324.0 576.1L326.2 576.8L328.3 575.0ZM477.9 605.5L478.0 608.2L476.2 609.6L476.2 611.9L477.9 613.3L475.8 614.4L474.7 616.7L472.7 615.4L473.5 613.3L474.5 610.5L475.0 608.3L475.9 604.4L477.9 605.5ZM473.2 612.7L471.1 613.4L471.1 610.7L470.6 608.5L473.4 606.3L474.2 609.3L473.0 611.4ZM349.1 523.1L347.2 521.5L348.1 518.0L349.8 520.1L349.1 523.1ZM348.2 590.0L347.1 592.0L345.2 590.9L343.1 592.1L342.9 589.8L343.3 587.3L345.0 585.3L348.3 587.0L348.2 590.0ZM583.6 566.5L586.1 566.9L589.5 568.8L591.3 570.7L588.9 571.7L586.7 568.2L584.5 567.9ZM584.3 575.9L587.8 576.4L590.6 576.6L595.1 577.3L592.9 578.9L590.6 578.6L587.7 577.5L584.5 576.7ZM544.0 560.0L548.0 561.5L547.5 563.7L545.1 563.4L542.9 560.8L543.5 562.9L541.2 562.7L539.0 562.1L541.3 560.6L544.0 560.0ZM523.6 539.5L521.5 537.0L523.7 534.3L525.0 537.8L523.6 539.5ZM520.9 576.6L517.4 576.9L514.9 577.0L514.9 574.5L517.4 573.6L519.9 575.3ZM502.5 577.9L505.2 578.2L501.9 579.2L497.8 579.4L499.9 578.1L502.5 577.9ZM493.4 577.1L495.9 577.7L493.7 579.4L490.5 579.8L487.8 578.6L489.2 576.5L493.4 577.1ZM548.4 640.0L546.3 638.7L547.3 636.2L548.6 634.3L550.2 632.2L551.6 634.4L550.6 636.8L548.9 638.7ZM509.2 636.7L507.3 638.1L505.0 639.2L502.6 638.9L500.5 639.8L502.1 636.6L505.4 636.8L507.6 635.7ZM489.9 641.4L493.0 641.7L494.8 643.3L488.8 644.5L488.7 641.8ZM545.6 573.2L543.4 571.7L542.8 569.6L545.1 569.2L546.0 571.9ZM246.8 507.7L249.8 507.3L252.8 507.9L255.1 507.6L257.3 509.6L259.0 511.2L259.8 513.4L261.9 515.8L261.9 518.1L264.4 520.0L265.9 521.6L269.8 524.2L273.0 526.9L274.8 528.2L276.3 530.1L278.2 533.5L279.8 535.3L281.1 537.4L283.1 538.8L284.8 540.5L284.2 538.1L287.7 539.0L288.9 541.1L290.8 543.3L294.6 545.6L296.2 548.6L297.8 551.6L301.8 552.8L303.7 555.1L301.3 557.0L299.2 557.8L302.2 557.2L304.1 556.0L306.0 554.9L308.1 556.1L309.6 558.3L308.2 560.7L306.7 562.4L307.5 564.7L307.7 567.5L311.2 569.8L313.5 570.5L315.4 572.5L315.9 576.0L316.2 578.2L318.6 580.4L318.6 582.8L317.2 585.4L319.4 584.2L322.9 583.6L325.5 584.9L328.2 588.9L329.5 591.1L328.2 594.1L327.8 597.3L327.7 601.2L328.1 605.5L328.0 607.9L327.5 616.8L325.4 617.6L323.5 615.5L321.5 617.2L317.3 615.2L317.6 618.2L315.0 616.9L313.1 614.7L310.3 610.8L306.6 608.2L304.3 606.0L302.4 604.7L299.1 601.5L297.7 599.7L296.1 596.7L292.9 593.8L290.8 591.7L289.4 589.0L287.6 586.6L285.3 583.4L284.5 579.4L281.3 573.0L279.8 568.3L277.9 565.5L275.9 563.1L274.7 560.3L271.4 557.9L269.4 555.4L269.0 553.1L267.9 549.7L266.7 545.0L265.9 543.0L264.7 541.0L260.5 538.1L258.0 537.2L256.9 535.1L256.5 532.1L254.5 530.2L253.3 528.1L250.9 524.2L247.0 522.3L245.2 520.1L242.4 517.4L238.8 513.4L237.6 511.4L235.6 507.2L235.8 504.8L238.3 503.7L241.1 504.9L242.7 506.5L246.8 507.7ZM474.4 646.1L471.7 647.3L469.3 647.3L466.2 648.6L464.1 648.2L461.8 649.2L459.3 649.3L457.1 648.5L453.1 648.2L450.4 648.1L448.7 646.2L450.0 644.4L452.3 642.9L455.1 642.6L458.0 643.3L460.0 644.2L462.2 645.5L464.9 645.1L467.4 644.6L469.9 646.3L471.8 645.1L474.1 643.5L474.5 641.3L476.4 643.3L474.7 644.8ZM450.4 653.8L452.3 655.1L454.2 656.5L455.8 658.1L457.6 660.4L455.9 662.3L452.5 662.4L450.3 660.4L446.9 657.7L442.4 657.1L441.6 654.7L444.2 653.7L447.0 653.5L449.8 653.0ZM435.1 643.2L437.3 642.7L439.2 644.2L441.6 643.4L442.0 645.6L440.1 647.1L437.2 648.6L434.7 648.4L431.8 649.3L428.7 650.1L426.2 650.3L424.0 650.8L422.4 648.9L422.5 646.7L424.9 644.5L427.4 644.3L429.7 644.6L431.3 647.1L433.9 646.5L431.4 643.4L431.9 641.0L434.3 641.5ZM492.7 550.0L491.0 551.7L489.4 554.4L487.4 556.0L482.8 556.9L479.0 556.8L477.0 555.2L470.1 555.2L466.3 555.6L463.5 555.0L459.1 555.6L456.4 554.9L453.3 555.5L452.0 557.3L451.0 559.6L450.4 562.0L450.6 564.3L451.2 566.5L452.4 568.7L454.8 570.4L455.6 572.6L458.3 573.8L460.8 572.1L462.7 569.4L464.9 568.9L467.4 569.3L469.2 567.9L472.2 567.6L475.4 567.5L477.8 565.7L479.9 567.1L479.7 569.6L476.8 568.7L474.6 569.7L473.3 571.7L470.6 575.0L466.4 576.9L464.6 579.0L462.4 578.3L463.3 580.4L465.3 582.1L467.4 585.4L468.4 587.5L470.2 589.1L471.0 591.4L470.4 593.8L469.8 596.2L472.2 598.5L473.6 600.8L475.4 602.3L473.9 604.1L469.5 605.0L468.1 606.7L465.5 608.2L463.4 606.8L463.7 602.8L463.7 600.1L458.2 595.6L459.3 592.1L459.6 588.8L458.9 586.7L456.0 586.7L453.3 588.7L452.9 591.5L454.1 597.1L453.5 600.9L453.7 604.2L453.8 607.3L453.0 609.6L453.7 613.9L452.1 615.6L449.5 616.0L446.5 616.1L444.9 614.2L445.0 612.0L446.2 608.8L446.4 606.3L447.1 600.3L446.0 597.7L445.7 595.1L441.6 595.4L440.2 592.8L440.1 590.4L439.8 587.6L441.3 586.0L442.8 583.8L443.2 581.4L444.5 579.3L444.3 576.6L444.4 574.1L446.1 569.1L447.8 566.8L447.9 560.9L448.7 558.1L449.6 555.5L450.8 553.1L452.3 551.4L454.8 551.8L456.5 550.1L457.9 547.5L460.8 547.4L463.1 548.4L466.5 549.1L471.4 549.8L474.5 551.4L476.9 550.6L483.6 551.6L487.4 549.8L489.6 547.7L491.4 545.6L493.2 543.3L495.6 545.0L493.9 548.2ZM341.0 620.1L342.6 621.8L345.4 622.3L347.6 623.0L350.1 623.8L351.6 627.3L354.2 628.1L357.6 628.7L360.2 628.4L363.2 629.2L365.5 628.9L368.2 629.0L369.2 626.9L370.1 624.7L372.4 624.6L373.7 626.7L376.6 626.5L378.8 627.7L380.9 628.1L383.8 628.9L386.1 630.5L387.6 632.6L387.9 635.5L391.9 637.2L396.2 637.0L398.7 636.3L401.7 637.7L402.2 640.0L401.7 642.6L402.3 645.6L403.4 647.7L401.3 646.5L397.8 645.7L395.7 644.8L391.9 642.9L388.8 643.6L386.1 644.0L382.0 643.2L376.8 643.0L372.9 642.4L369.0 641.5L364.1 638.9L357.5 637.1L354.9 637.0L351.4 637.1L349.3 637.9L345.7 637.2L342.9 635.7L340.2 634.7L334.6 634.2L332.7 632.4L330.8 629.3L328.6 628.6L325.6 628.6L323.1 628.4L325.5 626.7L327.0 624.8L327.9 621.2L329.3 619.3L332.1 619.8L334.9 620.4L337.1 620.7L339.1 619.6ZM360.5 539.7L360.0 541.9L361.4 544.8L363.2 546.6L366.5 550.0L369.1 551.2L371.8 549.8L374.9 549.6L377.1 550.1L379.4 549.9L381.7 548.6L382.7 545.6L385.2 544.4L389.2 544.3L390.8 545.9L393.7 547.0L396.3 546.9L398.4 545.4L400.7 545.3L403.1 545.3L404.1 543.1L405.3 541.1L405.0 538.4L406.8 536.5L408.6 534.8L407.9 532.4L408.7 530.3L411.0 529.6L411.5 526.6L411.8 523.7L412.0 520.6L412.9 518.1L414.5 516.5L416.9 516.5L419.3 516.9L421.7 516.5L425.2 516.6L428.2 518.1L429.2 520.1L430.6 522.0L428.6 523.3L425.8 523.6L427.3 525.7L427.4 528.1L429.6 529.4L429.9 531.7L432.0 534.6L433.6 536.8L432.0 539.1L432.4 541.3L434.4 543.6L437.1 545.8L440.4 549.0L439.6 551.6L435.7 551.5L433.1 549.6L432.4 551.7L429.1 556.6L428.4 562.0L429.1 565.5L428.9 568.0L426.4 569.3L425.0 571.1L423.0 572.2L421.0 574.3L419.8 576.3L418.1 577.9L419.4 580.5L420.6 583.0L419.6 585.4L418.8 588.3L417.0 589.8L417.0 592.3L415.8 594.3L409.3 599.1L404.4 601.7L403.6 597.0L402.9 593.8L400.4 593.6L398.0 593.9L395.8 594.6L395.2 592.5L392.9 592.2L390.0 589.3L389.5 591.9L387.6 593.2L384.9 593.7L382.1 593.8L380.3 595.5L379.6 593.1L379.5 590.6L376.7 589.7L372.8 590.6L370.8 589.4L367.0 589.3L365.7 586.9L364.8 582.3L364.6 580.0L363.4 577.4L364.1 575.3L363.6 572.8L361.9 570.1L359.0 568.7L357.8 566.8L356.5 564.9L356.1 562.6L356.8 560.1L355.7 557.5L354.4 554.7L354.3 552.1L354.7 548.7L355.5 545.6L357.4 542.9L358.3 540.8L360.5 539.7ZM517.3 551.5L519.3 549.6L520.9 547.6L523.3 544.8L525.6 544.3L525.7 548.9L522.6 550.9L523.1 553.6L525.3 554.9L526.7 556.9L524.3 556.6L521.5 555.9L519.0 555.6L518.9 557.9L519.4 562.5L520.4 564.9L521.8 567.3L523.3 568.9L520.0 567.1L518.7 564.2L516.9 562.4L516.8 559.6L517.1 557.1L515.8 555.1L515.9 552.6L514.7 548.6L515.6 545.3L515.9 543.0L517.3 540.3L518.8 538.6L518.7 540.9L519.7 543.0L519.8 545.4L518.6 548.4L516.6 549.9ZM534.8 588.7L536.8 589.8L539.6 589.8L541.9 591.3L542.8 593.9L544.4 595.7L543.9 598.6L541.9 597.5L540.1 596.3L537.1 594.7L533.7 593.2L531.2 594.1L528.0 593.3L525.5 594.0L523.2 594.2L521.6 592.0L519.9 593.4L520.6 589.3L524.6 588.4L527.5 588.5L529.8 589.3L532.0 587.9L534.8 588.7ZM509.7 590.9L511.8 592.8L513.1 594.7L511.7 596.7L509.2 597.9L505.8 597.1L503.8 595.8L502.6 593.6L502.7 591.3L504.9 591.0L509.3 590.7ZM493.0 649.4L494.9 651.2L493.4 652.9L494.2 655.1L492.3 657.6L490.2 659.9L487.8 661.7L484.7 663.0L481.9 663.1L482.5 660.8L481.8 658.4L482.5 656.2L484.8 653.7L487.4 654.3L488.8 652.4L491.1 650.6L493.0 649.4ZM578.1 617.1L577.7 619.5L578.1 621.7L575.4 623.3L573.9 621.7L574.6 618.3L575.5 615.6L578.1 617.1ZM576.2 624.4L575.2 626.8L573.3 629.1L572.5 624.7L572.6 621.9L575.2 623.9ZM610.8 642.7L608.8 644.1L606.1 643.8L603.5 644.1L604.8 639.3L606.3 636.4L608.8 634.4L610.9 633.8L613.2 634.1L614.6 635.9L613.9 638.8L611.5 642.0ZM632.0 586.1L632.0 590.1L632.0 594.1L632.0 598.2L632.0 602.3L632.0 606.3L632.0 610.4L632.0 614.5L632.0 618.5L632.0 622.6L631.1 626.1L631.5 628.4L632.0 630.7L632.0 634.8L632.0 638.9L632.0 642.9L632.0 647.0L632.0 651.0L629.3 648.5L627.8 646.2L624.4 643.0L623.9 640.8L620.5 641.3L618.2 641.9L617.0 639.8L614.3 642.6L614.1 640.4L615.3 636.9L614.3 634.7L612.7 632.5L615.0 632.3L612.4 630.7L613.7 628.6L612.3 626.3L610.7 624.5L609.4 621.2L608.9 618.9L607.3 617.2L606.7 614.7L604.8 613.5L600.2 610.1L597.8 609.3L594.3 608.2L592.3 607.0L589.7 605.8L586.4 604.8L584.1 604.4L581.9 604.5L578.1 602.0L577.7 599.5L575.0 599.1L572.8 598.0L570.8 597.2L568.8 594.8L568.9 592.5L570.2 590.5L568.6 593.6L567.3 596.2L566.6 598.4L565.1 600.6L562.6 600.9L561.1 598.3L561.8 595.5L560.8 592.9L559.1 591.3L557.3 589.7L554.7 589.1L556.3 586.8L559.3 587.3L562.0 586.6L564.0 584.5L566.5 585.1L568.6 586.0L570.1 584.2L570.7 581.8L567.1 582.2L564.9 582.1L562.6 582.7L559.7 582.5L556.9 582.4L554.9 580.3L553.7 577.1L551.9 575.4L548.2 573.9L545.6 574.2L546.9 572.2L547.8 570.1L549.6 567.8L552.5 567.0L554.7 565.4L557.7 563.6L561.7 564.2L565.2 566.4L569.2 567.4L571.8 567.7L572.2 570.0L573.2 572.0L573.6 574.7L572.5 577.2L572.8 579.7L572.9 582.0L574.7 586.2L575.6 588.3L575.8 585.8L577.6 589.3L579.3 592.1L581.0 593.5L583.4 593.7L585.7 591.9L587.7 590.0L588.8 587.6L591.0 585.8L592.0 583.3L594.2 582.2L598.2 581.1L598.7 578.8L600.8 576.9L602.9 575.7L605.5 574.8L611.8 577.9L614.2 579.7L617.1 581.0L619.0 582.1L621.7 583.5L624.9 583.5L628.9 584.5L632.0 586.1ZM614.0 643.9L611.4 643.7L612.8 641.7L614.0 643.9ZM291.9 539.2L292.0 542.1L289.8 542.4L289.3 539.8L291.3 538.7ZM298.1 550.1L296.5 547.4L298.2 549.3ZM298.7 545.4L295.8 545.3L298.5 544.9ZM303.3 552.5L301.2 552.2L298.7 551.4L298.8 549.1L301.2 550.4L303.3 552.5ZM304.6 551.3L302.1 550.0L304.6 551.3ZM316.8 547.8L317.4 550.4L314.3 549.8L316.1 548.2ZM318.5 561.8L320.5 562.8L317.8 562.1L315.6 561.9L316.5 559.8L318.5 561.8ZM315.9 563.3L316.2 566.0L314.0 564.6L315.9 563.3ZM361.2 571.8L359.1 572.8L359.0 570.4L361.5 570.4ZM397.0 631.0L394.4 631.9L391.4 632.2L387.7 631.4L388.6 629.0L398.2 628.7L397.0 631.0ZM515.9 563.2L516.2 566.1L518.2 567.2L515.3 568.0L514.3 566.0L513.8 563.4ZM522.0 596.7L519.4 597.7L520.7 595.9ZM509.4 519.7L509.3 517.4L508.9 514.5L510.3 517.1L509.4 519.7ZM535.5 639.5L533.5 638.3L535.6 638.9ZM540.0 576.9L540.4 579.4L538.1 580.6L536.0 579.9L536.9 577.6L539.7 576.9ZM280.8 591.8L278.9 589.9L281.2 590.4ZM278.9 587.4L276.8 586.1L278.9 587.4ZM275.8 583.4L273.1 581.6L275.5 582.8ZM263.8 565.3L263.3 563.1L262.6 560.0L264.5 562.6L263.8 565.3ZM246.5 536.4L242.7 534.0L240.2 532.3L242.5 532.2L246.1 534.9ZM468.0 614.4L466.0 612.6L467.4 610.8L468.0 614.4ZM478.2 571.7L480.6 572.6L480.2 575.0L477.8 576.2L477.6 573.0L476.2 575.1L474.9 572.8L477.7 571.6ZM454.9 623.0L454.2 618.8L454.9 623.0ZM418.3 598.7L416.5 600.5L416.4 598.2L416.2 594.6L417.8 592.6L418.2 595.0L418.3 597.2ZM475.9 669.1L476.8 667.0L478.6 665.2L478.2 668.1L475.9 669.1ZM487.4 643.3L486.2 645.3L484.7 643.5L487.0 642.0ZM484.3 642.7L482.4 644.2L480.1 645.8L480.2 643.5L483.0 641.9ZM478.4 601.1L476.1 600.6L478.4 600.4ZM609.2 181.8L608.4 179.2L610.2 177.1L611.2 179.3L609.2 181.8ZM579.6 217.1L577.4 217.1L578.8 215.3ZM537.6 237.7L537.1 235.3L537.6 237.7ZM656.6 118.8L659.0 119.0L662.4 120.5L665.1 120.6L667.7 118.3L669.8 116.7L669.0 119.2L667.9 121.3L668.7 124.2L669.8 127.0L672.7 126.1L671.5 128.1L668.8 128.6L666.2 130.0L663.6 130.5L660.8 130.2L657.9 131.2L656.1 132.5L653.3 135.8L652.3 138.5L650.5 139.8L645.3 137.4L641.6 135.3L639.6 134.2L635.7 134.5L632.1 136.6L630.4 135.0L628.3 134.3L626.3 136.2L628.1 138.7L631.4 140.2L633.5 141.9L631.4 142.6L629.2 141.8L627.3 144.3L624.8 145.8L623.7 143.0L624.5 140.9L622.6 138.1L622.0 135.5L623.1 133.3L625.5 132.1L627.3 130.5L626.8 127.6L630.3 127.9L633.4 128.2L635.4 127.2L635.6 124.9L636.1 122.5L637.8 119.8L637.9 117.4L638.8 115.2L639.0 112.8L638.4 110.6L637.3 108.4L637.8 106.2L639.8 105.2L642.3 106.7L644.5 108.8L647.0 111.8L650.2 114.7L652.0 116.0L654.0 117.2L656.1 118.7ZM547.1 224.0L549.9 223.8L550.9 226.1L553.4 227.5L553.7 229.9L551.9 234.1L550.9 236.7L550.0 240.0L549.7 242.2L548.5 246.0L546.2 245.6L544.8 248.9L543.6 246.2L543.7 244.0L541.5 245.4L542.3 247.8L539.6 247.3L539.6 245.1L538.9 242.7L538.6 240.5L540.4 237.8L541.8 235.4L541.9 232.7L540.8 230.5L539.4 228.5L538.4 230.7L540.0 232.4L537.4 232.3L535.6 233.8L534.2 231.2L536.9 231.5L535.2 229.2L533.3 227.6L535.6 226.8L537.6 224.8L540.1 223.7L541.1 221.6L544.2 220.8L546.1 223.3ZM574.7 217.4L577.1 217.7L577.2 220.2L576.3 222.7L574.2 224.7L573.2 227.5L571.2 225.5L568.9 224.8L565.4 226.4L564.2 229.2L562.7 231.6L560.2 232.2L558.5 230.8L558.4 228.2L557.8 225.7L555.0 226.6L557.4 224.9L559.8 223.1L560.8 220.9L562.4 219.0L564.1 220.7L567.0 220.3L568.1 217.6L571.1 216.5L573.5 216.8ZM634.2 146.3L635.7 149.0L635.8 151.6L636.2 153.9L639.1 157.1L639.8 159.3L640.7 161.6L640.8 163.9L640.1 167.8L638.9 169.8L637.2 171.8L636.6 175.0L634.4 176.2L631.9 178.5L631.9 181.8L632.5 185.3L632.2 188.9L630.8 191.1L629.0 195.0L628.5 197.7L630.1 201.5L628.7 203.7L627.1 206.1L626.3 208.5L624.0 209.6L622.2 210.8L622.3 207.7L623.8 205.2L622.1 203.4L620.5 205.9L620.7 208.5L619.0 207.0L616.3 207.9L615.9 210.4L615.0 212.6L612.8 213.0L613.2 210.3L611.2 209.1L609.2 211.5L607.9 214.0L605.1 213.5L602.3 213.4L598.1 214.2L600.1 213.0L597.8 212.3L596.3 210.2L593.9 212.1L596.2 215.4L593.6 217.4L591.2 219.0L589.5 222.2L588.2 224.4L584.2 224.5L582.4 221.9L581.4 219.9L581.1 217.1L582.9 215.8L583.8 213.8L580.6 213.7L578.4 212.5L575.7 212.4L573.4 213.0L571.3 214.7L568.8 215.1L565.8 216.1L563.1 216.7L561.0 217.4L557.9 216.5L556.0 219.7L552.2 219.5L549.7 219.8L547.6 220.5L544.9 220.2L544.6 217.4L546.7 215.9L549.3 215.3L552.0 213.3L554.0 211.9L555.6 210.3L557.8 208.4L559.6 206.9L562.2 204.9L565.2 204.4L568.3 204.9L571.4 204.9L574.5 204.2L579.2 203.4L581.8 202.5L583.1 204.7L585.4 204.8L588.1 203.9L589.7 202.3L589.0 200.1L590.2 197.8L592.0 196.4L593.7 194.3L595.4 190.5L595.1 188.0L597.2 185.9L599.3 185.0L597.9 187.8L597.7 190.4L599.7 192.5L601.7 190.7L605.5 189.4L608.1 188.3L611.0 186.1L612.9 183.4L617.0 179.9L618.7 177.3L619.4 175.0L620.6 173.0L621.8 171.2L622.5 169.0L623.4 166.9L624.1 163.8L623.5 161.4L621.3 160.8L623.3 158.6L623.2 155.9L623.3 153.3L625.3 152.3L626.5 149.9L626.9 147.7L629.1 148.4L629.4 151.1L631.6 150.6L634.1 150.1L633.9 147.6L630.5 148.6L631.0 145.7L634.2 146.3ZM521.9 293.5L519.9 294.7L518.8 296.7L517.3 299.0L517.3 295.7L519.2 294.1L521.5 292.0ZM532.2 277.9L529.7 277.5L532.3 276.1L534.2 274.8L532.7 277.0ZM25.5 137.5L23.1 138.9L20.2 139.7L18.1 141.8L15.5 143.0L12.1 144.6L10.0 145.7L8.5 148.0L6.4 149.6L4.9 151.7L4.3 153.9L1.4 152.8L0.8 150.4L-0.6 148.0L-4.1 148.2L-6.7 148.4L-8.7 147.3L-8.7 145.1L-8.7 142.6L-8.7 140.1L-8.7 136.9L-8.7 133.9L-8.7 131.3L-8.7 128.0L-8.7 125.1L-8.7 122.9L-8.7 125.1L-8.7 122.9L-8.7 120.1L-8.7 117.5L-8.7 114.8L-8.7 112.2L-8.7 109.5L-8.7 106.9L-8.7 104.4L-8.7 107.0L-8.7 109.4L-8.7 112.3L-8.7 114.6L-8.7 116.9L-8.7 119.2L-8.7 121.5L-8.7 123.8L-8.7 126.1L-8.7 128.4L-8.7 130.7L-8.7 133.0L-8.7 135.3L-8.7 137.6L-8.7 139.9L-8.7 142.2L-8.7 144.5L-8.7 146.8L-8.7 144.4L-8.7 141.9L-8.7 139.2L-8.7 137.0L-8.7 139.4L-8.7 142.2L-8.7 139.5L-8.7 136.7L-8.7 134.4L-8.7 131.9L-8.7 129.0L-8.7 126.4L-8.7 124.2L-8.7 120.4L-8.7 118.1L-8.7 115.4L-8.7 112.9L-8.7 110.2L-8.7 107.7L-8.7 105.0L-8.7 102.2L-8.7 98.1L-8.7 95.9L-8.7 93.3L-8.7 91.1L-8.7 93.7L-8.7 95.9L-8.7 93.5L-8.7 90.5L-8.7 87.4L-8.7 84.1L-8.7 81.2L-8.7 78.7L-8.7 75.9L-8.7 72.0L-8.7 69.6L-8.7 67.0L-8.7 63.0L-8.7 60.6L-8.7 57.8L-8.7 60.3L-8.7 57.7L-8.7 54.5L-8.7 51.5L-8.7 49.2L-8.7 46.8L-8.7 44.1L-8.7 47.5L-8.7 50.0L-8.7 53.3L-8.7 50.9L-8.7 53.3L-8.7 50.6L-8.7 53.1L-8.7 50.1L-8.7 47.7L-8.7 45.1L-8.7 42.3L-8.7 39.7L-8.7 37.2L-8.7 34.3L-8.7 31.8L-8.7 29.4L-8.7 27.1L-8.7 24.8L-8.7 22.5L-8.7 19.8L-8.7 17.6L-8.7 14.8L-8.7 12.6L-6.4 11.7L-2.7 11.3L-0.5 10.5L1.8 10.0L3.8 8.0L6.2 6.9L8.5 6.1L10.8 6.3L15.1 6.9L17.2 8.0L19.9 8.2L23.7 7.0L25.2 8.7L27.1 12.9L27.4 15.4L26.8 17.9L31.9 18.2L34.7 17.9L37.0 17.3L38.0 19.5L40.0 18.7L42.6 18.9L45.3 20.4L47.7 20.0L45.9 22.9L46.5 25.5L48.9 24.2L52.6 23.9L55.0 25.1L57.9 22.5L60.5 21.8L63.9 20.3L66.3 18.9L70.5 17.4L73.6 16.6L75.8 15.6L75.4 18.2L72.9 18.5L74.3 20.6L76.4 21.8L79.1 23.3L82.0 25.0L84.0 26.2L86.9 29.1L90.7 33.6L92.8 36.4L95.2 39.5L96.5 41.3L99.3 45.1L101.5 48.4L102.7 50.4L104.5 52.4L106.3 50.8L107.6 48.6L109.6 47.2L112.0 47.6L113.5 49.3L115.9 50.4L116.6 52.6L119.1 52.4L122.1 52.9L125.5 52.7L127.5 51.3L130.1 51.0L132.3 50.1L134.9 50.7L137.4 51.8L139.4 53.9L140.8 57.1L142.9 57.8L145.8 59.1L147.2 61.1L149.1 63.4L151.5 63.9L154.9 64.4L157.4 65.0L159.5 63.6L161.7 62.2L162.1 64.4L164.1 66.8L166.6 67.8L164.0 69.0L162.2 70.6L162.1 73.0L160.7 74.7L158.2 75.5L154.4 75.9L152.9 77.5L151.8 80.8L152.3 84.4L153.0 86.6L151.8 89.0L149.2 89.6L147.3 90.9L145.0 91.4L141.5 90.0L138.7 90.3L136.1 89.8L133.7 88.9L131.6 88.1L129.9 89.7L128.2 93.8L127.2 96.1L126.0 98.4L125.0 101.9L124.0 104.0L126.3 105.6L126.4 107.8L124.0 107.9L121.1 108.4L119.2 106.9L115.5 107.5L112.9 108.3L110.7 108.7L108.3 108.9L105.9 109.7L103.5 110.6L106.1 111.9L107.0 114.5L107.0 116.7L107.0 119.0L108.2 121.1L109.1 123.1L110.0 125.7L110.5 128.0L108.3 129.1L107.6 131.4L105.7 132.7L105.7 136.0L103.3 135.9L100.4 135.4L97.8 133.9L96.4 132.2L93.5 132.1L91.2 131.4L86.8 131.4L83.3 131.0L80.0 130.9L77.8 130.3L74.9 130.7L71.2 130.8L68.7 130.7L66.5 131.7L63.8 131.6L61.0 131.0L57.4 129.4L55.1 128.2L52.7 128.1L49.5 129.1L47.2 133.0L47.6 135.9L45.0 134.7L42.1 134.4L39.3 133.2L37.0 132.4L33.0 131.8L30.4 132.3L28.2 132.7L26.2 134.6L25.1 136.6ZM522.9 173.8L521.6 175.8L518.8 177.0L516.0 176.9L513.5 176.9L511.1 177.6L508.8 180.2L507.8 182.2L505.5 181.2L503.3 182.6L500.3 180.1L498.7 181.9L496.3 181.6L493.9 180.8L495.8 179.4L492.8 178.9L492.6 176.6L494.2 174.4L496.3 173.4L495.0 171.3L497.2 167.1L496.8 164.7L494.5 164.1L492.5 163.0L490.2 162.8L488.5 161.3L488.3 159.0L491.1 156.8L493.1 155.4L495.2 154.1L498.3 152.6L500.4 151.3L502.9 150.3L504.5 148.6L505.9 146.8L507.3 144.1L509.6 142.5L511.7 143.6L514.6 145.2L516.9 145.6L519.7 145.5L522.1 144.4L520.7 142.3L520.0 140.1L522.3 139.7L525.0 139.8L527.6 139.6L529.4 138.3L531.0 135.9L533.5 135.6L535.0 132.9L535.7 130.4L538.0 130.4L539.1 132.6L540.8 134.2L542.3 135.8L539.7 137.9L537.5 139.6L535.9 141.9L534.2 144.0L534.9 147.0L534.7 150.7L531.2 152.7L529.2 155.1L526.9 156.4L524.9 158.0L522.2 159.6L519.3 160.0L515.9 162.2L515.7 165.4L514.4 167.9L517.0 168.8L519.4 171.0L521.8 172.6ZM507.8 182.2L508.8 180.2L510.4 178.2L512.4 177.0L515.6 176.9L518.8 177.0L521.1 176.4L522.6 173.9L525.0 178.2L527.0 181.1L528.7 183.2L531.2 187.3L531.9 189.4L532.4 192.6L532.1 195.3L531.7 198.0L533.2 200.5L532.5 203.1L531.1 206.7L528.9 208.8L526.5 209.1L524.1 209.0L523.5 211.3L520.9 210.8L518.5 210.3L517.2 212.8L515.1 211.6L514.4 214.5L513.1 212.4L511.2 213.9L509.5 215.5L507.3 216.8L505.2 214.1L507.0 212.2L505.1 209.5L505.7 206.9L507.3 204.7L508.5 202.3L508.3 199.9L507.1 197.6L507.0 195.2L506.5 193.1L504.3 193.1L505.3 190.4L508.2 190.4L510.6 190.9L509.1 189.0L508.3 185.9L507.6 183.8ZM505.1 227.8L505.2 225.4L508.3 224.5L510.4 225.6L508.4 227.3L505.1 227.8ZM25.6 157.6L28.6 157.1L31.0 157.9L33.3 157.7L35.8 155.6L38.0 155.7L40.5 154.4L44.3 152.1L41.8 151.4L39.0 150.2L36.5 149.9L34.3 148.1L32.9 145.9L30.7 146.9L29.4 148.8L26.9 148.5L24.8 147.7L23.3 145.5L20.9 145.5L18.9 144.3L21.3 142.7L23.6 140.9L26.2 139.2L25.1 137.1L26.2 134.6L28.2 132.7L30.4 132.3L32.6 131.8L36.0 132.4L39.3 133.2L41.5 134.0L45.0 134.7L47.6 135.9L47.2 133.0L48.1 130.0L51.0 128.7L53.2 128.1L57.4 129.4L61.0 131.0L63.8 131.6L66.1 131.9L68.7 130.7L71.2 130.8L73.7 130.8L77.5 130.3L80.0 130.9L82.4 131.0L84.9 131.0L89.1 131.4L92.2 131.7L94.8 132.3L97.0 133.3L99.0 135.2L102.2 135.6L104.5 137.0L105.9 138.7L103.1 139.8L99.6 141.8L96.5 142.8L93.0 144.4L90.4 145.8L87.7 149.2L85.0 149.4L80.4 149.9L77.8 149.6L75.4 151.8L74.3 154.2L72.7 156.1L69.8 156.1L66.5 156.9L65.7 153.9L62.7 155.2L59.4 155.1L57.9 156.9L55.5 158.6L52.7 159.3L51.0 161.2L51.2 163.9L49.5 165.4L46.7 165.6L44.2 166.4L40.2 166.1L37.7 166.6L35.4 166.9L32.9 167.2L30.7 165.5L28.8 164.3L26.6 165.1L24.2 166.1L22.6 164.4L19.4 164.6L17.0 164.5L14.4 164.3L12.1 164.7L10.7 162.4L11.8 160.5L15.3 158.4L18.0 158.3L20.6 159.3L22.7 160.0L25.5 158.1ZM295.6 336.2L297.1 338.2L298.7 340.4L299.9 342.3L302.4 342.9L302.1 345.6L302.1 348.0L304.0 351.1L307.1 352.2L309.3 352.8L312.2 350.6L314.8 351.8L316.8 353.5L315.3 355.1L317.4 356.7L319.5 358.3L319.1 360.5L316.8 363.8L314.0 363.1L312.3 365.2L310.8 367.0L315.6 370.2L318.0 372.0L320.4 372.7L321.2 375.0L322.8 377.6L324.9 379.2L325.9 381.7L327.2 383.6L328.9 385.5L331.4 387.8L332.8 390.0L333.8 393.5L335.1 395.4L337.1 396.5L339.6 398.6L341.1 400.5L339.2 402.0L340.7 404.4L342.6 406.1L342.8 408.8L342.3 411.3L341.4 414.4L338.7 415.8L336.2 416.9L334.3 415.2L331.4 415.3L329.2 416.4L329.9 418.7L328.3 420.7L325.0 418.4L322.6 418.0L323.4 415.8L324.8 413.4L325.2 410.7L324.7 407.4L325.8 405.1L325.3 402.6L323.7 401.1L321.7 399.1L320.0 396.6L318.3 393.5L318.2 391.2L318.8 387.0L317.4 384.5L315.5 383.0L313.5 380.1L312.2 377.8L310.0 376.8L307.3 375.8L305.2 376.6L303.9 378.6L302.2 380.2L300.3 381.5L298.4 380.2L296.5 378.5L294.0 379.2L291.8 381.1L289.4 382.8L287.2 385.0L285.0 384.2L285.8 382.0L286.8 379.7L287.0 377.1L286.7 374.7L287.7 372.1L288.2 369.1L287.5 366.7L287.6 364.5L285.5 363.9L282.6 365.0L280.8 363.5L281.2 361.1L281.8 358.7L280.4 356.6L278.3 357.5L278.7 354.1L280.0 352.0L282.5 351.4L282.8 348.7L284.2 346.9L286.5 345.3L287.6 347.2L290.5 347.7L292.7 347.9L292.2 344.7L292.2 342.2L291.0 340.1L290.4 337.9L291.6 335.4L294.0 335.6ZM278.2 495.6L278.7 493.3L282.0 495.3L284.2 496.7L286.3 497.6L286.5 500.4L286.0 502.8L289.3 501.5L291.7 502.2L293.7 500.9L294.9 499.0L297.4 498.3L299.1 501.4L301.3 503.6L303.9 505.9L306.7 511.5L307.2 516.1L306.7 520.2L306.3 523.3L306.8 526.2L306.9 530.7L310.1 534.2L311.5 537.4L313.7 542.8L314.3 545.2L311.9 544.2L309.1 545.5L307.3 546.7L306.2 544.5L302.2 542.1L299.2 539.6L295.7 537.5L293.5 535.5L290.3 533.2L288.4 531.1L288.6 528.6L286.8 525.3L284.5 522.2L283.3 520.3L282.9 517.7L282.5 513.5L281.2 509.6L280.2 504.1L280.1 500.2L278.5 496.8ZM429.3 518.3L426.7 517.0L423.0 516.6L420.8 516.6L418.5 516.5L415.9 517.1L412.9 518.1L412.2 520.2L411.9 522.7L412.0 525.0L411.3 527.9L410.3 529.9L408.0 531.1L407.7 533.7L406.8 536.5L405.0 537.9L405.6 540.2L404.1 543.1L403.1 545.3L400.7 545.3L398.4 545.4L396.3 546.9L393.7 547.0L390.8 545.9L389.2 544.3L385.2 544.4L382.7 545.6L381.7 548.6L379.4 549.9L377.1 550.1L374.9 549.6L372.3 549.7L369.1 551.2L366.5 550.0L364.7 548.1L362.7 546.0L360.7 543.8L359.8 541.5L362.6 542.4L364.7 543.0L367.2 543.0L369.6 544.5L371.9 544.8L373.7 546.1L372.8 543.7L373.9 541.0L374.7 538.6L374.2 536.2L376.2 535.0L376.8 532.6L382.1 530.8L387.4 529.3L389.6 528.4L390.9 526.6L392.5 524.4L395.9 520.0L397.7 517.6L398.3 515.2L400.6 515.9L402.2 518.0L403.6 519.8L405.4 517.3L405.1 514.5L405.9 512.0L407.5 514.2L408.5 516.4L409.4 513.7L408.5 511.3L410.7 510.3L412.1 508.1L410.7 505.9L412.3 504.0L414.6 503.9L416.2 501.2L416.9 498.7L420.0 494.8L422.2 490.2L422.7 493.1L425.0 490.8L426.9 493.2L429.6 494.9L430.4 497.3L429.9 500.0L432.1 500.3L432.8 502.9L435.2 501.8L437.5 502.7L439.2 504.4L441.3 505.7L443.6 505.9L443.6 508.4L440.9 509.8L437.8 510.3L435.3 510.1L435.8 513.3L437.9 515.0L436.2 516.6L433.1 517.5L430.8 516.6ZM171.6 68.4L174.2 67.4L176.1 65.3L178.7 65.1L181.0 64.6L183.4 64.7L186.0 63.4L187.4 61.0L190.3 60.2L192.5 58.8L195.0 57.9L197.1 56.9L199.4 55.8L201.8 55.4L204.4 54.2L207.5 53.0L210.2 52.2L212.9 52.8L215.3 52.1L217.4 54.0L219.9 53.9L222.2 54.2L225.1 54.3L227.3 54.4L228.2 57.0L230.1 59.1L233.2 59.6L235.3 60.6L237.7 60.8L240.0 60.3L242.4 60.3L245.2 61.0L247.7 61.2L251.0 61.2L253.0 62.7L255.8 61.6L258.0 60.6L260.7 59.2L262.0 57.0L262.2 54.7L260.1 53.5L259.4 51.4L258.4 49.5L259.1 47.2L260.7 45.2L262.4 43.3L265.3 42.0L267.2 39.3L270.0 40.0L273.1 41.0L275.3 41.7L277.4 42.6L281.2 42.7L285.0 43.9L287.7 44.9L290.7 45.3L292.9 45.8L295.4 46.5L295.8 48.9L296.3 51.7L297.0 54.2L299.2 55.4L301.9 56.7L304.5 57.1L306.7 58.1L309.4 58.5L312.5 58.5L314.8 57.2L317.7 56.6L320.2 56.2L322.7 55.4L325.1 55.6L328.0 55.9L331.0 57.0L334.1 56.7L336.5 57.5L338.1 59.1L340.8 60.1L343.2 60.2L345.7 60.5L345.9 63.1L348.2 64.7L350.9 66.6L354.4 66.6L357.1 66.7L359.7 67.3L363.7 67.9L366.5 67.8L369.2 68.6L374.2 67.0L376.8 66.4L379.6 66.0L384.3 64.9L387.1 64.9L390.2 63.8L392.5 61.3L394.7 59.9L397.3 59.0L400.3 57.4L403.2 57.6L406.0 58.2L407.9 59.4L410.2 60.9L413.2 61.2L416.9 59.9L420.5 60.8L420.8 63.1L419.2 65.9L417.8 68.3L416.6 70.6L415.3 73.1L413.9 75.4L412.6 78.1L411.9 80.5L414.1 82.6L416.3 82.1L418.5 81.4L421.3 81.4L423.9 81.6L426.1 82.6L428.3 82.6L430.2 80.9L432.8 80.0L435.1 80.0L437.3 80.2L439.0 81.8L441.3 83.0L443.1 84.7L444.9 86.2L446.9 87.8L448.3 89.7L449.3 92.1L447.8 93.9L444.5 93.9L441.9 93.1L439.3 93.1L436.5 93.0L433.6 93.3L431.4 94.6L429.1 94.1L427.4 95.6L424.2 96.4L421.7 96.8L419.5 98.4L418.0 100.4L417.4 102.6L415.1 103.7L412.9 105.4L408.9 106.0L406.3 106.2L404.0 105.9L402.0 108.0L399.8 109.5L397.8 110.9L395.4 112.4L392.3 112.1L387.2 111.2L385.4 109.9L382.0 109.4L378.9 110.3L377.1 113.3L376.0 115.8L376.9 118.1L379.6 120.6L380.5 122.9L378.0 124.4L374.0 126.1L371.6 127.4L369.9 129.3L368.2 131.0L366.2 132.6L362.5 133.9L360.2 134.9L358.0 135.6L354.0 135.7L351.1 135.7L347.9 135.5L344.7 135.9L340.3 136.5L336.9 136.9L334.1 137.7L331.8 138.6L327.9 140.1L325.3 141.3L323.1 142.3L320.9 143.8L318.5 143.6L316.1 143.4L314.4 141.5L311.7 142.0L309.3 142.5L307.0 141.4L303.8 139.9L301.4 139.5L295.8 138.4L293.4 137.1L292.0 135.3L288.5 134.6L283.8 134.1L281.6 133.8L277.9 133.3L275.0 133.7L272.5 134.3L268.0 133.8L261.9 133.2L257.4 132.6L252.9 132.1L249.7 132.4L245.8 132.8L245.1 130.7L243.2 129.0L241.3 127.2L239.8 123.4L238.7 121.1L236.7 119.6L237.0 117.4L234.3 117.4L231.3 116.5L229.5 115.3L226.9 113.5L224.0 112.8L222.2 111.0L219.0 110.2L215.8 109.8L212.9 109.9L209.3 109.6L206.6 109.3L204.2 109.2L201.9 108.8L199.6 107.8L197.1 106.3L196.3 104.0L197.4 101.5L199.2 99.6L198.4 97.3L199.5 94.7L199.1 92.5L198.1 90.5L196.1 89.0L194.8 87.1L194.2 85.0L192.2 83.0L190.8 81.2L188.6 81.7L186.7 80.0L183.6 80.2L181.2 79.1L179.1 78.3L177.7 76.2L174.6 74.9L173.4 72.6L171.0 71.2L171.7 68.8ZM174.1 281.3L174.1 283.6L173.4 285.9L173.1 288.7L174.2 290.7L174.2 294.1L173.2 296.2L170.0 296.0L167.0 296.4L164.9 294.6L162.5 295.6L159.5 294.4L157.0 293.9L154.6 294.0L153.3 292.2L149.8 292.6L147.4 291.2L144.5 289.6L143.8 287.0L140.5 285.7L137.7 285.7L134.7 285.4L132.4 286.3L129.3 285.3L127.4 284.0L125.1 283.3L122.2 281.3L120.0 281.3L116.8 279.4L114.7 277.6L112.7 275.9L110.4 274.6L108.4 273.3L105.9 272.8L104.7 270.1L105.9 268.1L106.1 265.8L107.4 262.7L109.2 260.4L111.0 258.8L113.5 259.6L116.2 256.6L120.0 256.4L122.1 257.5L125.5 260.6L128.6 263.2L131.2 263.9L133.0 265.6L135.0 268.2L138.0 267.2L140.1 269.6L142.1 272.0L144.2 273.4L147.8 273.9L148.0 276.3L150.8 277.2L153.1 277.2L155.2 280.1L157.1 278.8L158.7 280.4L160.7 279.1L163.2 280.0L165.8 281.6L168.6 281.8L172.0 281.1ZM75.9 203.4L76.9 205.6L78.0 208.0L77.0 210.6L75.3 212.1L70.8 213.3L68.1 214.4L65.9 215.0L62.9 214.0L60.2 213.5L57.1 212.8L54.6 212.3L52.4 213.2L50.7 215.2L51.7 217.6L52.9 220.0L52.0 222.1L53.1 224.5L52.4 227.0L53.1 229.3L54.8 230.7L57.0 232.5L57.7 234.8L60.5 235.4L62.7 236.3L62.8 238.6L58.4 240.5L56.5 242.4L57.0 244.8L56.6 247.4L57.5 249.6L55.3 251.1L52.0 254.8L51.3 257.2L49.0 259.7L46.6 260.7L45.5 263.9L44.4 266.4L42.9 269.1L40.1 271.0L37.6 272.5L36.2 275.8L34.2 278.2L33.5 280.4L30.7 281.3L27.6 281.7L24.9 282.9L22.9 281.6L21.5 279.8L19.4 280.7L17.8 283.0L16.4 285.3L14.4 287.4L12.9 290.5L13.9 293.0L16.5 294.1L18.6 294.9L18.5 297.9L18.0 300.1L19.6 302.9L22.3 302.9L23.0 305.8L24.2 307.9L25.6 311.1L26.0 313.5L26.4 315.7L24.3 317.4L22.1 316.7L19.8 316.4L17.9 317.6L15.6 318.3L13.5 317.3L10.7 317.3L7.8 317.1L6.3 320.4L3.3 320.5L1.3 322.0L-1.2 321.0L-3.8 321.2L-5.5 319.1L-6.1 316.3L-7.2 312.4L-8.7 310.7L-8.7 307.7L-8.7 305.1L-8.7 308.2L-8.7 304.2L-8.7 301.8L-8.7 298.3L-8.7 295.7L-8.7 293.5L-8.7 291.2L-8.7 288.8L-8.7 286.4L-8.7 282.0L-8.7 278.0L-8.7 275.2L-8.7 272.1L-8.7 267.4L-8.7 264.6L-8.7 261.4L-8.7 264.7L-8.7 262.2L-8.7 259.6L-8.7 256.8L-8.7 253.9L-8.7 250.9L-8.7 248.1L-6.2 247.8L-3.5 247.2L-3.7 244.9L0.1 243.2L2.8 242.3L5.2 242.0L6.8 243.5L9.4 242.6L11.1 240.6L10.9 237.5L11.2 234.7L12.2 232.4L13.0 229.8L16.6 228.9L19.6 227.1L18.5 223.8L16.2 221.0L19.5 220.2L23.0 220.5L26.4 219.5L26.8 217.3L25.8 215.1L27.0 213.2L28.5 211.3L30.5 209.5L30.7 207.1L30.9 204.5L29.7 201.7L27.9 200.0L30.0 197.1L32.2 195.7L35.5 193.7L37.5 192.6L40.0 191.7L43.2 191.5L46.9 191.2L49.6 191.1L52.0 191.8L55.7 190.2L58.0 189.6L60.2 190.3L63.6 190.9L65.6 192.4L67.9 193.5L69.1 196.2L68.7 198.7L70.2 200.5L72.6 201.6L74.8 202.7ZM632.0 651.2L632.0 647.0L632.0 642.9L632.0 638.9L632.0 634.8L632.0 630.7L631.5 628.4L631.1 626.1L632.0 623.5L632.0 620.6L632.0 616.5L632.0 612.4L632.0 608.4L632.0 604.3L632.0 600.2L632.0 596.2L632.0 592.1L632.0 588.0L633.1 586.1L638.2 588.4L640.3 589.5L642.7 590.8L645.6 592.0L648.7 593.2L652.8 593.9L655.6 595.7L658.3 597.8L661.4 598.0L663.6 599.9L666.3 601.9L668.7 603.8L673.5 608.2L673.7 611.8L673.3 614.0L675.5 615.0L679.0 616.2L684.2 619.2L684.2 621.6L684.2 625.5L683.8 628.3L684.2 631.7L684.2 634.6L684.2 637.1L684.2 639.4L684.2 641.6L684.2 644.6L684.2 647.0L684.2 649.4L684.2 651.8L684.2 654.1L684.2 656.3L684.2 658.7L684.2 661.3L684.2 664.3L684.2 666.5L684.2 664.0L684.2 661.7L684.2 659.1L684.2 656.7L684.2 654.3L683.6 651.5L681.5 650.2L680.0 647.5L678.1 644.6L677.1 642.5L673.9 639.9L671.7 639.4L669.3 638.6L666.6 638.0L664.9 636.4L662.6 635.7L660.5 637.1L658.0 637.1L656.3 635.5L657.7 639.5L655.3 640.0L653.4 642.4L650.4 643.1L647.9 642.9L645.4 643.2L643.2 641.7L645.0 643.7L647.8 643.4L650.1 644.6L652.2 646.6L652.9 649.1L650.2 650.9L646.5 653.3L644.3 652.2L640.7 652.0L637.6 652.1L634.7 651.7L632.0 651.2ZM684.2 579.6L684.2 581.8L682.0 581.5L682.9 579.5ZM459.9 373.8L464.1 376.2L466.3 377.1L468.9 375.1L470.4 376.8L469.2 379.4L469.0 382.4L469.7 385.6L471.1 387.6L471.7 390.1L469.6 395.6L468.8 398.1L465.8 399.2L463.8 401.7L463.2 404.9L462.4 407.3L463.7 410.0L464.7 412.1L464.6 415.2L465.5 417.7L466.9 419.8L469.5 420.7L469.7 418.2L471.9 416.8L474.2 417.2L476.4 419.2L476.8 421.5L479.0 420.6L481.8 421.0L483.3 422.8L481.1 423.5L482.4 425.7L483.4 428.1L485.6 429.7L486.2 432.1L485.5 434.3L484.1 431.9L481.7 430.9L479.8 429.7L478.1 426.5L475.4 424.1L472.8 420.9L472.0 423.0L473.5 426.0L471.2 425.1L469.4 423.5L465.7 420.6L463.3 421.6L462.0 423.5L459.0 422.4L456.6 421.0L455.7 418.1L458.3 415.1L458.0 412.9L455.9 411.8L455.4 414.0L452.8 413.2L451.0 411.5L450.7 408.9L450.0 406.6L449.4 401.6L448.3 399.4L448.5 397.0L450.6 398.1L452.7 399.5L453.2 396.0L453.0 393.5L453.9 390.4L453.9 387.3L453.6 384.7L454.7 378.4L455.5 374.9L457.9 374.0ZM427.1 475.6L427.4 472.9L428.9 471.0L430.8 469.0L432.4 467.5L436.0 464.0L437.6 462.1L439.3 459.7L441.9 456.5L444.1 454.3L443.9 451.5L445.7 447.1L446.5 449.5L447.0 452.9L446.8 455.9L444.1 457.5L441.2 460.1L439.7 462.3L437.9 465.8L436.0 468.0L433.6 470.2L432.0 472.0L429.3 473.6L427.1 475.6ZM472.0 443.9L474.9 444.0L477.2 444.6L477.3 447.1L475.8 449.4L474.3 451.8L472.2 453.1L469.4 453.8L467.6 455.4L467.4 453.0L467.8 450.2L468.2 446.7L468.6 443.6L466.7 442.1L470.2 442.3L472.0 443.9ZM477.4 469.4L475.2 466.8L473.0 465.6L471.2 463.1L471.7 460.4L475.1 459.1L475.0 456.0L475.9 453.0L476.5 450.9L480.7 450.8L480.9 453.4L479.8 455.4L478.9 458.8L477.7 461.4L477.6 463.9L479.0 466.4L478.3 468.8ZM489.9 446.6L492.1 446.0L493.9 447.9L494.0 450.5L494.4 452.8L495.3 455.4L494.8 457.6L493.9 459.7L491.7 458.3L491.4 455.6L491.9 453.2L490.7 450.4L488.5 448.5L488.1 446.3ZM495.7 434.7L496.7 437.1L498.1 439.4L497.6 442.3L498.0 444.5L498.9 446.8L500.1 449.3L497.4 448.9L495.0 447.3L493.2 445.2L493.6 443.0L491.9 441.0L489.9 439.4L488.3 437.6L487.5 434.3L489.9 434.7L492.3 434.7L494.9 434.3ZM456.4 425.2L458.8 425.1L461.4 426.3L462.8 428.1L463.1 430.7L463.7 433.6L462.6 435.8L461.0 437.8L458.7 435.5L457.7 433.0L457.0 430.3L456.0 428.3L454.3 426.1L456.4 425.2ZM502.4 466.8L503.9 468.7L505.1 471.5L503.5 473.7L505.5 475.2L506.3 478.0L506.0 480.7L507.0 482.8L507.4 486.8L506.1 489.9L504.2 491.1L504.2 495.2L503.0 492.7L502.2 490.6L500.8 486.7L499.4 488.4L497.6 490.9L496.9 493.1L498.5 495.0L499.5 497.8L499.4 500.2L497.6 503.4L495.6 501.9L496.0 499.7L493.9 501.3L490.5 500.0L488.4 498.8L485.6 496.0L485.4 493.3L484.8 490.7L486.0 488.2L486.8 486.0L484.7 483.3L482.5 482.2L480.4 483.3L479.7 485.9L477.8 484.7L475.6 484.7L474.5 482.8L472.0 483.3L470.4 486.6L469.2 490.0L466.8 489.3L468.1 486.4L468.6 483.4L469.8 480.6L472.8 479.1L475.5 478.4L476.5 476.0L478.8 474.6L480.6 473.2L483.1 474.5L483.9 478.1L486.4 478.0L487.8 474.9L490.3 474.8L491.8 471.3L494.0 471.1L495.8 469.7L498.3 468.6L497.2 463.3L501.2 464.9L502.4 466.8ZM479.5 465.5L479.8 461.1L480.8 458.6L482.5 455.3L483.5 452.7L484.4 450.4L484.7 448.1L485.4 450.7L485.4 454.1L484.6 456.8L482.4 458.7L480.6 464.1ZM460.4 499.3L462.6 500.4L459.7 501.1ZM451.2 438.3L453.3 439.2L451.2 440.1L449.4 438.2ZM490.1 462.1L488.1 463.7L484.4 463.8L483.8 461.2L485.8 459.4L487.9 458.4L490.0 459.7L490.1 462.1ZM468.5 495.7L466.6 494.4L468.2 492.6L470.1 493.6L468.5 495.7ZM499.6 460.9L498.3 459.1L498.7 456.4L499.7 459.3ZM466.9 424.6L468.7 426.4L466.6 427.2L466.5 424.3ZM468.5 436.5L467.8 438.9L467.0 436.7L467.7 434.0L468.5 436.5ZM482.5 437.1L485.3 440.3L482.8 440.7L480.9 438.0L478.8 439.6L478.4 436.7L478.3 434.2L481.2 435.6ZM488.0 423.7L485.5 423.9L486.0 420.2L488.6 421.3L488.0 423.7ZM494.2 655.1L493.4 652.9L494.9 651.2L492.9 650.3L494.7 647.1L496.9 645.8L500.6 644.9L503.8 644.9L506.9 644.7L509.6 643.8L512.8 643.7L512.0 645.8L509.1 647.6L506.5 649.1L503.7 650.0L501.8 651.2L497.2 652.8L494.2 655.1ZM485.3 653.4L488.8 651.9L487.7 654.1L485.4 653.8ZM542.9 137.0L541.5 134.6L540.9 132.5L543.2 131.6L545.7 131.2L546.8 129.0L547.7 126.6L547.2 124.3L547.4 120.0L546.7 115.3L545.6 112.5L547.6 110.8L549.8 109.9L551.3 107.9L553.5 107.3L555.8 108.0L559.0 108.8L561.5 109.4L563.9 108.7L564.5 105.1L566.7 103.9L567.4 101.2L569.1 99.3L570.4 97.5L570.4 95.0L571.8 92.9L572.2 90.5L573.2 88.1L574.1 85.9L576.3 85.1L577.9 83.1L576.7 80.2L577.5 77.9L575.5 76.4L570.2 77.3L567.9 78.7L565.5 79.0L563.1 79.4L560.9 80.6L559.1 82.3L555.5 82.8L552.4 83.2L549.6 82.8L546.7 83.0L544.9 81.6L543.3 79.8L543.8 77.5L542.6 75.2L542.3 72.3L540.0 71.3L537.3 70.3L535.2 68.0L532.9 66.8L530.4 66.2L527.7 65.5L525.7 64.0L521.7 64.4L518.0 63.8L515.7 62.0L515.4 59.3L514.4 57.0L514.0 54.5L512.7 51.7L510.3 49.0L509.5 46.8L509.0 44.6L508.0 42.2L506.3 39.7L505.6 37.1L504.1 35.2L502.5 33.6L501.2 31.3L499.3 29.6L495.6 28.3L493.4 28.0L490.5 27.9L488.2 27.3L484.9 25.9L482.7 24.9L480.0 24.7L477.7 24.6L474.1 25.3L471.0 25.4L468.4 25.5L465.4 26.2L462.5 26.8L458.9 27.2L456.4 28.3L454.0 30.3L451.2 32.1L453.5 33.7L456.0 34.3L456.1 37.0L456.2 40.3L452.4 42.8L450.0 45.8L448.2 48.2L446.6 50.5L445.5 53.0L443.9 55.2L444.5 58.4L441.5 60.2L436.9 61.6L434.6 63.1L431.9 64.9L428.5 63.9L424.5 63.1L421.6 61.8L418.7 60.2L415.1 60.5L412.1 61.1L409.4 60.5L407.1 58.6L404.8 57.7L401.7 57.4L399.0 58.0L396.1 59.4L393.6 60.6L391.1 62.0L389.0 64.3L385.3 64.7L381.7 65.8L378.8 66.0L376.1 66.6L370.9 68.3L368.3 68.1L365.5 68.3L361.6 67.6L359.0 67.0L354.4 66.6L351.7 66.8L348.2 64.7L346.1 63.5L346.0 60.8L343.2 60.2L340.8 60.1L338.1 59.1L336.5 57.5L334.1 56.7L331.0 57.0L328.0 55.9L325.1 55.6L322.7 55.4L320.2 56.2L317.7 56.6L314.8 57.2L312.5 58.5L310.1 58.2L307.4 58.4L305.1 57.4L301.9 56.7L299.2 55.4L297.0 54.2L296.3 51.7L296.1 49.5L295.8 46.9L292.9 45.8L290.7 45.3L288.4 45.3L285.0 43.9L281.8 42.9L279.1 42.7L276.4 42.4L273.8 41.1L270.0 40.0L267.6 38.8L266.4 40.9L262.8 42.8L261.7 44.9L259.7 46.2L259.0 48.3L258.5 50.6L259.8 53.0L261.7 54.4L262.0 57.0L260.9 58.9L258.5 60.5L256.2 60.9L254.3 62.6L252.0 62.0L248.7 60.9L245.8 61.0L243.5 60.2L241.2 59.9L238.7 60.6L235.3 60.6L233.2 59.6L231.0 59.7L229.1 58.3L227.9 55.9L225.8 54.3L223.4 54.2L220.9 54.0L218.4 53.9L216.2 52.9L213.7 53.2L211.5 52.0L209.5 53.0L206.1 53.1L203.7 54.4L201.2 55.5L198.5 56.4L196.2 57.8L193.7 58.3L191.4 59.0L189.5 60.5L187.4 61.8L185.3 63.9L182.8 65.0L180.4 65.5L177.9 65.2L174.9 65.5L173.5 67.8L171.2 68.3L168.7 69.1L166.6 67.8L164.1 66.8L162.1 64.4L161.7 62.2L159.5 63.6L157.4 65.0L154.9 64.4L151.5 63.9L149.2 63.8L147.9 61.8L147.1 59.4L143.8 58.0L141.4 57.6L140.3 55.6L138.6 53.2L136.1 51.1L133.0 50.1L130.7 50.4L127.8 51.1L125.5 52.7L123.1 52.8L120.7 52.3L118.1 52.6L116.1 50.9L113.7 50.5L113.7 48.1L111.5 47.2L109.2 47.8L107.8 50.0L105.0 51.4L102.7 50.4L101.5 48.4L100.1 46.2L96.5 41.3L95.2 39.5L92.8 36.4L90.7 33.6L88.3 30.7L85.4 27.3L82.0 25.0L79.1 23.3L76.4 21.8L74.3 20.6L72.9 18.5L75.4 18.2L76.5 15.6L73.9 16.5L71.6 16.9L68.2 18.3L64.4 19.1L62.5 21.1L59.6 21.7L55.9 23.5L53.8 24.2L50.8 23.8L47.4 25.3L45.9 22.9L48.1 21.3L49.5 19.6L46.6 20.4L44.3 20.2L41.1 18.8L39.2 20.2L37.5 18.2L35.6 16.9L31.9 18.2L28.9 18.4L26.4 17.4L27.4 14.6L25.9 10.5L24.2 7.4L21.5 7.2L18.9 8.4L16.2 7.5L12.9 6.4L8.5 6.1L6.2 6.9L3.8 8.0L2.1 9.5L-0.5 10.5L-2.7 11.3L-6.4 11.7L-8.7 12.6L-8.7 14.8L-8.7 17.2L-8.7 19.6L-8.7 21.9L-8.7 24.2L-8.7 26.6L-8.7 28.9L-8.7 31.4L-8.7 34.3L-8.7 36.6L-8.7 39.7L-8.7 42.3L-8.7 44.6L-8.7 47.7L-8.7 50.1L-8.7 53.0L-8.7 50.3L-8.7 52.9L-8.7 50.6L-8.7 53.4L-8.7 50.9L-8.7 48.4L-8.7 46.0L-8.7 43.2L-8.7 46.3L-8.7 48.7L-8.7 51.5L-8.7 54.0L-8.7 56.5L-8.7 59.0L-8.7 61.3L-8.7 57.2L-8.7 59.4L-8.7 63.0L-8.7 66.3L-8.7 69.0L-8.7 72.0L-8.7 74.3L-8.7 76.8L-8.7 79.8L-8.7 82.1L-8.7 85.4L-8.7 89.0L-8.7 92.3L-8.7 94.9L-8.7 97.2L-8.7 99.7L-8.7 102.2L-8.7 104.7L-8.7 107.1L-8.7 109.8L-8.7 112.2L-8.7 114.4L-8.7 117.4L-8.7 120.1L-8.7 124.4L-8.7 121.7L-8.7 124.9L-8.7 127.3L-8.7 129.7L-8.7 131.9L-8.7 136.5L-8.7 139.2L-8.7 141.5L-8.7 144.0L-8.7 146.7L-8.7 144.4L-8.7 141.9L-8.7 139.6L-8.7 136.4L-8.7 133.5L-8.7 131.0L-8.7 128.7L-8.7 126.3L-8.7 122.7L-8.7 117.1L-8.7 113.0L-8.7 110.3L-8.7 107.5L-8.7 105.1L-8.7 102.0L-8.7 99.5L-8.7 96.1L-8.7 93.6L-8.7 91.3L-8.7 88.9L-8.7 86.6L-8.7 83.9L-8.7 81.6L-8.7 78.3L-8.7 75.8L-8.7 73.4L-8.7 70.9L-8.7 68.0L-8.7 65.7L-8.7 62.7L-8.7 60.5L-8.7 57.9L-8.7 55.6L-8.7 53.2L-8.7 51.0L-8.7 48.2L-8.7 45.8L-8.7 43.6L-8.7 40.2L-8.7 37.5L-8.7 34.7L-8.7 32.4L-8.7 30.1L-8.7 27.9L-8.7 25.5L-8.7 23.1L-8.7 20.7L-8.7 18.0L-8.7 15.5L-8.7 13.0L-8.7 10.8L-8.7 8.6L-8.7 6.4L-8.7 4.0L-8.7 1.6L-8.7 -0.9L-8.7 -3.1L-8.7 -5.5L-8.7 -8.2L-3.1 -10.0L1.4 -10.0L4.4 -10.0L7.2 -10.0L9.9 -10.0L6.6 -10.0L3.1 -10.0L0.6 -10.0L-1.9 -10.0L-8.1 -10.0L-4.0 -10.0L-0.3 -10.0L2.3 -10.0L5.3 -10.0L9.0 -10.0L12.1 -10.0L14.7 -10.0L18.8 -10.0L23.0 -10.0L30.3 -10.0L34.0 -10.0L38.5 -10.0L41.7 -10.0L37.9 -10.0L33.9 -10.0L39.7 -10.0L45.0 -10.0L48.0 -10.0L45.6 -10.0L42.9 -10.0L39.8 -10.0L33.3 -10.0L29.1 -10.0L26.6 -10.0L23.6 -10.0L20.6 -10.0L23.3 -10.0L19.8 -10.0L16.9 -10.0L10.5 -10.0L14.7 -10.0L17.2 -10.0L20.3 -10.0L27.2 -10.0L30.9 -10.0L33.9 -10.0L37.4 -10.0L46.3 -10.0L50.2 -10.0L52.6 -10.0L57.8 -10.0L55.4 -10.0L61.7 -10.0L65.7 -10.0L70.2 -10.0L73.3 -10.0L75.7 -10.0L78.9 -10.0L81.4 -10.0L83.8 -10.0L86.5 -10.0L91.7 -10.0L94.6 -10.0L91.4 -10.0L88.0 -10.0L83.0 -10.0L85.5 -10.0L82.0 -10.0L74.9 -10.0L69.3 -10.0L65.5 -10.0L61.1 -10.0L55.1 -10.0L51.8 -10.0L49.0 -10.0L51.4 -10.0L53.7 -10.0L49.6 -10.0L46.5 -10.0L44.0 -10.0L49.1 -10.0L51.4 -10.0L54.6 -10.0L58.9 -10.0L61.4 -10.0L58.8 -10.0L61.9 -10.0L64.7 -10.0L67.1 -10.0L64.0 -10.0L67.0 -10.0L70.2 -10.0L75.7 -10.0L83.0 -10.0L87.2 -10.0L91.2 -10.0L94.8 -10.0L91.7 -10.0L88.4 -10.0L85.8 -10.0L82.1 -10.0L78.9 -10.0L73.0 -10.0L70.2 -10.0L72.9 -10.0L76.8 -10.0L82.7 -10.0L88.2 -10.0L84.7 -10.0L82.2 -10.0L86.3 -10.0L88.6 -10.0L90.8 -10.0L98.9 -10.0L103.5 -10.0L108.0 -10.0L110.5 -10.0L117.0 -10.0L121.9 -10.0L126.0 -10.0L129.8 -10.0L125.5 -10.0L123.3 -10.0L126.4 -10.0L128.8 -10.0L131.0 -10.0L134.2 -10.0L131.2 -10.0L133.9 -10.0L131.6 -10.0L127.8 -10.0L124.0 -10.0L119.5 -10.0L115.0 -10.0L111.1 -10.0L108.3 -10.0L116.7 -10.0L119.7 -10.0L134.6 -10.0L142.2 -10.0L145.0 -10.0L147.9 -10.0L151.1 -10.0L155.7 -10.0L161.0 -10.0L163.6 -10.0L159.1 -10.0L156.7 -10.0L154.4 -10.0L156.7 -10.0L160.3 -10.0L156.9 -10.0L159.2 -10.0L165.6 -10.0L169.5 -10.0L166.4 -10.0L161.9 -10.0L157.4 -10.0L160.6 -10.0L163.7 -10.0L166.5 -10.0L163.6 -10.0L159.6 -10.0L156.9 -10.0L154.1 -10.0L156.4 -10.0L161.5 -10.0L164.9 -10.0L168.2 -10.0L165.8 -10.0L170.3 -10.0L177.6 -10.0L184.6 -10.0L187.0 -10.0L192.1 -10.0L199.2 -10.0L203.3 -10.0L206.5 -10.0L211.4 -10.0L221.3 -10.0L225.8 -10.0L222.4 -10.0L220.0 -10.0L217.5 -10.0L215.3 -10.0L218.8 -10.0L222.1 -10.0L226.1 -10.0L228.5 -10.0L234.2 -10.0L236.9 -10.0L241.8 -10.0L239.5 -10.0L241.9 -10.0L246.9 -10.0L250.1 -10.0L252.9 -10.0L255.5 -10.0L259.1 -10.0L261.5 -10.0L265.5 -10.0L268.3 -10.0L273.4 -10.0L275.8 -10.0L272.5 -10.0L269.3 -10.0L266.8 -10.0L273.4 -10.0L276.6 -10.0L279.9 -10.0L284.4 -10.0L288.5 -10.0L291.0 -10.0L287.6 -10.0L285.2 -10.0L287.4 -10.0L290.3 -10.0L299.7 -10.0L304.3 -10.0L308.0 -10.0L311.9 -10.0L318.8 -10.0L323.1 -10.0L326.6 -10.0L328.9 -10.0L323.8 -10.0L319.7 -10.0L314.6 -10.0L323.2 -10.0L326.0 -10.0L330.3 -10.0L335.2 -10.0L340.2 -10.0L337.2 -10.0L334.6 -10.0L339.1 -10.0L343.2 -10.0L345.6 -10.0L348.0 -10.0L352.0 -10.0L358.3 -10.0L363.6 -10.0L367.8 -10.0L373.4 -10.0L375.8 -10.0L379.2 -10.0L381.9 -10.0L384.6 -10.0L387.0 -10.0L390.1 -10.0L392.9 -10.0L397.1 -10.0L394.6 -10.0L390.8 -10.0L386.5 -10.0L389.3 -10.0L391.8 -10.0L394.5 -10.0L389.1 -10.0L382.7 -10.0L379.9 -10.0L375.0 -10.0L371.5 -10.0L367.0 -10.0L362.3 -10.0L359.5 -10.0L355.7 -10.0L348.1 -10.0L344.4 -10.0L340.1 -10.0L336.0 -10.0L330.7 -10.0L326.3 -10.0L323.8 -10.0L326.6 -10.0L329.7 -10.0L333.2 -10.0L338.7 -10.0L340.9 -10.0L344.3 -10.0L347.7 -10.0L351.4 -10.0L355.9 -10.0L360.6 -10.0L367.4 -10.0L370.4 -10.0L367.1 -10.0L364.5 -10.0L361.6 -10.0L364.5 -10.0L371.7 -10.0L375.3 -10.0L379.4 -10.0L382.3 -10.0L387.9 -10.0L391.3 -10.0L393.9 -10.0L390.8 -10.0L395.5 -10.0L393.1 -10.0L396.3 -10.0L394.1 -10.0L397.1 -10.0L405.5 -10.0L409.9 -10.0L420.0 -10.0L427.0 -10.0L436.9 -10.0L440.6 -10.0L437.0 -10.0L441.3 -10.0L445.4 -10.0L448.2 -10.0L455.5 -10.0L459.0 -10.0L462.1 -10.0L465.5 -10.0L467.9 -10.0L472.3 -10.0L476.3 -10.0L478.9 -10.0L481.3 -10.0L479.0 -10.0L483.2 -10.0L488.3 -10.0L491.9 -10.0L499.0 -10.0L501.3 -10.0L504.5 -10.0L507.1 -10.0L509.6 -10.0L517.4 -10.0L519.6 -10.0L522.1 -10.0L524.7 -10.0L527.3 -10.0L524.8 -10.0L528.4 -10.0L525.1 -10.0L529.3 -10.0L531.8 -10.0L527.7 -10.0L523.7 -10.0L521.3 -10.0L517.9 -10.0L522.7 -10.0L527.5 -10.0L530.1 -10.0L527.8 -10.0L530.2 -10.0L534.9 -10.0L537.1 -10.0L539.4 -10.0L541.6 -10.0L544.1 -10.0L547.0 -10.0L549.3 -10.0L552.3 -10.0L554.6 -10.0L557.1 -10.0L559.9 -10.0L564.1 -10.0L566.6 -10.0L568.9 -10.0L572.5 -10.0L577.7 -10.0L580.4 -10.0L583.4 -10.0L587.9 -10.0L592.4 -10.0L598.6 -10.0L601.2 -10.0L604.5 -10.0L607.0 -10.0L610.8 -10.0L613.0 -10.0L616.7 -10.0L620.4 -10.0L623.4 -10.0L620.9 -10.0L618.0 -10.0L620.4 -10.0L623.7 -10.0L620.2 -10.0L616.4 -10.0L619.0 -10.0L627.4 -10.0L629.6 -10.0L632.9 -10.0L629.2 -10.0L634.9 -10.0L641.4 -10.0L654.0 -10.0L660.8 -10.0L663.1 -10.0L668.6 -10.0L671.1 -10.0L676.2 -10.0L670.9 -10.0L668.7 -10.0L665.9 -10.0L663.3 -10.0L659.6 -10.0L662.3 -10.0L667.2 -10.0L680.7 -10.0L676.5 -10.0L673.8 -10.0L670.4 -10.0L667.9 -10.0L673.8 -10.0L676.1 -10.0L678.7 -10.0L683.2 -10.0L-8.7 -10.0L684.2 -10.0L684.2 -7.6L684.2 -4.5L684.2 -1.7L684.2 -4.0L684.2 -1.3L684.2 1.6L684.2 5.0L684.2 7.9L684.2 11.1L684.2 14.7L684.2 17.1L684.2 19.9L684.2 22.2L684.2 24.5L684.2 27.2L684.2 29.5L684.2 33.1L684.2 35.4L684.2 39.1L684.2 41.9L684.2 44.7L684.2 47.9L684.2 50.3L684.2 47.7L684.2 45.3L684.2 40.9L684.2 36.3L684.2 33.7L684.2 31.3L684.2 22.6L684.2 14.8L684.2 11.3L684.2 8.0L684.2 2.1L684.2 -0.7L684.2 -7.0L684.2 -10.0L680.2 -10.0L677.9 -10.0L674.9 -10.0L671.6 -10.0L662.4 -10.0L659.2 -10.0L654.1 -10.0L651.2 -10.0L645.9 -10.0L641.1 -10.0L638.7 -10.0L635.2 -10.0L632.1 -10.0L629.5 -10.0L623.6 -10.0L620.2 -10.0L616.5 -10.0L611.9 -9.7L608.1 -6.3L606.9 -4.3L603.6 -1.4L600.9 0.3L597.7 2.0L592.9 4.2L590.4 6.5L586.7 8.4L582.5 10.6L583.1 12.9L587.6 14.2L591.0 13.9L593.9 13.9L596.0 15.5L595.2 19.4L595.1 22.0L597.7 21.5L599.8 19.7L600.8 17.2L603.3 17.2L601.5 18.7L604.8 20.5L602.0 22.9L599.5 24.2L604.0 24.4L608.4 22.7L610.5 20.4L609.8 23.3L611.9 22.5L612.5 19.6L611.9 17.0L615.8 17.8L621.0 17.2L625.1 19.5L626.5 21.9L629.5 24.0L632.2 25.1L634.1 26.7L635.0 29.0L631.2 29.1L633.0 31.0L634.5 33.5L633.4 35.7L635.0 37.3L635.5 39.4L634.5 41.4L631.6 43.8L630.8 45.9L629.5 47.7L629.1 50.1L627.7 54.5L628.2 58.7L627.6 60.9L628.0 64.0L627.3 66.7L626.3 68.8L625.5 72.3L625.0 74.8L623.5 76.8L621.5 78.2L619.4 80.2L616.3 83.7L614.9 86.2L611.3 89.4L609.6 92.6L608.0 95.4L607.1 97.5L604.2 100.7L601.2 103.6L598.8 106.1L595.9 108.3L594.1 110.2L591.1 113.3L588.8 115.6L584.8 120.3L582.5 123.1L579.5 125.7L577.6 127.1L572.9 129.6L569.1 131.7L565.8 132.4L563.4 132.8L560.4 131.2L556.9 131.2L557.2 127.6L554.5 128.8L552.5 127.5L550.1 130.0L548.1 132.3L545.8 133.5L543.5 133.3L543.3 136.7ZM647.5 16.1L649.3 18.6L648.8 21.2L650.4 25.1L651.4 27.0L652.3 30.4L652.4 33.0L651.8 35.2L650.9 39.2L651.7 41.5L652.3 44.2L653.6 46.0L655.9 54.9L656.6 57.2L658.6 61.0L659.4 63.4L660.3 65.7L661.1 68.2L663.4 70.6L664.3 73.6L662.8 71.1L660.6 69.3L658.6 67.5L655.9 66.9L652.8 67.1L650.4 68.0L649.3 70.8L646.5 77.5L645.6 81.2L646.7 84.6L648.4 86.1L650.3 90.0L651.4 92.1L653.7 92.5L654.5 95.9L653.8 98.3L652.6 95.2L649.9 94.1L647.8 93.8L645.0 93.6L643.5 96.4L642.6 99.1L640.5 99.9L639.4 95.5L639.7 93.1L641.0 89.7L640.7 86.5L640.6 84.1L641.5 81.9L642.4 79.9L642.0 77.1L640.0 73.5L640.7 70.3L641.4 66.9L642.1 64.3L642.2 57.8L641.5 54.9L641.7 52.2L642.6 50.0L642.6 47.8L641.7 45.7L639.8 43.7L638.4 41.5L637.9 37.3L639.2 34.4L639.6 32.1L639.8 29.6L639.3 26.6L642.1 25.0L644.5 25.9L645.6 23.5L647.0 21.1L644.9 18.5L646.6 16.4ZM605.7 9.1L608.0 9.7L606.1 11.8L603.8 13.4L602.1 11.7L599.9 12.1L600.9 10.0L602.6 8.0L605.5 8.9ZM677.3 115.0L680.4 115.6L678.1 117.2L674.8 119.0L671.9 121.5L673.3 119.3L675.0 117.3L676.5 115.0ZM346.2 344.9L343.9 345.9L341.3 347.2L340.8 349.5L338.7 350.4L336.2 350.4L335.6 352.6L333.9 354.7L333.6 357.1L330.5 360.1L327.5 364.1L327.3 367.1L326.0 369.4L326.8 372.2L327.7 374.3L329.7 376.8L332.7 379.5L333.2 382.8L335.5 386.3L337.1 387.8L338.8 389.4L340.8 392.1L342.5 393.6L344.7 396.0L347.2 397.6L348.8 399.7L350.3 402.4L352.2 405.2L354.2 408.2L355.3 412.0L355.8 414.5L356.7 417.3L357.2 419.5L357.6 422.3L357.6 425.5L357.8 427.8L358.8 430.4L358.7 432.8L357.7 436.1L356.9 439.3L356.4 441.6L356.2 444.0L354.9 446.6L352.5 448.0L350.0 449.6L347.9 450.8L346.4 452.8L342.6 454.4L340.0 456.0L338.0 454.4L336.1 455.7L333.3 457.0L335.4 458.1L334.8 460.5L330.3 457.8L333.5 461.8L333.3 464.4L330.8 463.2L328.4 460.4L330.1 463.3L330.8 465.5L324.8 469.1L323.2 472.0L321.4 473.7L318.4 474.0L318.8 468.1L319.1 463.9L320.3 461.3L320.1 459.0L317.5 458.3L315.5 455.9L317.8 454.8L320.3 453.4L320.6 451.1L322.9 451.4L325.4 450.3L327.8 451.4L329.9 452.0L330.5 449.9L328.2 447.6L327.8 445.1L329.1 442.4L332.0 443.2L332.7 440.9L335.1 440.2L337.1 439.2L339.1 437.2L341.6 437.0L342.6 434.6L342.2 431.7L342.5 427.7L342.9 424.8L341.8 421.8L340.9 419.8L340.9 416.9L342.0 414.5L342.2 411.8L342.6 409.4L343.1 406.9L340.7 404.4L339.4 402.5L340.9 400.8L339.6 398.6L337.8 396.9L336.5 394.8L334.2 394.0L333.7 391.8L332.0 388.6L329.1 385.9L327.2 383.6L325.9 381.7L324.9 379.2L322.8 377.6L321.2 375.5L321.4 373.2L318.0 372.0L315.6 370.2L312.7 368.0L310.9 366.6L312.2 364.4L316.5 363.9L318.2 362.5L319.8 359.8L318.8 357.8L317.1 356.3L314.9 355.6L316.8 354.0L314.8 351.8L312.6 350.5L310.0 351.9L307.1 352.2L304.9 351.6L302.1 348.0L302.1 345.6L302.7 343.2L300.2 343.2L299.5 341.0L297.1 338.2L295.6 336.2L297.1 334.5L298.5 332.5L300.7 333.5L302.5 335.3L304.8 333.6L307.2 334.0L308.5 332.2L311.0 334.6L312.2 332.5L315.0 333.0L317.3 331.8L318.8 329.9L320.4 328.1L322.5 326.8L324.7 328.2L326.4 329.7L328.8 330.6L331.3 331.3L333.8 330.9L335.8 332.2L334.6 334.1L333.9 336.6L334.8 338.6L336.7 340.5L338.3 342.1L340.8 343.9L343.3 343.9L345.6 344.4ZM-2.1 188.3L-1.6 185.1L0.1 182.8L1.5 180.7L3.0 178.8L1.2 176.2L0.4 173.3L1.3 171.1L-1.1 170.2L-2.9 168.9L-5.2 168.0L-5.0 165.3L-2.4 163.8L0.7 164.4L3.5 164.7L5.3 162.6L6.9 160.9L8.4 159.1L5.5 158.7L8.3 157.8L10.6 158.1L10.4 154.3L11.7 152.3L14.1 153.2L17.4 152.3L19.9 151.1L22.3 150.9L23.8 152.6L22.1 154.4L20.5 156.2L22.5 157.9L25.1 157.7L22.9 159.2L20.6 159.3L18.0 158.3L15.3 158.4L12.9 159.4L11.1 160.8L11.1 163.3L13.8 164.3L17.0 164.5L19.4 164.6L21.7 164.1L23.7 165.9L26.0 165.9L28.3 164.7L30.7 165.5L32.7 167.2L35.0 166.5L36.8 167.8L38.9 166.4L42.2 166.4L45.3 166.3L47.4 165.4L48.6 167.7L50.2 170.0L49.8 173.0L51.7 174.7L53.6 173.4L56.4 174.0L59.0 175.4L58.7 178.1L59.7 180.7L59.9 183.1L61.5 185.5L59.9 187.5L57.7 186.1L55.0 185.8L52.6 186.8L49.8 187.7L48.8 185.6L45.1 185.9L42.4 187.3L40.3 189.7L37.7 190.2L34.1 192.3L31.7 193.0L30.1 189.8L29.9 187.3L30.4 184.0L31.0 181.4L28.7 181.0L28.9 178.3L26.4 175.8L23.7 175.8L21.8 178.1L20.0 180.2L19.5 182.3L18.4 184.6L15.8 183.9L12.9 184.5L12.4 187.1L11.0 188.9L9.1 187.3L6.8 187.4L3.4 188.6L0.6 190.5L-1.4 189.4ZM278.2 356.8L280.9 357.6L281.6 360.0L280.6 362.4L281.6 364.5L284.1 364.6L287.1 364.2L287.5 366.7L288.2 369.1L287.7 372.1L286.7 374.7L287.0 377.1L286.8 379.7L285.8 382.0L285.0 384.2L287.2 385.0L289.4 382.8L291.8 381.1L293.4 379.5L295.3 377.9L297.5 379.5L299.6 380.7L302.2 380.2L303.9 378.6L305.5 376.9L308.6 376.2L310.9 377.1L313.5 380.1L315.5 383.0L317.4 384.5L318.8 387.0L318.3 389.2L318.3 393.5L320.0 396.6L321.7 399.1L324.0 400.1L325.3 402.6L325.8 405.1L324.7 407.4L325.2 410.7L324.8 413.4L323.4 415.8L321.5 417.2L319.4 416.0L316.8 416.1L313.7 416.0L310.9 416.4L308.3 415.8L305.8 416.5L303.4 417.5L302.0 419.4L300.8 421.6L299.2 423.4L297.2 424.6L297.3 427.1L298.1 429.2L298.7 431.7L299.9 434.3L300.6 437.4L302.4 442.7L301.0 439.9L299.6 438.0L297.4 437.5L295.6 435.6L293.5 434.1L289.6 433.8L286.6 433.3L284.9 431.8L285.3 428.1L285.5 425.7L282.8 424.8L279.2 425.2L277.3 426.5L277.9 429.6L277.0 432.3L277.2 436.5L276.5 439.5L275.4 442.5L273.9 445.4L273.3 447.8L272.7 451.1L270.9 454.3L269.9 456.8L269.9 460.7L270.1 463.7L271.0 465.9L271.9 467.9L274.7 466.9L276.3 468.9L276.8 473.3L278.3 475.7L281.1 485.6L281.8 487.7L280.7 485.4L279.9 482.8L278.9 485.0L280.3 487.2L283.2 489.2L286.0 491.4L288.4 490.9L291.1 492.5L292.7 495.3L295.3 497.6L293.9 500.2L292.6 502.2L290.8 501.0L288.0 502.1L285.6 502.3L286.5 499.7L285.7 497.4L284.0 495.7L280.1 494.5L278.2 495.6L276.0 492.5L274.7 488.9L273.6 486.4L271.1 484.4L269.1 482.8L268.2 480.4L265.9 477.4L263.4 478.2L261.9 475.8L261.9 472.3L263.0 467.1L264.1 464.4L264.7 461.6L265.9 458.1L266.5 455.7L266.4 453.4L268.7 450.8L270.1 448.9L271.6 446.1L272.6 443.9L273.0 439.1L272.2 436.9L272.0 434.5L270.4 432.6L270.0 430.4L270.0 427.7L270.0 425.0L269.6 422.8L268.6 420.5L266.1 417.6L264.1 415.3L262.7 413.0L261.6 410.2L261.5 408.0L263.7 406.4L264.6 404.4L264.8 400.6L266.9 398.2L267.1 395.8L264.9 394.8L263.9 392.7L263.6 390.2L262.0 388.5L260.4 386.3L258.0 383.2L257.5 380.6L256.8 378.3L255.1 376.4L257.0 374.4L257.3 370.7L258.0 367.3L259.1 364.1L260.8 362.4L263.0 363.1L266.4 362.3L268.6 359.6L270.9 359.2L272.7 357.4L275.2 356.6L278.2 356.8ZM25.5 137.5L27.8 137.9L25.2 139.6L22.8 141.3L18.9 144.3L20.9 145.5L23.3 145.5L24.8 147.7L26.9 148.5L29.4 148.8L30.7 146.9L31.5 144.7L33.1 146.4L35.1 148.4L37.2 149.6L40.0 151.2L42.7 151.6L41.3 153.5L38.1 154.2L35.8 155.6L34.3 157.4L32.0 158.5L30.0 157.6L26.8 157.3L23.0 158.0L20.8 156.4L22.1 154.4L23.8 152.8L22.3 150.9L20.1 150.8L17.4 152.3L14.8 153.4L12.2 152.0L10.9 154.1L11.3 156.7L8.3 157.8L5.6 158.2L8.0 158.6L7.5 160.9L5.3 162.6L4.0 164.6L0.7 164.4L-2.4 163.8L-4.4 164.8L-5.6 167.6L-3.3 168.5L-1.1 170.2L1.1 170.7L0.4 173.3L1.2 176.2L2.9 177.6L2.1 180.4L0.1 182.8L-1.6 185.1L-1.8 187.6L-4.2 187.3L-7.0 187.7L-8.7 185.4L-8.7 182.1L-8.7 179.9L-8.7 177.6L-8.7 174.6L-8.7 171.8L-8.7 169.4L-8.7 166.2L-8.7 163.7L-8.7 161.4L-8.7 156.7L-8.7 153.2L-8.7 149.7L-8.7 147.2L-8.7 144.6L-8.7 142.1L-8.7 139.8L-8.7 137.1L-8.7 134.8L-8.7 132.2L-8.7 134.7L-8.7 137.0L-8.7 140.4L-8.7 143.3L-8.7 146.1L-8.7 142.2L-8.7 139.9L-8.7 137.6L-8.7 135.3L-8.7 133.0L-8.7 130.7L-8.7 128.4L-8.7 126.1L-8.7 123.8L-8.7 121.5L-8.7 119.2L-8.7 116.9L-8.7 114.6L-8.7 112.3L-8.7 110.1L-8.7 107.8L-8.7 105.6L-8.7 108.2L-8.7 110.8L-8.7 113.5L-8.7 116.1L-8.7 118.3L-8.7 121.2L-8.7 124.2L-8.7 126.9L-8.7 129.4L-8.7 132.3L-8.7 135.3L-8.7 138.1L-8.7 141.1L-8.7 143.9L-8.7 146.5L-6.7 148.4L-4.1 148.2L-1.7 148.4L0.5 149.4L0.4 151.9L2.5 153.4L5.0 153.8L5.0 151.2L7.4 148.8L9.2 146.3L11.8 145.1L14.4 143.3L17.0 142.5L19.3 140.5L21.6 139.2L23.9 138.1ZM408.3 511.0L409.4 513.7L409.8 516.2L407.5 514.2L407.3 511.8ZM407.3 511.0L405.2 512.4L405.2 515.4L405.1 518.3L402.8 518.9L401.2 517.4L400.3 515.2L402.1 513.4L404.0 512.0L405.6 510.5ZM204.7 282.4L204.9 285.1L207.4 285.4L208.1 287.9L208.4 290.3L206.5 291.5L203.7 291.9L200.3 292.0L197.9 292.2L195.4 292.0L192.6 291.5L190.0 292.8L187.2 292.8L185.2 291.7L182.2 291.3L180.4 289.4L180.9 287.0L182.1 284.8L183.3 282.9L185.3 280.4L187.5 278.4L189.6 277.1L192.5 277.2L193.6 279.2L196.0 279.2L198.4 279.7L201.1 279.3L203.5 280.2L204.7 282.4ZM182.3 339.1L181.6 334.9L181.0 331.6L181.3 328.1L179.3 327.1L178.7 324.5L178.6 321.7L179.4 319.3L178.8 316.7L176.6 316.1L174.5 315.1L173.6 312.9L174.5 310.9L177.1 308.1L179.7 308.3L180.1 305.4L177.5 304.6L175.4 302.1L174.3 299.8L176.1 297.4L176.2 295.2L178.6 295.7L180.4 297.5L182.0 295.9L182.8 298.0L184.4 299.6L186.6 299.9L187.7 297.9L189.0 300.6L189.0 304.4L188.8 306.6L191.5 307.8L194.3 308.4L196.8 308.4L199.5 308.3L202.6 308.5L205.8 308.4L208.3 308.3L211.1 309.9L209.8 312.1L208.9 315.1L207.3 316.7L205.0 318.1L202.6 319.0L201.2 320.8L200.6 323.4L201.4 326.3L201.9 328.9L204.0 330.1L205.9 328.9L206.0 326.4L207.2 324.0L209.2 322.8L210.3 325.1L210.8 327.6L211.0 330.7L212.1 333.2L212.5 335.9L212.7 339.5L212.9 343.9L213.2 346.5L211.1 345.9L209.5 348.0L210.3 350.7L208.3 348.3L207.9 344.8L207.1 341.2L206.5 338.4L205.5 335.9L203.8 332.9L201.1 333.6L198.7 334.0L196.2 329.7L196.2 327.3L195.8 324.7L192.9 325.4L195.0 326.5L195.7 328.7L195.3 330.9L194.7 333.2L195.7 335.7L195.3 337.8L193.6 339.5L192.5 341.7L191.3 339.8L189.6 338.0L190.4 335.3L189.4 338.3L188.4 340.8L186.8 342.3L186.1 337.2L186.2 339.7L184.9 342.8L182.7 341.3L182.3 339.1ZM197.3 339.1L195.0 339.3L196.4 336.7L195.4 333.8L194.9 331.6L196.9 333.6L198.0 336.1L197.7 338.4ZM651.1 679.6L650.4 681.7L651.7 684.0L653.0 686.4L653.5 688.6L655.7 690.0L659.1 690.0L662.3 690.0L666.1 690.0L668.4 690.0L670.8 690.0L673.4 690.0L675.9 690.0L678.4 690.0L680.6 690.0L684.2 690.0L679.3 690.0L676.9 690.0L674.3 690.0L672.1 690.0L669.4 690.0L666.5 690.0L662.9 690.0L659.0 690.0L656.6 690.0L654.2 690.0L651.5 690.0L648.1 690.0L644.8 690.0L642.5 690.0L640.2 690.0L637.3 690.0L634.0 690.0L629.0 690.0L625.4 690.0L622.4 690.0L619.6 690.0L617.0 690.0L614.7 690.0L617.4 690.0L615.0 690.0L612.5 690.0L609.6 690.0L607.0 690.0L603.6 690.0L599.9 690.0L597.3 690.0L599.8 690.0L603.2 690.0L605.6 690.0L602.2 690.0L599.6 690.0L597.0 690.0L594.4 690.0L590.0 690.0L587.1 690.0L584.4 690.0L581.9 690.0L584.1 690.0L581.9 690.0L579.3 690.0L576.8 690.0L574.2 690.0L571.0 690.0L568.7 690.0L566.4 690.0L560.8 690.0L557.1 690.0L551.8 690.0L549.0 690.0L545.8 690.0L538.1 690.0L533.2 690.0L529.9 690.0L524.3 690.0L520.2 690.0L516.8 690.0L513.7 690.0L509.1 690.0L503.5 690.0L498.5 690.0L495.9 690.0L491.5 690.0L488.2 690.0L484.7 690.0L481.9 690.0L479.5 690.0L476.9 690.0L474.4 690.0L469.0 690.0L465.3 690.0L462.5 690.0L457.4 690.0L454.9 690.0L452.2 690.0L449.1 690.0L445.6 690.0L442.4 690.0L437.5 690.0L434.2 690.0L431.8 690.0L429.4 690.0L425.6 690.0L423.2 690.0L420.2 690.0L417.6 690.0L413.3 690.0L409.4 690.0L407.1 690.0L410.1 690.0L412.9 690.0L409.6 690.0L407.0 690.0L403.8 690.0L401.4 690.0L399.2 690.0L395.9 690.0L392.6 690.0L396.1 690.0L393.1 690.0L395.9 690.0L398.3 690.0L395.5 690.0L393.3 690.0L396.3 690.0L398.6 690.0L401.0 690.0L403.6 690.0L405.8 690.0L408.4 690.0L411.0 690.0L413.7 690.0L420.9 690.0L424.3 690.0L426.9 690.0L430.3 690.0L433.8 690.0L437.0 690.0L439.5 690.0L442.6 690.0L446.7 690.0L452.0 690.0L458.0 690.0L460.5 690.0L463.3 690.0L465.8 690.0L469.9 690.0L472.2 690.0L475.0 690.0L477.5 690.0L480.5 690.0L482.8 690.0L480.6 690.0L483.7 690.0L486.1 690.0L488.9 690.0L491.7 690.0L488.9 690.0L491.5 690.0L493.8 690.0L496.2 690.0L498.6 690.0L500.9 690.0L503.2 690.0L505.8 690.0L508.2 690.0L511.0 690.0L513.5 690.0L516.8 690.0L521.2 690.0L523.7 690.0L528.8 690.0L531.6 690.0L533.8 690.0L531.6 690.0L534.4 690.0L537.6 690.0L539.7 688.8L540.9 686.6L542.3 684.3L544.4 685.6L545.2 683.5L547.5 681.8L551.9 682.8L554.8 682.8L557.5 682.4L559.3 681.1L559.7 678.4L558.4 674.9L555.4 675.0L553.8 673.5L556.0 673.0L559.1 673.7L561.7 673.9L563.9 676.2L566.0 677.3L568.6 678.1L572.8 679.4L575.2 680.5L577.9 679.8L580.5 681.9L583.3 681.3L586.2 679.6L588.2 678.3L587.2 680.5L589.0 681.9L589.6 684.2L591.7 683.1L592.7 679.5L594.2 681.3L596.7 682.4L593.5 687.9L594.0 690.0L591.5 690.0L588.3 690.0L584.9 690.0L587.4 690.0L590.7 690.0L592.9 690.0L595.7 690.0L598.3 690.0L602.1 690.0L605.5 690.0L608.4 690.0L610.6 690.0L613.3 690.0L615.8 690.0L618.7 690.0L622.6 690.0L625.3 690.0L628.0 690.0L630.7 690.0L634.1 690.0L637.2 690.0L639.0 687.8L638.7 685.3L639.2 680.8L640.4 679.0L641.2 676.3L642.1 672.7L642.3 669.5L644.4 668.0L647.1 670.1L648.1 673.1L648.2 676.3L648.9 678.8L651.1 679.6ZM540.9 676.8L538.1 678.3L538.5 675.4L539.5 673.4L540.7 675.9ZM542.3 673.8L544.8 673.1L547.5 672.4L549.7 673.8L548.1 677.1L545.2 679.3L542.5 677.4L540.6 674.5L540.1 672.2L542.3 673.8ZM-8.7 186.5L-5.9 187.9L-3.4 187.8L-1.4 189.4L0.6 190.5L2.6 189.1L4.7 188.2L7.1 187.3L10.2 188.4L12.4 187.1L12.9 184.5L15.8 183.9L18.4 184.6L19.5 182.3L20.0 180.2L21.8 178.1L23.7 175.8L26.4 175.8L28.9 178.3L28.4 180.8L30.8 180.7L30.4 184.0L29.9 187.3L30.1 189.8L31.1 192.7L34.1 192.3L36.0 191.0L40.3 189.7L42.4 187.3L45.1 185.9L47.5 185.3L49.7 186.2L52.6 186.8L55.0 185.8L57.7 186.1L59.5 187.6L56.8 187.6L55.7 190.2L53.6 191.0L51.2 191.5L46.9 191.2L44.3 191.3L41.3 191.6L38.4 192.3L36.0 193.0L33.9 194.7L31.4 195.6L28.7 198.3L29.0 200.6L30.2 202.8L31.1 205.4L31.2 207.9L29.9 210.3L27.9 212.2L26.6 214.0L26.8 216.3L26.8 218.8L24.7 220.2L20.9 220.5L17.3 219.5L17.8 222.8L19.2 225.4L18.1 228.0L14.7 229.1L12.6 231.7L11.8 234.1L10.9 237.5L11.1 240.6L9.4 242.6L6.8 243.5L5.2 242.0L2.8 242.3L0.1 243.2L-2.3 244.5L-2.9 246.9L-6.2 247.8L-8.4 247.0L-8.7 249.5L-8.7 252.0L-8.7 255.0L-8.7 258.1L-8.7 260.3L-8.7 263.0L-8.7 265.4L-8.7 262.5L-8.7 258.7L-8.7 256.4L-8.7 254.0L-8.7 251.7L-8.7 249.3L-8.7 246.2L-8.7 243.4L-8.7 240.1L-8.7 237.5L-8.7 234.0L-8.7 230.0L-8.7 226.8L-8.7 224.4L-8.7 221.6L-8.7 219.1L-8.7 216.8L-8.7 214.5L-8.7 212.0L-8.7 209.5L-8.7 207.3L-8.7 204.9L-8.7 207.1L-8.7 204.3L-8.7 201.8L-8.7 199.3L-8.7 196.6L-8.7 192.5L-8.7 189.4L-8.7 186.3ZM78.4 208.9L77.3 206.5L76.3 204.3L78.7 204.5L81.8 205.2L84.2 205.2L81.6 207.0L79.4 208.3Z"};
+var C30=Math.cos(Math.PI/6);
+function P(lon,lat){return[(lon-68)*10*C30,(56-lat)*10]}
+var VIEW={cn:"40 0 560 420",mig:"150 255 520 390"};
+var STEP={"最高階梯":"var(--s1)","次高階梯":"var(--s2)","最低階梯":"var(--s3)"};
+
+var places=[
+ {id:"sc",n:"四川盆地",ll:[106,30.3],lab:"end",step:"次高階梯",env:"周圍群山圍繞，盆底地形相對平坦；溫暖溼潤的季風氣候。",
+  q:"四川盆地的人口點子會是？",o:["密集","稀疏"],a:0,pop:"人口眾多：盆底平坦、溫暖溼潤，農、工商業發達（學習會考題 3 的「甲」）。",ext:"次高階梯也可能很稠密。判斷疏密要看局部的地形、氣候與產業，不能只看在第幾階。"},
+ {id:"cj",n:"長江中下游平原",ll:[116.5,30.6],lab:"start",step:"最低階梯",env:"水源匯聚的平原，是經濟發達的精華區；夏雨冬乾的季風氣候。",
+  q:"長江中下游平原的人口點子會是？",o:["密集","稀疏"],a:0,pop:"人口稠密：平原農業發達、糧食充足，工商業與就業機會也多。",ext:"屬黑河—騰衝線以東的「43% 土地住 94% 人口」。"},
+ {id:"hb",n:"華北平原",ll:[116,36.3],lab:"start",step:"最低階梯",env:"地形平坦；溫帶季風氣候。",
+  q:"華北平原的人口點子會是？",o:["密集","稀疏"],a:0,pop:"人口稠密：地形平坦、傳統農業區（111 會考 28 解析：黃河下游華北平原屬人口密集區）。",ext:"對照：太行山以西的高原地區人口就較稀疏（教材 Q&A Q2）。"},
+ {id:"db",n:"東北平原",ll:[125,45.5],lab:"start",step:"最低階梯",env:"中國面積最大的平原，土地肥沃；溫帶季風氣候。",
+  q:"東北平原本身與它東、北、西三側的山地相比，哪裡人口較密？",o:["平原","三側山地"],a:0,pop:"平原較密；東北平原的東、北、西三側山地人口較稀疏（教材 Q&A Q2）。",ext:"東半部內部也有疏密差異：平原、盆地、平緩丘陵較密，山地與陡坡較疏。"},
+ {id:"dn",n:"東南丘陵",ll:[117.6,25.6],lab:"start",step:"最低階梯",env:"丘陵廣布、地勢崎嶇、山多田少，常被闢為梯田；溫暖溼潤的季風氣候。",
+  q:"人口不斷增加後，東南丘陵最可能出現什麼現象？",o:["人口外移","人口大量移入"],a:0,pop:"山多田少、糧食不足，形成人口外移的巨大推力，移往東南亞與臺灣（2-3）。",ext:"切到「2-3 向外遷移」圖層看路線。這是地形（第 1 課）→ 人口壓力 → 遷移 → 文化擴散的完整鏈。",go:"mig"},
+ {id:"zj",n:"珠江三角洲",ll:[113.3,22.9],lab:"end",step:"最低階梯",env:"河口三角洲平原，地形平坦；溫暖溼潤的季風氣候；臨海。",
+  q:"珠江三角洲的人口點子會是？",o:["密集","稀疏"],a:0,pop:"非常密集：沿海工商業都市就業機會多，吸引大量人口移入。",ext:"近代以來沿海的就業機會，使人口更集中於沿海都市（教材 Q&A Q2）。"},
+ {id:"yg",n:"雲貴高原",ll:[103.6,25.6],lab:"end",step:"次高階梯",env:"多石灰岩地形，地表高低起伏不平。",
+  q:"雲貴高原位在黑河—騰衝線以東，它的人口點子會是？",o:["和四川盆地一樣密集","比四川盆地稀疏"],a:1,pop:"比四川盆地稀疏：地勢崎嶇（學習會考題 3 的「乙」）。",ext:"陷阱：「線以東＝都很密」是錯的。黑河—騰衝線是大尺度的分界，不是每個地方的答案。"},
+ {id:"qz",n:"青藏高原",ll:[88,33],lab:"middle",step:"最高階梯",env:"地勢陡峻，有「世界屋脊」之稱；高地氣候（高度＞3,000 公尺、地表風強、終年積雪、日夜溫差大）。",
+  q:"青藏高原的人口點子會是？",o:["密集","稀疏"],a:1,pop:"非常稀疏：高山、高原地區居民維生不易。",ext:"西半部的人主要住在河谷或綠洲，廣大高山高原更稀疏。"},
+ {id:"tl",n:"塔里木盆地",ll:[83,39.5],lab:"middle",step:"次高階梯",env:"中國最大盆地，內有沙漠盤據；乾燥氣候，乾燥少雨、年日溫差大。",
+  q:"塔里木盆地內的人口最可能集中在哪裡？",o:["盆地中央的沙漠","盆地邊緣的綠洲"],a:1,pop:"集中在邊緣綠洲：水源來自高山夏季融雪形成的河水或地下水，可引水灌溉。",ext:"同樣是「盆地」，四川盆地很密、塔里木盆地很疏，差別在氣候（溼潤或乾燥）。"},
+ {id:"hx",n:"河西走廊",ll:[100.5,39],lab:"start",step:"次高階梯",env:"位於乾燥的西北地區，有河流通過或地下水充沛（雪水），有少量植被。",
+  q:"河西走廊在黑河—騰衝線以西，為什麼仍有人口聚集？",o:["有融雪形成的河水與地下水可灌溉","沿海工商業發達、就業機會多"],a:0,pop:"綠洲有水源，居民集中於此引水灌溉維生（課本第 25 頁側欄）。",ext:"西半部的「點狀聚集」：水源決定人住在哪裡。"},
+ {id:"nm",n:"內蒙古高原",ll:[112,43],lab:"middle",step:"次高階梯",env:"平坦遼闊的荒漠和草原；深居內陸、乾燥。",
+  q:"內蒙古高原地勢平坦，人口點子會是？",o:["密集","稀疏"],a:1,pop:"稀疏：深居內陸、氣候乾燥（學習會考題 3 的「丁」）。",ext:"地勢平坦不保證人多，水（降水）才是關鍵。蒙古族的那達慕大會也在這類草原環境。"},
+ {id:"zg",n:"準噶爾盆地",ll:[86.5,45.2],lab:"middle",step:"次高階梯",env:"深居內陸；乾燥少雨。",
+  q:"準噶爾盆地的人口點子會是？",o:["密集","稀疏"],a:1,pop:"稀疏：深居內陸、乾燥（學習會考題 3 的「丙」）。",ext:"和塔里木盆地一樣，人口集中在有水源的綠洲。"}
+];
+var CLIM={sc:"副熱帶季風氣候",cj:"副熱帶季風氣候",hb:"溫帶季風氣候",db:"溫帶季風氣候",dn:"副熱帶季風氣候",zj:"副熱帶季風氣候",yg:"副熱帶季風氣候",qz:"高地氣候",tl:"乾燥氣候（溫帶沙漠）",hx:"乾燥氣候",nm:"乾燥氣候（東部草原、西部沙漠）",zg:"乾燥氣候"};
+places.forEach(function(p){p.clim=CLIM[p.id]});
+var stations=[
+ {id:"ht",n:"和闐",ll:[79.9,37.1],lab:"start",t:13.5,p:44,c:["最冷月月均溫低於 0°C"],ans:"溫帶沙漠氣候",why:"年降水量 < 250 mm、最冷月 < 0°C。深居內陸、距海遙遠，水氣難以到達。"},
+ {id:"lz",n:"蘭州",ll:[103.8,36.1],lab:"end",t:11.2,p:294,c:["最冷月月均溫低於 0°C"],ans:"草原氣候",why:"年降水量 250～500 mm、最冷月 < 0°C。位於黃河上游河谷，深居內陸、距海遠。"},
+ {id:"hrb",n:"哈爾濱",ll:[126.6,45.75],lab:"end",t:4.9,p:538,c:["最冷月月均溫低於 0°C","1 月均溫約 −16～−20°C"],ans:"溫帶季風氣候",why:"年降水量 > 500 mm、最冷月 < 0°C（秦嶺—淮河以北）。緯度高，冬季寒冷漫長。"},
+ {id:"sh",n:"上海",ll:[121.5,31.2],lab:"start",t:16.8,p:1129,c:["最冷月月均溫介於 0～18°C"],ans:"副熱帶季風氣候",why:"年降水量 > 500 mm、最冷月 0～18°C（秦嶺—淮河以南）。"},
+ {id:"sy",n:"三亞",ll:[109.5,18.25],lab:"start",t:26.9,p:1453,c:["最冷月月均溫高於 18°C"],ans:"熱帶季風氣候",why:"年降水量 > 500 mm、最冷月 > 18°C，緯度最低。"},
+ {id:"ls",n:"拉薩",ll:[91.1,29.65],lab:"middle",t:9.3,p:439,c:["海拔約 3,660 公尺","最暖月月均溫低於 20°C"],ans:"高地氣候",why:"判讀第一步：最暖月 < 20°C 就是高地氣候，與降水量無關。海拔 > 3,000 公尺，日照強烈，有「日光城」之稱。"}
+];
+var CTYPES=["熱帶季風氣候","副熱帶季風氣候","溫帶季風氣候","草原氣候","溫帶沙漠氣候","高地氣候"];
+var dests=[
+ {id:"tw",n:"臺灣",ll:[121,23.7],d:"清代閩、粵移民大量來臺。<b>泰山巖</b>：福建安溪移民沿用原鄉廟名，也是新北市泰山區地名由來。漳州府移民多奉祀開漳聖王、泉州府多奉祀保生大帝，可由鄉土神推估原鄉。"},
+ {id:"ph",n:"菲律賓",ll:[121,15.5],d:"圖 1-2-7 標示的移入地區之一。"},
+ {id:"vn",n:"越南",ll:[106.3,16.5],d:"移入地區之一。2 下會學到：東南亞受中國文化影響以越南最明顯。"},
+ {id:"th",n:"泰國",ll:[100.8,14.5],d:"華人人數僅次於印尼（與馬來西亞同屬次多）。"},
+ {id:"mm",n:"緬甸",ll:[96,20],d:"圖 1-2-7 標示的移入地區之一。"},
+ {id:"kh",n:"柬埔寨",ll:[104.9,12.6],d:"圖 1-2-7 標示的移入地區之一。"},
+ {id:"my",n:"馬來西亞",ll:[101.8,3.5],d:"華人人數次多。<b>峇峇娘惹</b>：華人與馬來人通婚，形成混血文化；<b>肉骨茶</b>：華人移工帶中藥補身而發展出的料理。"},
+ {id:"sg",n:"新加坡",ll:[103.8,1.3],d:"華人<b>比例最高</b>，約 70% 以上。<b>牛車水</b>是最古老且最大的中國城；海南雞飯、肉骨茶都很普遍。"},
+ {id:"id",n:"印尼",ll:[107,-6.5],d:"華人<b>人數最多</b>，約 1 千萬人。"},
+ {id:"bn",n:"汶萊",ll:[114.7,4.6],d:"圖 1-2-7 標示的移入地區之一。"}
+];
+var polPts=[
+ {id:"xz",n:"西藏",ll:[91,30.5],lab:"middle",d:"人口增幅 21.52%（全中國最高）。生育政策是各省區中最寬鬆的之一，自然增長率依然較高。"},
+ {id:"xj",n:"新疆",ll:[87.6,42],lab:"middle",d:"人口增幅 18.50%。生育政策寬鬆，加上實施脫貧戰略期間人口遷入。維吾爾族 2008～2018 年均增長率 1.72%，高於少數民族平均 1.46%。"},
+ {id:"nx",n:"寧夏",ll:[106.2,37.5],lab:"start",d:"人口增幅 14.30%，高於全國平均。"},
+ {id:"gz",n:"貴州",ll:[106.8,26.8],lab:"start",d:"少數民族人口集中的省區之一，人口增幅高於全國平均。"},
+ {id:"gx",n:"廣西",ll:[108.3,23.6],lab:"start",d:"少數民族人口集中的省區之一（壯族是人數最多的少數民族），人口增幅高於全國平均。"}
+];
+
+var map=$("#map"),info=$("#info"),layer="pop",current=null;
+(function draw(){
+  var defs=S("defs",{});
+  var cp=S("clipPath",{id:"cnclip"});cp.appendChild(S("path",{d:MAP.china}));defs.appendChild(cp);
+  var mk=S("marker",{id:"arrow",viewBox:"0 0 10 10",refX:8,refY:5,markerWidth:5,markerHeight:5,orient:"auto-start-reverse"});
+  mk.appendChild(S("path",{d:"M0 0L10 5L0 10z",fill:"var(--bad)"}));defs.appendChild(mk);
+  map.appendChild(defs);
+  map.appendChild(S("rect",{x:-50,y:-50,width:800,height:800,fill:"var(--sea)"}));
+  map.appendChild(S("path",{d:MAP.others,fill:"var(--land)",stroke:"var(--line)","stroke-width":.8}));
+  map.appendChild(S("path",{d:MAP.china,fill:"var(--cn)"}));
+  function pts(a){return a.map(function(q){return P(q[0],q[1]).join(",")}).join(" ")}
+  function line(a){return a.map(function(q,i){var c=P(q[0],q[1]);return(i?"L":"M")+c[0].toFixed(1)+" "+c[1].toFixed(1)}).join("")}
+  var L1=[[74,37.5],[80,36.3],[86,36],[90,37.5],[94,38.8],[99,38.3],[102.5,37],[103,34.5],[102.5,31],[101.5,28],[100,25.5],[98.7,24.5]];
+  var L2=[[121.5,53.5],[121,50],[119,47],[117,43.5],[115.5,41],[114,38],[113,35.5],[111,32.5],[110,31],[110.5,28],[110,26],[108.5,23.5],[107.5,22]];
+  var HI=L1.concat([[98.7,15],[60,15],[60,37.5]]);
+  var LO=L2.concat([[107.5,15],[145,15],[145,56],[121.5,56]]);
+  var M500=[[121,53.5],[120.5,50],[119,46],[116,42.5],[111,41.3],[106.5,38.5],[106,36],[103,34.5],[102.5,37],[99,38.3],[94,38.8],[90,37.5],[86,36],[80,36.3],[74,37.5],[60,37.5],[60,56],[121,56]];
+  var QH=[[103.5,34.3],[106,33.8],[109,33.9],[112,33.4],[115,32.7],[117.5,33],[119.5,33.6],[120.3,34]];
+  var sf=S("g",{id:"stepFill","clip-path":"url(#cnclip)"});
+  sf.appendChild(S("rect",{x:-50,y:-50,width:800,height:800,fill:"var(--s2)",opacity:.28}));
+  sf.appendChild(S("polygon",{points:pts(HI),fill:"var(--s1)",opacity:.32}));
+  sf.appendChild(S("polygon",{points:pts(LO),fill:"var(--s3)",opacity:.3}));
+  map.appendChild(sf);
+  var cf=S("g",{id:"climFill","clip-path":"url(#cnclip)"});
+  cf.appendChild(S("rect",{x:-50,y:-50,width:800,height:800,fill:"var(--s3)",opacity:.3}));
+  cf.appendChild(S("polygon",{points:pts(M500),fill:"var(--west)",opacity:.32}));
+  cf.appendChild(S("polygon",{points:pts(HI),fill:"var(--s1)",opacity:.32}));
+  map.appendChild(cf);
+  var sl=S("g",{id:"stepLines"});
+  sl.appendChild(S("path",{d:line(L1),fill:"none",stroke:"var(--s1)","stroke-width":2.5}));
+  sl.appendChild(S("path",{d:line(L2),fill:"none",stroke:"var(--s3)","stroke-width":2.5}));
+  [[P(84,30.3),"最高階梯 約 4,000 m"],[P(94,43.3),"次高階梯 約 1,500 m"],[P(118,27.5),"最低階梯 1,000 m 以下"]].forEach(function(t){sl.appendChild(S("text",{x:t[0][0],y:t[0][1],"text-anchor":"middle","font-size":14,"font-weight":700},t[1]))});
+  [[P(84,37.1),"崑崙山—祁連山—橫斷山"],[P(121,40.2),"大興安嶺—太行山—巫山"]].forEach(function(t,i){sl.appendChild(S("text",{x:t[0][0],y:t[0][1],"text-anchor":i?"start":"middle","font-size":12},t[1]))});
+  map.appendChild(sl);
+  var cl=S("g",{id:"climLines"});
+  cl.appendChild(S("path",{d:line(M500.slice(0,8)),fill:"none",stroke:"var(--west)","stroke-width":2.5,"stroke-dasharray":"6 4"}));
+  cl.appendChild(S("path",{d:line(QH),fill:"none",stroke:"var(--accent)","stroke-width":2.5}));
+  var q0=P(120.4,34.6);cl.appendChild(S("text",{x:q0[0]+4,y:q0[1],"font-size":12,"font-weight":700},"秦嶺—淮河"));
+  var m0=P(112,42.6);cl.appendChild(S("text",{x:m0[0],y:m0[1],"text-anchor":"middle","font-size":12,"font-weight":700},"約 500 mm"));
+  [[P(86,43),"乾燥氣候"],[P(86,32),"高地氣候"],[P(114,28.5),"季風氣候"]].forEach(function(t){cl.appendChild(S("text",{x:t[0][0],y:t[0][1],"text-anchor":"middle","font-size":16,"font-weight":700},t[1]))});
+  map.appendChild(cl);
+  // Hu line halves
+  var H=P(127.5,50.25),T=P(98.5,25.02),dx=T[0]-H[0],dy=T[1]-H[1];
+  var A=[H[0]-dx*.6,H[1]-dy*.6],B=[T[0]+dx*.6,T[1]+dy*.6];
+  var g=S("g",{id:"huHalves","clip-path":"url(#cnclip)"});
+  g.appendChild(S("polygon",{points:[A,B,[-400,B[1]],[-400,-400],[A[0],-400]].map(function(p){return p.join(",")}).join(" "),fill:"var(--west)",opacity:.28}));
+  g.appendChild(S("polygon",{points:[A,B,[B[0],900],[1100,900],[1100,A[1]]].map(function(p){return p.join(",")}).join(" "),fill:"var(--east)",opacity:.3}));
+  map.appendChild(g);
+  map.appendChild(S("path",{d:MAP.china,fill:"none",stroke:"var(--ink)","stroke-width":1.2,opacity:.7}));
+  map.appendChild(S("path",{d:MAP.taiwan,fill:"var(--land)",stroke:"var(--ink)","stroke-width":.8,opacity:.9}));
+  var hu=S("g",{id:"huLine"});
+  hu.appendChild(S("line",{x1:H[0],y1:H[1],x2:T[0],y2:T[1],stroke:"var(--bad)","stroke-width":2.2,"stroke-dasharray":"7 5"}));
+  [[H,"黑河","start",8,-4],[T,"騰衝","end",-8,14]].forEach(function(c){hu.appendChild(S("circle",{cx:c[0][0],cy:c[0][1],r:4,fill:"var(--bad)"}));hu.appendChild(S("text",{x:c[0][0]+c[3],y:c[0][1]+c[4],"text-anchor":c[2],"font-size":15,"font-weight":700},c[1]))});
+  map.appendChild(hu);
+  var stats=S("g",{id:"huStats"});
+  stats.appendChild(S("text",{x:52,y:P(0,25.5)[1],"text-anchor":"start","font-size":15,"font-weight":700,style:"fill:var(--west)"},"西半部：土地 57%｜人口 6%"));
+  stats.appendChild(S("text",{x:P(118,20.5)[0]+30,y:P(118,20.5)[1]+16,"text-anchor":"middle","font-size":15,"font-weight":700,style:"fill:var(--east)"},"東半部：土地 43%｜人口 94%"));
+  map.appendChild(stats);
+  // migration arrows
+  var mg=S("g",{id:"migArrows"}),O=P(117.8,24.6);
+  dests.forEach(function(d){var D=P(d.ll[0],d.ll[1]);var mx=(O[0]+D[0])/2,my=(O[1]+D[1])/2,vx=D[0]-O[0],vy=D[1]-O[1];var cx=mx-vy*.18,cy=my+vx*.18;
+    mg.appendChild(S("path",{d:"M"+O[0]+" "+O[1]+"Q"+cx+" "+cy+" "+D[0]+" "+D[1],fill:"none",stroke:"var(--bad)","stroke-width":2,opacity:.75,"marker-end":"url(#arrow)"}))});
+  mg.appendChild(S("circle",{cx:O[0],cy:O[1],r:7,fill:"var(--bad)"}));
+  mg.appendChild(S("text",{x:O[0]+10,y:O[1]-8,"font-size":15,"font-weight":700},"閩、粵沿海"));
+  map.appendChild(mg);
+  // pins
+  function pin(list,kind,color){var gg=S("g",{id:"pins-"+kind});
+    list.forEach(function(p){var c=P(p.ll[0],p.ll[1]);
+      var a=S("g",{class:"pin",tabindex:0,role:"button","aria-label":p.n,"data-id":p.id});
+      a.appendChild(S("circle",{cx:c[0],cy:c[1],r:17,fill:"transparent"}));
+      a.appendChild(S("circle",{class:"dot",cx:c[0],cy:c[1],r:7,fill:color(p),stroke:"var(--card)","stroke-width":2.5}));
+      var lab=p.lab||"start",dx=lab==="start"?11:lab==="end"?-11:0,dy=lab==="middle"?-13:5;
+      a.appendChild(S("text",{x:c[0]+dx,y:c[1]+dy,"text-anchor":lab,"font-size":15},p.n));
+      a.addEventListener("click",function(){select(kind,p)});
+      a.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();select(kind,p)}});
+      gg.appendChild(a)});
+    map.appendChild(gg);return gg}
+  pin(places,"place",function(){return "var(--ink)"});
+  pin(dests,"dest",function(){return "var(--bad)"});
+  pin(polPts,"pol",function(){return "var(--accent)"});
+  pin(stations,"stn",function(){return "var(--ink)"});
+})();
+
+var LAYERS={
+ terrain:{view:"cn",show:["pins-place","stepFill","stepLines"],intro:'<h3>1-1 地勢西高東低，呈三級階梯</h3><div class="flow"><div><b>最高階梯</b>平均約 4,000 公尺，以山地和高原為主（青藏高原）</div><div><b>次高階梯</b>平均約 1,500 公尺，多山地、高原和盆地</div><div><b>最低階梯</b>平均約 1,000 公尺以下，主要為平原和丘陵</div></div><p style="margin-top:10px">影響：有利夏季海洋暖溼氣流深入內陸；主要河川多向東流，上游富水力、下游利於東西向水運。山地和高原約占總面積 59%，山多平原少。</p><p class="note">點地圖上的地點，判斷它在哪一級階梯，再看它和人口的關係。</p>',
+   legend:'<span><i class="sq" style="background:var(--s1);opacity:.6"></i>最高階梯</span><span><i class="sq" style="background:var(--s2);opacity:.6"></i>次高階梯</span><span><i class="sq" style="background:var(--s3);opacity:.6"></i>最低階梯</span>'},
+ climate:{view:"cn",show:["pins-stn","climFill","climLines"],intro:'<h3>1-2 氣候多樣，分屬三大類型</h3><div class="flow"><div><b>氣溫</b>夏季普遍高溫、南北溫差小；冬季南暖北冷、南北溫差大（1 月廣州約 12～16°C，哈爾濱約 −16～−20°C）</div><div><b>降水</b>時間：受季風影響，夏雨冬乾。空間：受季風、距海遠近、地形影響，由東南向西北遞減（東溼西乾）</div><div><b>判讀三步驟</b>① 最暖月 < 20°C → 高地氣候 ② 最冷月 < 0°C 溫帶、0～18°C 副熱帶、> 18°C 熱帶 ③ 年降水 < 250 mm 沙漠、250～500 mm 草原、> 500 mm 季風</div></div><p class="note" style="margin-top:8px">秦嶺—淮河一線：1 月 0°C 等溫線、750 mm 等雨量線，也是溫帶與副熱帶季風氣候的分界。點黑色氣候站練習判讀。</p>',
+   legend:'<span><i class="sq" style="background:var(--s3);opacity:.6"></i>季風氣候</span><span><i class="sq" style="background:var(--west);opacity:.6"></i>乾燥氣候</span><span><i class="sq" style="background:var(--s1);opacity:.6"></i>高地氣候</span><span><i style="background:var(--accent)"></i>秦嶺—淮河</span><span><i style="background:var(--ink)"></i>氣候站</span>'},
+ pop:{view:"cn",show:["pins-place","huHalves","huStats","huLine"],intro:'<h3>東密西疏：黑河—騰衝線</h3><p>中國各地因<b>環境負載力</b>高低有別，大致以東北的黑河、西南的騰衝連線為界。</p><div class="flow"><div><b>連線以東</b>地形平坦、氣候溫暖溼潤、位置優越、交通便利，農、工商業發達 → 土地 43%，人口 94%</div><div><b>連線以西</b>深入內陸、乾燥少雨、多山地高原盆地，維生不易 → 土地 57%，人口 6%，集中在河谷與綠洲</div></div><p class="note" style="margin-top:8px">推算：東半部平均人口密度約是西半部的 21 倍（(94÷43)÷(6÷57)，依課本比例自行計算）。點地圖上的地點練習預測。</p>',
+   legend:'<span><i class="sq" style="background:var(--east);opacity:.5"></i>連線以東</span><span><i class="sq" style="background:var(--west);opacity:.5"></i>連線以西</span><span><i style="background:var(--bad)"></i>黑河—騰衝線</span>'},
+ mig:{view:"mig",show:["pins-dest","migArrows"],intro:'<h3>2-3 近代中國的人口為何向外遷移？</h3><div class="flow"><div><b>推力</b>東南沿海丘陵廣布、山多田少，人口增加後難以謀生</div><div><b>去向</b>早期以鄰近的東南亞與臺灣最多；19 世紀後數以百萬計華工前往美國、澳洲採礦、築路（不在此圖範圍）</div><div><b>影響</b>移民在新居地重建或複製原鄉的飲食、衣著、住宅、習俗 → 華人文化擴散，形成中國城、唐人街</div></div><p class="note" style="margin-top:8px">中間障礙：冬季順東北季風南下、夏季順西南季風返鄉（船棹風）。點紅色目的地看當地的華人文化。</p>',
+   legend:'<span><i style="background:var(--bad)"></i>移入地區</span><span>→ 移民路線（依課本圖 1-2-7 示意）</span>'},
+ pol:{view:"cn",show:["pins-pol"],intro:'<h3>交會：政策也有地區差異</h3><p>一胎化時期，<b>部分少數民族、農村家庭及特殊情況</b>可生第二胎。少數民族集中的邊疆省區，生育政策較寬鬆。</p><div class="flow"><div><b>空間</b>少數民族多分布在邊疆，鄰國眾多、地形阻隔，民族組成多元</div><div><b>時間</b>1953 年少數民族 3,532 萬人（6.06%）→ 2020 年 1.25 億人（8.89%）</div><div><b>結果</b>2010～2020 年少數民族年均增長 0.98%，漢族 0.48%，快一倍以上；主因是生育意願較高</div></div><div id="polQ"></div><p class="note" style="margin-top:8px">資料：備課用書「素養試題觀摩」。點藍色省區看人口增幅。</p>',
+   legend:'<span><i style="background:var(--accent)"></i>人口增幅高於全國平均的省區</span>'}
+};
+function setLayer(k){
+  layer=k;var L=LAYERS[k];
+  [].forEach.call(document.querySelectorAll(".layers .btn"),function(b){var on=b.getAttribute("data-layer")===k;b.classList.toggle("sel",on);b.setAttribute("aria-selected",String(on))});
+  map.setAttribute("viewBox",VIEW[L.view]);
+  ["pins-place","pins-dest","pins-pol","pins-stn","migArrows","huHalves","huStats","huLine","stepFill","stepLines","climFill","climLines"].forEach(function(id){var g=document.getElementById(id);var on=L.show.indexOf(id)>=0;g.style.display=on?"":"none"});
+  $("#mlegend").innerHTML=L.legend;info.innerHTML=L.intro;current=null;
+  [].forEach.call(map.querySelectorAll(".pin"),function(p){p.classList.remove("on")});
+  if(k==="pol")buildPolQ();
+}
+[].forEach.call(document.querySelectorAll(".layers .btn"),function(b){b.addEventListener("click",function(){setLayer(b.getAttribute("data-layer"))})});
+
+places.forEach(function(p){reg("map-"+p.id);reg("map-step-"+p.id)});
+stations.forEach(function(p){reg("map-stn-"+p.id)});
+reg("map-pol");
+function select(kind,p){
+  [].forEach.call(map.querySelectorAll(".pin"),function(x){x.classList.toggle("on",x.getAttribute("data-id")===p.id)});
+  if(kind==="dest"){info.innerHTML='<h3>'+p.n+'</h3><p>'+p.d+'</p><p class="note"><button class="btn" id="backIntro">回到本圖層說明</button></p>';$("#backIntro").addEventListener("click",function(){setLayer(layer)});return}
+  if(kind==="pol"){info.innerHTML='<h3>'+p.n+'</h3><p>'+p.d+'</p><p class="note">西藏、新疆、寧夏、貴州、廣西 5 省區的人口增加幅度都高於全中國平均，增幅最大的是西藏、新疆與寧夏，為全國平均的 1.4～2.6 倍。</p><p class="note"><button class="btn" id="backIntro">回到本圖層說明</button></p>';$("#backIntro").addEventListener("click",function(){setLayer(layer)});return}
+  if(kind==="stn"){
+    info.innerHTML='<h3>'+p.n+'</h3><div class="readout" style="margin-top:0"><div><div class="lab">年均溫</div><div class="val">'+p.t+'°C</div></div><div><div class="lab">年降水量</div><div class="val">'+p.p.toLocaleString()+' mm</div></div></div><p class="note" style="margin:8px 0 4px">其他線索：'+p.c.join("；")+'</p><p class="k">這是哪一種氣候？</p><div class="grp" id="predBtns"></div><div id="reveal"></div>';
+    var sb=$("#predBtns");CTYPES.forEach(function(o){var b=el("button",{class:"btn"},o);b.addEventListener("click",function(){var ok=o===p.ans;[].forEach.call(sb.children,function(x){x.classList.remove("ok","no")});b.classList.add(ok?"ok":"no");mark("map-stn-"+p.id,ok);
+      $("#reveal").innerHTML='<div class="fb '+(ok?"ok":"no")+'">'+(ok?"判讀正確。":"答案是「"+p.ans+"」。")+p.why+'</div>'});sb.appendChild(b)});
+    return}
+  var chip=p.step&&layer!=="terrain"?'<span class="stepchip" style="background:'+STEP[p.step]+'">'+p.step+'</span>':'';
+  if(layer==="terrain"){
+    info.innerHTML='<h3>'+p.n+'</h3><p class="k">它位在哪一級階梯？</p><div class="grp" id="predBtns"></div><div id="reveal"></div>';
+    var tb=$("#predBtns");["最高階梯","次高階梯","最低階梯"].forEach(function(o){var b=el("button",{class:"btn"},o);b.addEventListener("click",function(){var ok=o===p.step;[].forEach.call(tb.children,function(x){x.classList.remove("ok","no")});b.classList.add(ok?"ok":"no");mark("map-step-"+p.id,ok);
+      $("#reveal").innerHTML='<div class="fb '+(ok?"ok":"no")+'">'+(ok?"正確。":"答案是「"+p.step+"」。")+'</div><div class="flow"><div><b>地形</b>'+p.env+'</div><div><b>氣候</b>'+p.clim+'</div><div><b>下一步</b>切到「2-1 人口」圖層，預測這裡的人口疏密。</div></div>'});tb.appendChild(b)});
+    return}
+  info.innerHTML='<h3>'+chip+p.n+'</h3><p class="note" style="margin-bottom:6px">預測</p><p class="k">'+p.q+'</p><div class="grp" id="predBtns"></div><div id="reveal"></div>';
+  var box=$("#predBtns");
+  p.o.forEach(function(o,k){var b=el("button",{class:"btn"},o);b.addEventListener("click",function(){
+    var ok=k===p.a;[].forEach.call(box.children,function(x){x.classList.remove("ok","no")});b.classList.add(ok?"ok":"no");mark("map-"+p.id,ok);
+    var r='<div class="fb '+(ok?"ok":"no")+'">'+(ok?"預測正確。":"答案是「"+p.o[p.a]+"」。")+'</div><div class="flow"><div><b>環境（第 1 課）</b>'+p.env+'<br>氣候：'+p.clim+'</div><div><b>人口（第 2 課）</b>'+p.pop+'</div><div><b>延伸思考</b>'+p.ext+'</div></div>';
+    if(p.go)r+='<p style="margin-top:8px"><button class="btn primary" id="goLayer">看移民路線</button></p>';
+    $("#reveal").innerHTML=r;if(p.go)$("#goLayer").addEventListener("click",function(){setLayer(p.go)});
+  });box.appendChild(b)});
+}
+function buildPolQ(){
+  var host=$("#polQ");if(!host)return;
+  host.innerHTML='<p class="k" style="margin-top:10px">為什麼少數民族人口增長比漢族快？</p>';
+  var opts=["生育意願較高，且所在地區生育政策較寬鬆","大量少數民族向外移民","少數民族地區醫療衛生較差"],grp=el("div",{class:"grp"}),fb=el("div");
+  opts.forEach(function(o,k){var b=el("button",{class:"btn"},o);b.addEventListener("click",function(){var ok=k===0;[].forEach.call(grp.children,function(x){x.classList.remove("ok","no")});b.classList.add(ok?"ok":"no");mark("map-pol",ok);
+    fb.innerHTML='<div class="fb '+(ok?"ok":"no")+'">'+(ok?"正確。":"再想想。")+'備課用書指出主因是少數民族生育意願較高；西藏、新疆的生育政策是各省區中最寬鬆的。這說明全國性的政策，在不同地區的執行與結果並不相同。</div>'});grp.appendChild(b)});
+  host.appendChild(grp);host.appendChild(fb);
+}
+setLayer("terrain");
+
+/* =========================================================
+   TIME HUB
+   ========================================================= */
+var KY=[1950,1953,1964,1970,1973,1979,1982,1990,2000,2010,2016,2020,2021,2023];
+var popD=[[1950,5.5],[1970,8.3],[1980,9.9],[1990,11.4],[2000,12.7],[2010,13.4],[2020,14.1],[2023,14.1]];
+var birthD=[[1970,33.6],[1980,18.2],[1990,21.1],[2000,14.0],[2010,11.9],[2020,8.5],[2023,6.4]];
+var deathD=[[1970,7.6],[1980,6.3],[1990,6.7],[2000,6.5],[2010,7.1],[2020,7.0],[2023,7.9]];
+var childD=[[1953,36.28],[1964,40.69],[1970,40.3],[1982,33.59],[1990,27.69],[2000,22.89],[2010,16.60],[2020,17.95],[2023,16.3]];
+var oldD=[[1953,4.41],[1964,3.56],[1970,4.0],[1982,4.91],[1990,5.57],[2000,6.96],[2010,8.87],[2020,13.50],[2023,15.4]];
+var srD=[[1970,107],[1980,107],[1990,108],[2000,114],[2010,117],[2020,113],[2023,111]];
+var EVENTS={
+ 1950:"結束長期戰亂、土地改革；受蘇聯影響<b>鼓勵生育</b>，甚至禁止人工流產，加上醫療改善，出現戰後嬰兒潮。",
+ 1953:"第一次人口普查。年齡組成以幼年、壯年為主，老年只有約 4%。",
+ 1964:"幼年人口比例達 40% 以上，人口非常年輕。1960 年代末人口逼近 8 億，被迫轉向節育。",
+ 1970:"出生率 33.6‰，自然增加率約 26‰，人口快速增加。糧食、物資與建設因應不及，1970 年代起提出計畫生育政策。",
+ 1973:"提出<b>「晚、稀、少」</b>：鼓勵晚婚、生育間隔 3 年以上、不超過兩個孩子，但效果有限。",
+ 1979:"實施<b>一胎化政策</b>：一對夫妻只能生一胎；部分少數民族、農村家庭及特殊情況可生第二胎；超生須繳社會扶養費。",
+ 1982:"人口快接近 10 億（1980 年 9.9 億）。幼年比例開始下降。",
+ 1990:"一胎化實施後出生率仍有上升（1980→1990：18.2→21.1‰），迫使 1990 年代<b>全面嚴格開罰超生</b>。新生兒性別比開始明顯偏高。",
+ 2000:"出生率大幅下滑。老年人口 6.96%，即將跨過 7%（高齡化社會）。新生兒性別比升到 114。",
+ 2010:"老年人口 8.87%，已是高齡化社會。新生兒性別比 117，失衡最嚴重；「光棍」問題浮現。",
+ 2016:"<b>全面開放二胎</b>（2016 年 1 月），終結一胎化政策。",
+ 2020:"幼年比例由 16.60% 微升到 17.95%（與開放二胎有關，112 會考 4）。但出生率仍降到 8.5‰。",
+ 2021:"<b>開放三胎</b>（2021 年 8 月）。調查顯示超過一半家庭不考慮生第二、三胎，主因是工作繁忙與教養費用偏高。",
+ 2023:"出生率 6.4‰ < 死亡率 7.9‰，<b>自然增加率為負</b>，人口總數停滯在 14.1 億。老年人口 15.4%，超過 14%，<b>邁入高齡社會</b>。"
+};
+var tc=$("#tchart");
+var X=function(y){return 64+(y-1950)/(2023-1950)*556};
+var panels=[
+ {t:"人口總數（億人）",y0:22,h:76,lo:0,hi:15,ticks:[0,5,10,15],series:[{d:popD,c:"var(--ink)"}]},
+ {t:"出生率、死亡率（‰）",y0:126,h:76,lo:0,hi:35,ticks:[0,10,20,30],series:[{d:birthD,c:"var(--accent)"},{d:deathD,c:"var(--west)"}]},
+ {t:"幼年與老年人口比例（%）",y0:230,h:76,lo:0,hi:45,ticks:[0,7,14,30,45],th:[7,14],series:[{d:childD,c:"var(--east)"},{d:oldD,c:"var(--bad)"}]},
+ {t:"新生兒性別比（縱軸從 100 起）",y0:334,h:76,lo:100,hi:120,ticks:[100,110,120],series:[{d:srD,c:"var(--bad)",dash:"2023"}]}
+];
+(function(){
+  [[1950,1970,"--s1"],[1973,2016,"--s2"],[2016,2023,"--s3"]].forEach(function(b){
+    tc.appendChild(S("rect",{x:X(b[0]),y:14,width:X(b[1])-X(b[0]),height:400,fill:"var("+b[2]+")",opacity:.1}))});
+  panels.forEach(function(p){
+    var Y=function(v){return p.y0+p.h-(v-p.lo)/(p.hi-p.lo)*p.h};p.Y=Y;
+    tc.appendChild(S("text",{x:64,y:p.y0-6,style:"fill:var(--ink);font-weight:500"},p.t));
+    p.ticks.forEach(function(v){tc.appendChild(S("line",{x1:64,x2:620,y1:Y(v),y2:Y(v),class:v===p.lo?"axis":"grid"}));tc.appendChild(S("text",{x:58,y:Y(v)+4,"text-anchor":"end"},v))});
+    if(p.th)p.th.forEach(function(v){tc.appendChild(S("text",{x:X(1971),y:Y(v)-3,"text-anchor":"start","font-size":11},v===7?"7% 高齡化社會":"14% 高齡社會"))});
+    p.series.forEach(function(s){
+      tc.appendChild(S("path",{d:s.d.map(function(q,i){return(i?"L":"M")+X(q[0]).toFixed(1)+" "+Y(q[1]).toFixed(1)}).join(""),fill:"none",stroke:s.c,"stroke-width":2.2,"stroke-linejoin":"round"}));
+      s.d.forEach(function(q){tc.appendChild(S("circle",{cx:X(q[0]),cy:Y(q[1]),r:2.8,fill:s.c}))})});
+  });
+  [1950,1960,1970,1980,1990,2000,2010,2023].forEach(function(y){tc.appendChild(S("text",{x:X(y),y:430,"text-anchor":"middle"},y))});
+  tc.appendChild(S("line",{id:"cursor",x1:0,x2:0,y1:14,y2:414,stroke:"var(--accent)","stroke-width":2}));
+})();
+function at(d,y){for(var i=d.length-1;i>=0;i--)if(d[i][0]<=y)return d[i];return null}
+function cell(lab,d,y,unit,fmt){var q=at(d,y);if(!q)return '<div><div class="lab">'+lab+'</div><div class="val">—</div><div class="src">此時尚無資料</div></div>';
+  return '<div><div class="lab">'+lab+'</div><div class="val">'+(fmt?fmt(q[1]):q[1])+unit+'</div><div class="src">'+(q[0]===y?"當年資料":"最近資料："+q[0]+" 年")+'</div></div>'}
+function pickYear(i){
+  var y=KY[i];$("#yrOut").textContent=y;var cx=X(y);var c=$("#cursor");c.setAttribute("x1",cx);c.setAttribute("x2",cx);
+  var b=at(birthD,y),d=at(deathD,y),ni=(b&&d&&b[0]===d[0])?'<div><div class="lab">自然增加率</div><div class="val">'+(b[1]-d[1]).toFixed(1)+'‰</div><div class="src">出生率 − 死亡率（'+b[0]+'）</div></div>':'';
+  $("#readout").innerHTML=cell("人口總數",popD,y," 億")+cell("出生率",birthD,y,"‰")+cell("死亡率",deathD,y,"‰")+ni+cell("幼年（0–14 歲）",childD,y,"%")+cell("老年（65 歲以上）",oldD,y,"%")+cell("新生兒性別比",srD,y,"");
+  $("#eventBox").innerHTML='<div class="fb ok" style="margin:0"><b>'+y+' 年</b>　'+EVENTS[y]+'</div>';
+}
+$("#yr").addEventListener("input",function(e){pickYear(+e.target.value)});
+pickYear(5);
+
+[["青藏地區","高原・高地氣候","藏族、犛牛、帳篷、晒青稞。氣候寒冷，衣袍可依日夜溫差穿脫。"],
+ ["新疆","乾燥・綠洲","平頂式建築、駱駝、哈密瓜與葡萄。日夜溫差大，瓜果甜度高。"],
+ ["內蒙古","高原・草原","草原、蒙古包，游牧生活。"],
+ ["黃土高原","黃土・千溝萬壑","窰洞。黃土由風力堆積，鬆散易受流水侵蝕。"],
+ ["雲貴高原","石灰岩地形","苗族、壩子；壯族。地勢崎嶇，「地無三里平」。"],
+ ["東北","平原・溫帶季風","鄂倫春族林獵生活、滿族。冬季寒冷，傳統民居有火炕。"],
+ ["華北","平原・溫帶季風","胡同巷弄。"],
+ ["長江中下游","平原・副熱帶季風","小橋流水，「魚米之鄉」。"],
+ ["東南丘陵","丘陵・山多田少","梯田、土樓。人口增加後形成外移推力（第 2 課）。"]
+].forEach(function(c){var b=el("button",{"aria-expanded":"false"},'<span class="t" style="font-size:17px">'+c[0]+'</span><span class="h">'+c[1]+'</span><span class="d">'+c[2]+'</span>');
+  b.addEventListener("click",function(){b.classList.toggle("open");b.setAttribute("aria-expanded",String(b.classList.contains("open")))});$("#landCards").appendChild(b)});
+
+/* =========================================================
+   PRACTICE
+   ========================================================= */
+var minority=[["壯族",15.6],["維吾爾族",9.4],["回族",9.1],["苗族",8.8],["滿族",8.3],["彝族",7.8],["土家族",7.6],["藏族",5.6],["蒙古族",5.0],["其他",22.8]];
+minority.forEach(function(m){var row=el("div",{class:"agerow"});row.appendChild(el("span",null,m[0]));
+  var bar=el("div",{style:"height:12px;background:var(--line);border-radius:6px;overflow:hidden"});
+  bar.appendChild(el("div",{style:"height:100%;width:"+(m[1]/22.8*100)+"%;background:"+(m[0]==="其他"?"var(--muted)":"var(--west)")}));
+  row.appendChild(bar);row.appendChild(el("span",{style:"text-align:right"},m[1]+"%"));$("#minority").appendChild(row)});
+
+var chain=[
+ {p:"人口快速老化（高齡社會）",c:"積極推動老年福利制度，如規畫老年公寓與老齡餐廳",r:"人口老化問題未見減緩"},
+ {p:"少子化",c:"2016 年全面開放二胎、2021 年開放三胎",r:"少子化問題持續惡化"},
+ {p:"性別結構失衡",c:"加強宣導性別平等的重要性",r:"性別比失衡仍嚴重"}
+];
+(function(){var box=$("#chainGame");box.appendChild(el("div",{class:"chainrow chainhead"},"<span>問題</span><span>對策</span><span>目前結果</span>"));
+  var cs=shuffle(chain.map(function(x){return x.c})),rs=shuffle(chain.map(function(x){return x.r}));
+  chain.forEach(function(x,i){reg("chain"+i);var row=el("div",{class:"chainrow"});row.appendChild(el("div",{class:"cell"},x.p));
+    var s1=el("select",{id:"chainC"+i,"aria-label":x.p+" 的對策"}),s2=el("select",{id:"chainR"+i,"aria-label":x.p+" 的結果"});
+    s1.appendChild(el("option",{value:""},"選擇對策…"));cs.forEach(function(c){s1.appendChild(el("option",{value:c},c))});
+    s2.appendChild(el("option",{value:""},"選擇結果…"));rs.forEach(function(c){s2.appendChild(el("option",{value:c},c))});
+    row.appendChild(s1);row.appendChild(s2);box.appendChild(row)});
+  $("#chainCheck").addEventListener("click",function(){var all=0;chain.forEach(function(x,i){var a=$("#chainC"+i),b=$("#chainR"+i),ok=a.value===x.c&&b.value===x.r;
+    a.style.borderColor=a.value===x.c?"var(--good)":"var(--bad)";b.style.borderColor=b.value===x.r?"var(--good)":"var(--bad)";if(ok)all++;mark("chain"+i,ok)});
+    $("#chainFb").innerHTML='<div class="fb '+(all===3?"ok":"no")+'">'+(all===3?"全對。三個對策的結果都不理想：課本說調整政策後「短時間內成效尚不顯著」。":"答對 "+all+" / 3 列，紅框是需要再想的格子。")+"</div>"})})();
+
+function buildChoice(boxSel,list,opts,prefix){var box=$(boxSel);list.forEach(function(p,i){var id=prefix+i;reg(id);
+  var row=el("div",{class:"sortitem"});row.appendChild(el("span",{class:"name"},p.n));
+  var fb=el("div",{class:"fb",hidden:""}),grp=el("span",{class:"grp"});
+  var btns=opts.map(function(o,k){var b=el("button",{class:"btn"},o);b.addEventListener("click",function(){var ok=k===p.a;btns.forEach(function(x){x.classList.remove("ok","no")});
+    b.classList.add(ok?"ok":"no");fb.hidden=false;fb.className="fb "+(ok?"ok":"no");fb.innerHTML=(ok?"答對。":"再想想：正確是「"+opts[p.a]+"」。")+p.why;mark(id,ok)});grp.appendChild(b);return b});
+  row.appendChild(grp);row.appendChild(fb);box.appendChild(row)})}
+buildChoice("#pushGame",shuffle([
+ {n:"東南沿海丘陵廣布、山多田少",a:0,why:"原鄉不利條件，促使人口移出，是推力。"},
+ {n:"人口增加，糧食供應不足、環境負載力低",a:0,why:"原鄉難以謀生，是推力。"},
+ {n:"殖民者在南洋開闢農場及礦坑，需要大量勞動力",a:1,why:"移入地的吸引條件，是拉力。"},
+ {n:"冬季順東北季風南下、夏季順西南季風返鄉（船棹風）",a:2,why:"季風讓往返較容易，屬於降低「中間障礙」的因素（教材 Q&A Q4）。"},
+ {n:"在東南亞經商可能致富",a:1,why:"移入地提供的機會，是拉力。"}
+]),["推力","拉力","中間障礙"],"push");
+
+[["海南雞飯","飲食","起源於海南省文昌市（又稱文昌雞飯）。20 世紀初隨移民潮傳至東南亞並普及。"],
+ ["肉骨茶","飲食","肉與骨配中藥煲成的湯，盛行於新加坡和馬來西亞。早期華人移工工作粗重，從家鄉帶中藥補身而發展出來。"],
+ ["峇峇娘惹","族群","華人與馬來人通婚，男孩稱峇峇、女孩稱娘惹，成為馬來地區華人混血文化的代稱。"],
+ ["摩摩喳喳","飲食","八寶粥到南洋後，把材料換成當地常見的椰奶、西米露、芋頭、地瓜等。原鄉文化＋在地食材。"],
+ ["牛車水","聚落","新加坡最古老且最大的中國城。早期無自來水，用牛車載水供應而得名。"],
+ ["泰山巖","信仰","清代福建安溪移民到今新北市泰山區，沿用原鄉廟名興建廟宇，也是泰山區地名由來。"],
+ ["開漳聖王・保生大帝","信仰","漳州府移民多奉祀開漳聖王，泉州府移民多奉祀保生大帝；可從供奉的鄉土神推估原鄉。"]
+].forEach(function(c){var b=el("button",{"aria-expanded":"false"},'<span class="t">'+c[0]+'</span><span class="h">'+c[1]+'・點開看來源</span><span class="d">'+c[2]+'</span>');
+  b.addEventListener("click",function(){b.classList.toggle("open");b.setAttribute("aria-expanded",String(b.classList.contains("open")))});$("#cultureCards").appendChild(b)});
+
+[{t:"跨課：從地勢到東密西疏",s:["地勢西高東低，呈三級階梯","夏季海洋暖溼氣流可深入東部","東半部溼潤的季風氣候，平原多","農業、交通、工商業發達，環境負載力高","人口集中東半部，形成東密西疏"]},
+ {t:"一胎化如何造成「人口紅利消失」的隱憂？",s:["嚴格執行一胎化政策","出生率大幅降低","幼年人口比例下降（少子化）","老年人口比例上升（人口老化）","未來壯年人口下降，人口紅利消失"]},
+ {t:"性別結構為什麼失衡？",s:["一胎化只能生一個孩子","重男輕女的傳統觀念","許多家庭希望唯一的孩子是男嬰","新生兒性別比男多於女","「光棍」眾多，男性難找到婚配對象"]},
+ {t:"從地形到文化擴散：東南沿海的故事",s:["東南沿海丘陵廣布、山多田少","人口增加、糧食不足，形成推力","移往東南亞與臺灣謀生","在新居地重建、複製原鄉生活方式","華人文化擴散，形成中國城、唐人街"]}
+].forEach(function(o,gi){var id="order"+gi;reg(id);
+  var p=el("div",{class:"panel"});p.appendChild(el("div",{class:"k"},o.t));
+  var seq=el("div",{class:"seq","aria-label":"你的排序"}),pool=el("div",{class:"pool"}),fb=el("div"),rst=el("button",{class:"btn",style:"margin-top:8px"},"重排");
+  p.appendChild(el("div",{class:"note"},"從下方依因果順序點選，點錯可點上方卡片退回。"));p.appendChild(seq);p.appendChild(pool);p.appendChild(rst);p.appendChild(fb);
+  function renum(){[].forEach.call(seq.children,function(b,i){b.setAttribute("data-n",i+1)})}
+  function check(){if(pool.children.length)return;var got=[].map.call(seq.children,function(b){return b.textContent});var ok=got.every(function(x,i){return x===o.s[i]});mark(id,ok);
+    fb.innerHTML='<div class="fb '+(ok?"ok":"no")+'">'+(ok?"順序正確。":"順序不對。正確："+o.s.join(" → "))+"</div>"}
+  function build(){seq.innerHTML="";pool.innerHTML="";fb.innerHTML="";shuffle(o.s).forEach(function(t){var b=el("button",{class:"btn"});b.textContent=t;
+    b.addEventListener("click",function(){if(b.parentNode===pool)seq.appendChild(b);else{pool.appendChild(b);fb.innerHTML=""}renum();check()});pool.appendChild(b)})}
+  rst.addEventListener("click",build);build();$("#orderGames").appendChild(p)});
+
+[["跨課：「季風」在兩課出現了三次，分別在哪裡？","① 1-2：夏季風帶來豐沛降水、冬季風乾冷，形成夏雨冬乾，東半部屬季風氣候、年降水 > 500 mm。② 2-1：東半部溫暖溼潤、適合農業，環境負載力高，所以人口稠密。③ 2-3：早期移民冬季順東北季風下南洋、夏季順西南季風返鄉，季風降低了遷移的中間障礙（船棹風）。同一個自然現象，同時影響氣候、人口分布和人口遷移。"],
+ ["跨課：四川盆地和塔里木盆地都在次高階梯、都是盆地，人口為何差這麼多？","地形相同不代表環境相同。四川盆地屬溼潤的副熱帶季風氣候，盆底平坦、農工商業發達；塔里木盆地深居內陸、周圍高山阻擋水氣，屬乾燥的溫帶沙漠氣候，盆地內大部分是沙漠，人口只集中在盆緣綠洲（高山夏季融雪）。判斷人口疏密要同時看地形和氣候（水）。"],
+ ["跨課：為什麼中國東半部的行政區面積小、數量多？","東半部地形較平坦、氣候溫和溼潤，人口多，行政區劃分較細以便管理；西半部地形崎嶇、氣候相對惡劣，人口稀疏，行政區面積較大（課本第 13 頁）。行政區地圖本身就反映了東密西疏。"],
+ ["跨課：第 1 課的地形、氣候如何解釋黑河—騰衝線？","中國地勢西高東低，東半部多在最低階梯的平原與丘陵；東半部又屬夏雨冬乾的溼潤季風氣候（大致以 500 mm 等雨量線東溼西乾）。地形平坦＋水源充足 → 農業發達、糧食充足 → 環境負載力高 → 人口稠密。西半部位居內陸、乾燥少雨、多高山高原 → 人口少，只集中在河谷、綠洲。"],
+ ["空間 × 時間：同一個一胎化政策，為什麼各地結果不同？","政策在空間上並不一致：一胎化時期部分少數民族、農村家庭可生第二胎，西藏、新疆的生育政策更寬鬆。加上少數民族生育意願較高，2010～2020 年少數民族人口年均增長 0.98%，漢族只有 0.48%。所以看人口變化要同時問「什麼時候」和「在哪裡」。"],
+ ["一胎化政策算成功嗎？請從正反兩面回答。","成功面：30 餘年間出生率明顯下降，人口增加速度趨緩。代價面：少子化、人口快速老化（2023 年邁入高齡社會）、性別結構失衡（光棍）、獨生子女過度溺愛、失獨家庭超過百萬、未來人口紅利消失。好的答案要同時寫出「目的、成效、衍生問題」。"],
+ ["政策能壓低生育率，為什麼開放三胎卻拉不高？","限制生育可用罰則強制（社會扶養費、不能報戶口），鼓勵生育卻無法強迫。超過一半家庭不考慮生二胎、三胎，主因是工作繁忙與子女教養費用偏高；在現代社會，經濟狀況與社會條件才是影響生育率高低的主要因素。"],
+ ["人口多是好事還是壞事？","兩面都有。快速增加的人口有利於經濟發展（勞動力），卻也造成糧食供應、社會與環境的極大壓力。1950 年代鼓勵生育正是想用大量勞動力帶動發展；後來人口紅利可能消失，又變成要鼓勵生育。答題要說明在什麼條件下是利、什麼條件下是弊。"],
+ ["延伸：今天的「春運」也是人口移動，可以用推拉理論解釋嗎？","可以。1980 年代改革開放後，大量內陸人口擁入沿海城市找工作：沿海就業機會是拉力，內陸經濟相對落後是推力。春節返鄉造成每年超過 30 億人次的暫時移動（備課用書「地理放映室」）。和 2-3 相比，差別在國內／國外、暫時／長期。"]
+].forEach(function(q){var d=el("details",{class:"open-q"});d.appendChild(el("summary",null,q[0]));d.appendChild(el("div",{class:"ans"},q[1]));$("#openQs").appendChild(d)});
+
+[["中國的山地和高原約占總面積的 59%，呈現山多平原少的特徵。",1,"對。山地 33%＋高原 26%。"],
+ ["四川盆地位在最低階梯。",0,"錯。四川盆地位在次高階梯（巫山以西）；最低階梯以平原和丘陵為主。"],
+ ["中國主要河川多向東流，是因為地勢西高東低。",1,"對。學習會考題 3：「一江春水向東流」。"],
+ ["秦嶺—淮河一線大致與 1 月 0°C 等溫線、750 mm 等雨量線重疊。",1,"對。也是溫帶季風與副熱帶季風氣候的分界（105 會考 3）。"],
+ ["中國夏季南北溫差大，冬季南北溫差小。",0,"錯。相反：夏季普遍高溫、南北溫差小；冬季南暖北冷、南北溫差大。"],
+ ["拉薩年降水量 439 mm，所以屬於草原氣候。",0,"錯。判讀先看最暖月：拉薩最暖月 < 20°C，屬高地氣候。"],
+ ["中國的少數民族人數占比低，所以各地文化差異不大。",0,"錯。少數民族因集居環境差異，發展出各具特色的生活方式與文化（如彝族火把節、蒙古族那達慕）。"],
+ ["1950 年代以前，中國人口一直穩定緩慢增加。",0,"錯。1600～1700 年明末清初戰亂，人口由 1.9 億降到 1.5 億，曾出現負成長。"],
+ ["黑河—騰衝線以東，土地占 43%，人口占 94%。",1,"對。以西土地 57%、人口只有 6%。"],
+ ["黑河—騰衝線以東的每個地方人口都很稠密。",0,"錯。雲貴高原、東北平原周圍山地都在線以東，但人口較稀疏。"],
+ ["人口數量龐大只會阻礙經濟發展。",0,"錯。課本：快速增加的人口有利於經濟發展，但也造成糧食、社會與環境壓力。"],
+ ["開放三胎後，中國的少子化問題已明顯改善。",0,"錯。課本：少子化問題持續惡化，調整政策短時間內成效尚不顯著。"],
+ ["老年人口比例超過 14% 稱為高齡社會；中國在 2023 年已達到。",1,"對。2023 年老年人口比例 15.4%。超過 7% 則為高齡化社會。"],
+ ["一胎化時期，全中國每個家庭都只能生一個孩子。",0,"錯。部分少數民族、農村家庭及特殊情況可生第二胎。"],
+ ["中國新生兒性別比失衡，主要原因是男嬰死亡率較低。",0,"錯。主因是生育率下降加上重男輕女傳統觀念。"],
+ ["早期中國東南沿海移民，人數最多的目的地是美國與澳洲。",0,"錯。早期以鄰近的東南亞與臺灣最多；19 世紀以後才有百萬華工到美、澳。"],
+ ["東南亞華人人數最多、比例也最高的國家都是新加坡。",0,"錯。人數最多是印尼（約 1 千萬）；比例最高是新加坡（70% 以上）。"],
+ ["環境負載力只由自然環境決定。",0,"錯。也與生產技術、經濟發展有關，例如新加坡因高度工業化提升了環境負載力。"]
+].forEach(function(t,i){var id="tf"+i;reg(id);var r=el("div",{class:"tfrow"});r.appendChild(el("span",{class:"s"},t[0]));
+  var fb=el("div",{class:"fb",hidden:""}),grp=el("span",{class:"grp"});
+  var bs=["正確","錯誤"].map(function(lab,k){var v=k===0?1:0;var b=el("button",{class:"btn"},lab);
+    b.addEventListener("click",function(){var ok=v===t[1];bs.forEach(function(x){x.classList.remove("ok","no")});b.classList.add(ok?"ok":"no");fb.hidden=false;fb.className="fb "+(ok?"ok":"no");fb.textContent=t[2];mark(id,ok)});grp.appendChild(b);return b});
+  r.appendChild(grp);r.appendChild(fb);$("#tfGame").appendChild(r)});
+
+var tblBD='<div class="tblwrap"><table class="data"><tr><th>西元</th><th>1970</th><th>1980</th><th>1990</th><th>2000</th><th>2010</th><th>2020</th><th>2023</th></tr><tr><th>人口(億)</th><td>8.3</td><td>9.9</td><td>11.4</td><td>12.7</td><td>13.4</td><td>14.1</td><td>14.1</td></tr><tr><th>出生率‰</th><td>33.6</td><td>18.2</td><td>21.1</td><td>14.0</td><td>11.9</td><td>8.5</td><td>6.4</td></tr><tr><th>死亡率‰</th><td>7.6</td><td>6.3</td><td>6.7</td><td>6.5</td><td>7.1</td><td>7.0</td><td>7.9</td></tr></table></div>';
+var tblAge='<div class="tblwrap"><table class="data"><tr><th>年齡組成 %</th><th>1982</th><th>1990</th><th>2000</th><th>2010</th><th>2020</th></tr><tr><th>0–14 歲</th><td>33.59</td><td>27.69</td><td>22.89</td><td>16.60</td><td>17.95</td></tr><tr><th>15–64 歲</th><td>61.50</td><td>66.74</td><td>70.15</td><td>74.53</td><td>68.55</td></tr><tr><th>65 歲以上</th><td>4.91</td><td>5.57</td><td>6.96</td><td>8.87</td><td>13.50</td></tr></table></div>';
+var tblPol='<div class="tblwrap"><table class="data" style="min-width:260px"><tr><th>代號</th><th>年</th><th>政策</th></tr><tr><td>甲</td><td>1949</td><td>鼓勵生育</td></tr><tr><td>乙</td><td>1960</td><td>提倡晚婚</td></tr><tr><td>丙</td><td>1979</td><td>一胎化</td></tr><tr><td>丁</td><td>2015</td><td>開放二胎</td></tr></table></div>';
+var tblCty='<div class="tblwrap"><table class="data"><tr><th>國家</th><th>甲</th><th>乙</th><th>丙</th><th>丁</th></tr><tr><th>出生率‰</th><td>12.2</td><td>13.8</td><td>17.3</td><td>29.4</td></tr><tr><th>死亡率‰</th><td>6.9</td><td>8.4</td><td>6.0</td><td>4.9</td></tr><tr><th>人口成長率‰</th><td>5</td><td>8</td><td>11</td><td>24</td></tr><tr><th>增加人口數(千人)</th><td>6,650</td><td>2,474</td><td>985</td><td>712</td></tr></table></div>';
+[{s:"中國面積廣大，透過分類指標可以將中國的地勢分成三級階梯。該分類指標為下列何者？",src:"第 1 課學習會考題 1",o:["距海遠近","海拔高度","坡度大小","緯度高低"],a:1,e:"最高階梯平均約 4,000 公尺、次高約 1,500 公尺、最低約 1,000 公尺以下，分類依據是海拔高度。"},
+ {s:"三個都市的年降水量分別為 1,801 mm、294 mm、71 mm。它們最可能依序位於？",src:"第 1 課學習會考題 2・改寫",o:["珠江三角洲、黃土高原西側、塔里木盆地西緣","塔里木盆地、黃土高原、珠江三角洲","黃土高原、珠江三角洲、塔里木盆地","珠江三角洲、塔里木盆地、黃土高原"],a:0,e:"降水由東南向西北遞減：廣州（1,801 mm）受夏季風影響最大；蘭州（294 mm）位內陸；喀什（71 mm）深居內陸、周圍高山阻擋。"},
+ {s:"李煜詞句「恰似一江春水向東流」，中國許多大河由西向東流的原因為何？",src:"第 1 課學習會考題 3",o:["受東北季風吹送","地勢西高東低","東部降水較多","地球自轉方向"],a:1,e:"三級階梯由西向東逐級下降，主要河川多發源自最高階梯，向東入海。"},
+ {s:"中國 1 月均溫 0°C 等溫線大致與哪一條線重疊？",src:"105 會考 3・改寫",o:["黑河—騰衝線","大興安嶺—陰山—隴山","秦嶺—淮河","崑崙山—祁連山"],a:2,e:"秦嶺—淮河以北 1 月均溫低於 0°C；此線也與 750 mm 等雨量線大致重疊。"},
+ {s:"孟浩然詩「水落魚梁淺，天寒夢澤深」描寫湖北冬季時河中沙洲露出水面。最主要的原因是？",src:"112 會考 14・改寫",o:["冬季降水增加","季風氣候夏雨冬乾，冬季水位下降","海水入侵","下游興建堤壩"],a:1,e:"湖北位於長江流域，屬夏雨冬乾的季風氣候，乾季水位降低，沙洲露出。"},
+ {s:"夏季從中國東南沿海往西北內陸旅行，沿途氣候最可能如何變化？",src:"111 會考 3・改寫",o:["由溼熱變為乾熱","由乾冷變為溼熱","一路都溼熱","由溼冷變為乾冷"],a:0,e:"夏季普遍高溫；東南沿海受季風影響、降水多，西北內陸距海遠、地形阻隔，乾燥少雨。"},
+ {s:"甲、乙、丙三都市進入春季的日期分別為 4 月 26 日、3 月 16 日、4 月 1 日。若三地為哈爾濱、北京、武漢，下列配對何者正確？",src:"107 會考 20・改寫",o:["甲武漢、乙哈爾濱、丙北京","甲哈爾濱、乙武漢、丙北京","甲北京、乙武漢、丙哈爾濱","甲哈爾濱、乙北京、丙武漢"],a:1,e:"緯度愈高，冬季愈長、春季愈晚到。哈爾濱最晚（甲），武漢最早（乙），北京居中（丙）。"},
+ {s:"某人計畫冬季到中國「避寒勝地」旅遊，最適合選擇哪一個省分？",src:"106 會考 32・改寫",o:["黑龍江省","海南省","青海省","內蒙古自治區"],a:1,e:"冬季南暖北冷，緯度最低的海南省冬季最溫暖。"},
+ {s:"準噶爾盆地與塔里木盆地之間隔著哪一座東—西走向的山脈？",src:"103 會考 34・改寫",o:["太行山","巫山","天山","大興安嶺"],a:2,e:"天山呈東—西向，北為準噶爾盆地、南為塔里木盆地。太行山、巫山為南—北向，大興安嶺為東北—西南向。"},
+ {s:"跨課：下列哪一組第 1 課的環境特徵，最能解釋黑河—騰衝線以東人口稠密？",src:"跨課整合",o:["多最低階梯的平原，屬年降水 > 500 mm 的季風氣候","多高原與盆地，屬乾燥氣候","海拔高、日照強烈","深居內陸、年溫差大"],a:0,e:"地形平坦＋溼潤季風氣候 → 農業與產業發達 → 環境負載力高。"},
+ {s:"跨課：東南丘陵「山多田少」，常被開闢成梯田。這個第 1 課的地形特徵，在第 2 課最直接導致什麼？",src:"跨課整合",o:["人口外移的推力","人口大量移入","計畫生育政策","性別比失衡"],a:0,e:"人口增加後糧食不足，形成外移的巨大推力，移往東南亞與臺灣。"},
+ {s:"中國人口在 1700～1794 年增加一倍約需 90 餘年，1950～1990 年增加近一倍只需約 40 年。這代表近代中國人口成長有何特徵？",src:"學習會考題 1",o:["人口成長愈來愈快","人口增加速度變慢","外移人口愈來愈多","自然增加愈來愈低"],a:0,e:"翻倍所需時間（人口倍時）縮短，代表成長速度變快。"},
+ {s:"依下表推測，2020～2023 年中國人口可能產生何種變化？"+tblBD,src:"學習會考題 2",o:["新生嬰兒數量增加","死亡人口減少","自然增加速度不變","人口成長停滯"],a:3,e:"2020 與 2023 年總數皆為 14.1 億；2023 年出生率 6.4‰ 低於死亡率 7.9‰，自然增加率為負。"},
+ {s:"四川盆地、雲貴高原、準噶爾盆地、內蒙古高原四地中，哪一地人口點子最密集？",src:"學習會考題 3",o:["四川盆地：盆底平坦、溫暖溼潤，農工商業發達","雲貴高原：位於黑河—騰衝線以東，必定稠密","準噶爾盆地：盆地地形平坦，適合居住","內蒙古高原：地勢平坦遼闊，交通便利"],a:0,e:"雲貴高原雖在線以東但地勢崎嶇；準噶爾盆地與內蒙古高原深居內陸、乾燥。"},
+ {s:"西元 1700 年以後中國人口穩定且大量成長，下列何者<b>不是</b>課本提到的原因？",src:"課本第 25 頁",o:["政治相對安定","民生經濟發展","番薯、馬鈴薯、玉米等新作物傳入","醫療進步並實施計畫生育"],a:3,e:"計畫生育是 1970 年代以後的事，而且是用來抑制成長。"},
+ {s:"依下表，2010 到 2020 年幼年人口比例由 16.60% 微幅增加到 17.95%，最可能的原因是什麼？"+tblAge,src:"112 會考 4・改寫",o:["為因應少子化而開放生育第二胎","一胎化政策開始實施","重男輕女觀念加深","大量外國人口移入"],a:0,e:"一胎化主要影響 1979～2015 年；重男輕女要看性別比資料；人口移入多與壯年人口有關。"},
+ {s:"下表是中國不同時期的生育政策。政府推出「丁」政策，主要想緩解哪一個問題？"+tblPol,src:"111 會考補考 18・改寫",o:["幼年人口比例過低、老年人口比例上升","人口總數成長過快","糧食供應不足","人口集中於東半部"],a:0,e:"計畫生育使幼年比例大降、高齡化愈趨明顯；2015 年取消一胎化，2016 年起全面開放二胎。"},
+ {s:"依下表，下列推論何者最合理？"+tblCty,src:"103 會考 35・改寫",o:["丁國人口總數最多","乙國死亡率最高，所以人口減少","丙國增加人口數最少","甲國成長率最低卻增加最多人，人口總數最龐大"],a:3,e:"增加人口數 = 人口總數 × 成長率。成長率最低卻增加最多，代表甲國人口基數最大。"},
+ {s:"2023 年中國老年人口比例為 15.4%，依聯合國標準，中國屬於哪一種社會？",src:"課本第 27 頁",o:["尚未高齡化","高齡化社會（超過 7%）","高齡社會（超過 14%）","超高齡社會（超過 20%）"],a:2,e:"課本：2023 年已超過聯合國所訂的 14% 標準，邁入高齡社會。"},
+ {s:"2023 年中國新生兒性別比為 111，意思是？",src:"課本第 27 頁",o:["每 100 名新生兒中有 111 名男嬰","每 100 名女嬰對應約 111 名男嬰","男性人口比女性多 111 萬人","女嬰比男嬰多 11%"],a:1,e:"性別比 = 男 ÷ 女 × 100。世界平均約 106，中國明顯偏高。"},
+ {s:"早期中國東南沿海居民冬季順東北季風「下南洋」，夏季順西南季風返鄉。在推拉理論中，季風屬於？",src:"教材 Q&A Q4",o:["推力","拉力","降低中間障礙的因素","文化擴散的結果"],a:2,e:"季風讓往返較容易，降低移動的困難度（中間障礙），因此又稱船棹風。"},
+ {s:"關於東南亞的華人，下列敘述何者正確？",src:"課本第 28 頁",o:["新加坡華人人數最多","印尼華人人數最多，新加坡華人比例最高","泰國華人比例最高","華人主要從事高科技產業"],a:1,e:"華人以印尼約 1 千萬人最多，泰國、馬來西亞次之；新加坡華人比例最高，約 70% 以上。"},
+ {s:"中國開放三胎後，調查顯示超過一半家庭不考慮生育第二胎或第三胎。這說明現代社會影響生育率的主要因素是？",src:"課本第 27 頁",o:["政府的罰則","經濟狀況與社會條件","醫療衛生水準","民族組成"],a:1,e:"主因是工作繁忙與子女教養費用偏高。"},
+ {s:"剛果與新加坡自然環境條件相似，但新加坡能養活的人口密度高得多。用環境負載力解釋，主要是因為？",src:"課本第 25 頁",o:["新加坡降水較多","新加坡高度工業化、生產技術較高","新加坡面積較大","剛果實施計畫生育"],a:1,e:"環境負載力也受經濟發展與生產技術影響。"},
+ {s:"清代福建安溪移民在今新北市興建「泰山巖」，沿用原鄉廟名，也成為泰山區地名由來。這最能說明？",src:"課本第 28 頁",o:["移民在新居地複製原鄉文化，造成文化擴散","臺灣原本就有相同地名","政府強制移民","宗教只在原鄉流行"],a:0,e:"移民將信仰、習俗帶到新居地，是華人文化擴散的例子。"},
+ {s:"中國在 1950 年代鼓勵人民生育，主要的想法是？",src:"課本第 26 頁",o:["以大量勞動力帶動國家發展","因應人口老化","平衡性別比","減輕糧食壓力"],a:0,e:"受蘇聯影響，希望以大量勞動力帶動發展，甚至禁止人工流產。"}
+].forEach(function(q,i){var id="q"+i;reg(id);
+  var d=el("div",{class:"q"});d.appendChild(el("div",{class:"stem"},(i+1)+". "+q.s+'<span class="src">'+q.src+"</span>"));
+  var opts=el("div",{class:"opts"}),fb=el("div",{class:"fb",hidden:""});
+  var bs=q.o.map(function(o,k){var b=el("button",{class:"btn"},"("+"ABCD"[k]+") "+o);
+    b.addEventListener("click",function(){var ok=k===q.a;bs.forEach(function(x){x.classList.remove("ok","no")});b.classList.add(ok?"ok":"no");if(!ok)bs[q.a].classList.add("ok");
+      fb.hidden=false;fb.className="fb "+(ok?"ok":"no");fb.innerHTML=(ok?"答對。":"答案是 ("+"ABCD"[q.a]+")。")+q.e;mark(id,ok)});opts.appendChild(b);return b});
+  d.appendChild(opts);d.appendChild(fb);$("#quiz").appendChild(d)});
+
+updScore();
+})();
+</script>
+
+</body></html>
